@@ -13,6 +13,7 @@ Most importantly — updates are released frequently.
 
 ### 🔧 Key Improvements
 - **Independent application theme**
+- **Multilingual translation**
 - Improved settings interface
 - Bug fixes from the original version
 - Increased overall stability
