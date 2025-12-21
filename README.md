@@ -2,7 +2,7 @@
 
 > An extended and enhanced version of AIDE with an improved interface, additional features, and better convenience for developers.
 
-![AIDE+ Pro Banner](https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/assets/banner.png)
+![AIDE+ Pro Banner](https://github.com/factorialovich/Aide-Pro-Modify/blob/main/main/assets/banner.png)
 
 ---
 
