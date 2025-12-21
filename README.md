@@ -4,8 +4,6 @@
 > This project is a **modified version of AIDE**.  
 > It is not official and is provided for educational and research purposes only.
 
-**English** 👈 | *(Other languages coming soon)*
-
 # 🚀 AIDE+ Pro (Modified)
 
 An enhanced and refined version of **AIDE**, focused on improving stability, usability, and modern Android development support — with frequent updates and community-driven improvements.
