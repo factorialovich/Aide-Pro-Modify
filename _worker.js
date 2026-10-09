@@ -124,6 +124,12 @@ export async function handle(request,env,ctx) {
    if(value.ids.length) await env.DB.batch(value.ids.map(id=>env.DB.prepare('UPDATE crashes SET acknowledged=1 WHERE id=?').bind(id)));
    return json({ok:true});
   }
+  if(path==='/admin/devices'&&request.method==='GET') {
+   const since=Number(url.searchParams.get('since')||'0');const cursor=url.searchParams.get('after')||'';
+   if(!Number.isSafeInteger(since)||since<0||cursor.length>36)fail(422,'invalid cursor');
+   const rows=await env.DB.prepare('SELECT id AS device_id,version AS app_version,created AS first_seen,seen AS last_seen FROM installations WHERE seen>? OR (seen=? AND id>?) ORDER BY seen,id LIMIT 100').bind(since,since,cursor).all();
+   return json({items:rows.results});
+  }
   if(path==='/admin/registrations'&&request.method==='GET') {
    const since=Number(url.searchParams.get('since')||'0'); const cursor=url.searchParams.get('after')||'';
    if(!Number.isSafeInteger(since)||since<0||cursor.length>36)fail(422,'invalid cursor');
@@ -169,8 +175,8 @@ export async function handle(request,env,ctx) {
  if(path==='/api/heartbeat'&&request.method==='POST') {
   const installation=await authenticated(request,env);
   await quota(env,'heartbeat:'+installation.id,24,3600);
-  await body(request,['version']);
-  await env.DB.prepare('UPDATE installations SET seen=? WHERE id=?').bind(now(),installation.id).run();
+  const value=await body(request,['version']);text(value.version,80);
+  await env.DB.prepare('UPDATE installations SET seen=?,version=? WHERE id=?').bind(now(),value.version,installation.id).run();
   return json({ok:true});
  }
  if(path==='/api/update'&&request.method==='GET')return signedRelease(env,url.origin);
