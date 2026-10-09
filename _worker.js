@@ -96,15 +96,12 @@ export async function handle(request,env) {
    if(upload[1]!==request.headers.get('X-Aide-Body-SHA256'))fail(401,'body signature mismatch');
    const length=Number(request.headers.get('Content-Length'));
    if(!Number.isSafeInteger(length)||length<=0||length>99000000)fail(413,'invalid APK size');
-   const stream=new crypto.DigestStream('SHA-256'); let received=0;
-   const bounded=request.body.pipeThrough(new TransformStream({transform(chunk,controller) {
-    received+=chunk.byteLength;if(received>length)throw new Error('invalid length');controller.enqueue(chunk);
-   }}));
-   const [store,hash]=bounded.tee();
-   await Promise.all([env.RELEASES.put(upload[1]+'.apk',store,{httpMetadata:{contentType:'application/vnd.android.package-archive'}}),hash.pipeTo(stream)]);
-   const actual=Array.from(new Uint8Array(await stream.digest),byte=>byte.toString(16).padStart(2,'0')).join('');
-   if(received!==length||actual!==upload[1]) {await env.RELEASES.delete(upload[1]+'.apk');fail(400,'APK checksum mismatch');}
-   return json({ok:true,size:received});
+   if(!request.body)fail(400,'APK body required');
+   // Keep the native request stream's length; R2 verifies integrity while storing.
+   const checksum=Uint8Array.from(upload[1].match(/../g),byte=>parseInt(byte,16));
+   const stored=await env.RELEASES.put(upload[1]+'.apk',request.body,{sha256:checksum.buffer,httpMetadata:{contentType:'application/vnd.android.package-archive'}});
+   if(!stored||stored.size!==length) {await env.RELEASES.delete(upload[1]+'.apk');fail(400,'APK length mismatch');}
+   return json({ok:true,size:stored.size});
   }
   if(path==='/admin/release'&&request.method==='POST') {
    const envelope=await body(request,['payload','signature']);
