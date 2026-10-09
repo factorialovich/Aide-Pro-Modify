@@ -76,7 +76,7 @@ async function verifyRelease(env,envelope,origin) {
  if(release.url!==origin+'/api/apk/'+release.sha256+'.apk'||release.issued>now()+300||release.expires<=now()||release.expires-release.issued>86400)fail(422,'invalid release validity');
  return release;
 }
-export async function handle(request,env) {
+export async function handle(request,env,ctx) {
  const url=new URL(request.url),path=url.pathname;
  if(url.protocol!=='https:') fail(400,'HTTPS required');
  if(!['GET','HEAD','POST'].includes(request.method)) fail(405,'method not allowed');
@@ -169,14 +169,41 @@ export async function handle(request,env) {
  if(path==='/api/update'&&request.method==='GET')return signedRelease(env,url.origin);
  const match=/^\/api\/apk\/([a-f0-9]{64})\.apk$/.exec(path);
  if(match&&['GET','HEAD'].includes(request.method)) {
-  const object=request.method==='HEAD'?await env.RELEASES.head(match[1]+'.apk'):await env.RELEASES.get(match[1]+'.apk');
-  if(!object)fail(404,'not found');
-  return new Response(request.method==='HEAD'?null:object.body,{headers:{...security,'Content-Type':'application/vnd.android.package-archive','Content-Length':String(object.size),'Content-Disposition':'attachment; filename="AIDE-Sora.apk"'}});
+  const key=match[1]+'.apk',metadata=await env.RELEASES.head(key);
+  if(!metadata)fail(404,'not found');
+  const etag=metadata.httpEtag||'"'+match[1]+'"';
+  const headers={...security,'Cache-Control':'private, no-transform','Content-Type':'application/vnd.android.package-archive','Content-Disposition':'attachment; filename="AIDE-Sora.apk"','Accept-Ranges':'bytes','ETag':etag,'X-Aide-Download-Version':'2'};
+  let offset=0,length=metadata.size,status=200;
+  const range=request.headers.get('Range');
+  if(request.method==='GET'&&range&&(!request.headers.get('If-Range')||request.headers.get('If-Range')===etag)) {
+   const parts=/^bytes=(\d*)-(\d*)$/.exec(range);
+   const invalid=()=>new Response(null,{status:416,headers:{...headers,'Content-Range':'bytes */'+metadata.size,'Content-Length':'0'}});
+   if(!parts||(!parts[1]&&!parts[2]))return invalid();
+   if(!parts[1]) {
+    const suffix=Number(parts[2]);if(!Number.isSafeInteger(suffix)||suffix<=0)return invalid();
+    offset=Math.max(0,metadata.size-suffix);
+   }else offset=Number(parts[1]);
+   let end=parts[1]&&parts[2]?Number(parts[2]):metadata.size-1;
+   if(!Number.isSafeInteger(offset)||!Number.isSafeInteger(end)||offset<0||offset>=metadata.size||end<offset)return invalid();
+   end=Math.min(end,metadata.size-1);length=end-offset+1;status=206;
+   headers['Content-Range']=`bytes ${offset}-${end}/${metadata.size}`;
+  }
+  headers['Content-Length']=String(length);
+  if(request.method==='HEAD')return new Response(null,{headers});
+  const object=await env.RELEASES.get(key,status===206?{range:{offset,length}}:undefined);
+  if(!object||!object.body)fail(503,'download unavailable');
+  // Explicit fixed length gives the download a finite body and detects truncated storage reads.
+  const stream=typeof FixedLengthStream==='function'?new FixedLengthStream(length):new TransformStream({
+   start(){this.count=0;},transform(chunk,controller){this.count+=chunk.byteLength;if(this.count>length)throw new Error('download overflow');controller.enqueue(chunk);},flush(){if(this.count!==length)throw new Error('download truncated');}
+  });
+  const transfer=object.body.pipeTo(stream.writable);
+  if(ctx)ctx.waitUntil(transfer);else transfer.catch(()=>{});
+  return new Response(stream.readable,{status,headers});
  }
  fail(404,'not found');
 }
 export default {
- async fetch(request,env) {try {return await handle(request,env);}catch(error) {return json({detail:error instanceof ApiError?error.message:'service unavailable'},error instanceof ApiError?error.status:503);}},
+ async fetch(request,env,ctx) {try {return await handle(request,env,ctx);}catch(error) {return json({detail:error instanceof ApiError?error.message:'service unavailable'},error instanceof ApiError?error.status:503);}},
  async scheduled(event,env,ctx) {
   ctx.waitUntil(env.DB.batch([
    env.DB.prepare('DELETE FROM quotas WHERE expires<?').bind(now()),
