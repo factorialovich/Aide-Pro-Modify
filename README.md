@@ -4,7 +4,7 @@
 > This project is a **modified version of AIDE**.  
 > It is not official and is provided for educational and research purposes only.
 
-# 🚀 AIDE+ Pro (Modified)
+# 🍇 AIDE+ Pro (Modified)
 
 An enhanced and refined version of **AIDE**, focused on improving stability, usability, and modern Android development support — with frequent updates and community-driven improvements.
 
@@ -54,7 +54,7 @@ An enhanced and refined version of **AIDE**, focused on improving stability, usa
 1. Download the APK from the **Releases** section
 2. Allow installation from unknown sources
 3. Install the APK
-4. Launch and enjoy 🚀
+4. Launch and enjoy
 
 ---
 
@@ -81,7 +81,7 @@ The donation section is available directly in the application.
 
 ## 🌐 Community & Links
 
-- Telegram: [@factorcode](https://t.me/factorcode)
+- Telegram: [@factorialovich](https://t.me/factorialovich)
 - GitHub: https://github.com/factorialovich
 
 ---
