@@ -148,6 +148,13 @@ export async function handle(request,env,ctx) {
   if(result.meta.changes!==1)fail(409,'installation already exists');
   return json({token});
  }
+ if(path==='/api/crash/status'&&request.method==='GET') {
+  const installation=await authenticated(request,env);
+  await quota(env,'crash-status:'+installation.id,60,60);
+  const id=url.searchParams.get('id')||'';if(!uuid.test(id))fail(422,'invalid report ID');
+  const row=await env.DB.prepare('SELECT acknowledged FROM crashes WHERE id=? AND installation=?').bind(id,installation.id).first();
+  return json({received:!!row,delivered:!!row&&row.acknowledged===1});
+ }
  if(path==='/api/crash'&&request.method==='POST') {
   const installation=await authenticated(request,env);
   await quota(env,'crash:'+installation.id,60,3600);
