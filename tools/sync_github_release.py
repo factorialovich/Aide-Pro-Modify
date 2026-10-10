@@ -48,6 +48,9 @@ def main():
    notes=root/'notes.md';notes.write_text(release.get('notes','')+'\n\nSHA-256: `'+release['sha256']+'`\n',encoding='utf8')
    if existing.returncode:gh('release','create',tag,'--repo',REPOSITORY,'--title','AIDE '+release['versionName'],'--notes-file',str(notes))
    gh('release','upload',tag,str(path),'--repo',REPOSITORY)
+   confirmed=json.loads(gh('api','repos/'+REPOSITORY+'/releases/tags/'+tag).stdout)
+   asset=next((item for item in confirmed.get('assets',[]) if item['name']==name),None)
+   if not asset or asset.get('digest')!='sha256:'+release['sha256'] or asset.get('size')!=release['size']:raise ValueError('GitHub did not confirm the complete file')
    print('Published '+tag+' after signature and file checksum validation',flush=True)
 
 if __name__=="__main__":main()
