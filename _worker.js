@@ -32,7 +32,16 @@ const base64=bytes=>btoa(String.fromCharCode(...new Uint8Array(bytes)));
 const unbase64=value=>Uint8Array.from(atob(value),char=>char.charCodeAt(0));
 export async function sha(value) { const bytes=typeof value==='string'?encoder.encode(value):value; return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),byte=>byte.toString(16).padStart(2,'0')).join(''); }
 export function sanitize(stack) {
- return stack.split('\n').slice(0,256).map(line=>line.trim()).filter(line=>/^(?:Caused by: |Suppressed: )?[A-Za-z0-9_.$]+(?:Exception|Error|Throwable)$/.test(line)||/^at [A-Za-z0-9_.$<>]+\([A-Za-z0-9_.$ :?-]+\)$/.test(line)).join('\n') || 'Crash report (details redacted)';
+ const message=value=>value.slice(0,2000)
+  .replace(/(authorization|password|token|secret|api[_-]?key)\s*[:=]\s*[^\s,;]+/gi,'$1=[redacted]')
+  .replace(/(https?:\/\/[^?#\s]+)[?#][^\s]+/g,'$1?[redacted]')
+  .replace(/Bearer\s+[A-Za-z0-9_.-]+/gi,'Bearer [redacted]');
+ return stack.split('\n').slice(0,256).map(line=>line.trim()).flatMap(line=>{
+  if(line==='Diagnostic report')return [line];
+  if(/^at [A-Za-z0-9_.$<>]+\([A-Za-z0-9_.$ :?-]+\)$/.test(line))return [line];
+  const heading=/^((?:Caused by: |Suppressed: )?[A-Za-z0-9_.$]+(?:Exception|Error|Throwable|ToastMessage))(?:: (.*))?$/.exec(line);
+  return heading?[heading[1]+(heading[2]?': '+message(heading[2]):'')]:[];
+ }).join('\n') || 'Crash report (details redacted)';
 }
 async function body(request, allowed) {
  if(request.headers.get('Content-Type')?.split(';')[0]!=='application/json') fail(415,'JSON required');
