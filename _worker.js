@@ -18,6 +18,12 @@ function burst(request,env) {
  if(count>240)fail(429,'rate limit');
 }
 const maintenanceState=new WeakMap();
+async function pruneDownloads(env) {
+ if(!env.RELEASES?.list)return;
+ const page=await env.RELEASES.list({prefix:'private-downloads/',limit:100,include:['customMetadata']});
+ const expired=page.objects.filter(item=>Number(item.customMetadata?.expires)<=now());
+ if(expired.length)await env.RELEASES.delete(expired.map(item=>item.key));
+}
 function maintenance(env,ctx) {
  if(!ctx||!env.DB||now()-(maintenanceState.get(env)||0)<600)return;
  maintenanceState.set(env,now());
@@ -27,6 +33,7 @@ function maintenance(env,ctx) {
   env.DB.prepare('DELETE FROM nonces WHERE id IN (SELECT id FROM nonces WHERE expires<? LIMIT 500)').bind(now()),
   env.DB.prepare('DELETE FROM crashes WHERE id IN (SELECT id FROM crashes WHERE acknowledged=1 AND created<? LIMIT 100)').bind(now()-30*86400)
  ]).catch(()=>{}));
+ ctx.waitUntil(pruneDownloads(env).catch(()=>{}));
 }
 const base64=bytes=>btoa(String.fromCharCode(...new Uint8Array(bytes)));
 const unbase64=value=>Uint8Array.from(atob(value),char=>char.charCodeAt(0));
@@ -165,6 +172,27 @@ export async function handle(request,env,ctx) {
  if(path.startsWith('/admin/')) {
   await admin(request,env);
 
+  if(path==='/admin/download'&&request.method==='POST') {
+   const value=await body(request,['files']);
+   if(!Array.isArray(value.files)||!value.files.length||value.files.length>3)fail(422,'invalid files');
+   const names=new Set();let total=0;
+   for(const file of value.files) {
+    if(!file||typeof file.name!=='string'||! /^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$/.test(file.name)||names.has(file.name))fail(422,'invalid filename');
+    names.add(file.name);text(file.data,44000);
+    let bytes;try{bytes=unbase64(file.data);}catch{fail(422,'invalid file encoding');}
+    if(base64(bytes)!==file.data||!bytes.length)fail(422,'invalid file encoding');
+    total+=bytes.length;if(total>32000)fail(413,'files too large');
+   }
+   const token=base64(crypto.getRandomValues(new Uint8Array(32))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+   const expires=now()+86400;
+   await env.RELEASES.put('private-downloads/'+await sha(token)+'.json',JSON.stringify({expires,files:value.files.map(file=>({name:file.name,data:file.data}))}),{customMetadata:{expires:String(expires)}});
+   return json({expires,files:value.files.map(file=>({name:file.name,url:url.origin+'/api/download/'+token+'/'+file.name}))});
+  }
+  if(path==='/admin/download/delete'&&request.method==='POST') {
+   const value=await body(request,['token']);if(!/^[A-Za-z0-9_-]{43}$/.test(value.token||''))fail(422,'invalid token');
+   await env.RELEASES.delete('private-downloads/'+await sha(value.token)+'.json');return json({ok:true});
+  }
+
   if(path==='/admin/messages'&&request.method==='POST') {
    const envelope=await body(request,['payload','signature']);const value=await verifiedMessage(env,envelope);
    await changeMessages(env,current=>{
@@ -226,6 +254,7 @@ export async function handle(request,env,ctx) {
     env.DB.prepare('DELETE FROM nonces WHERE expires<?').bind(now()),
     env.DB.prepare('DELETE FROM crashes WHERE acknowledged=1 AND created<?').bind(now()-30*86400)
    ]);
+   await pruneDownloads(env);
    return json({ok:true});
   }
   const upload=/^\/admin\/apk\/([a-f0-9]{64})$/.exec(path);
@@ -290,6 +319,18 @@ export async function handle(request,env,ctx) {
  // Native Cloudflare rate limiting reduces database amplification under floods.
  if(env.API_LIMIT) {if(!(await env.API_LIMIT.limit({key:peer})).success)fail(429,'rate limit');}
  else await quota(env,'ip-minute:'+await sha(peer),120,60);
+
+ const download=/^\/api\/download\/([A-Za-z0-9_-]{43})\/([A-Za-z0-9][A-Za-z0-9._-]{0,79})$/.exec(path);
+ if(download&&['GET','HEAD'].includes(request.method)) {
+  const key='private-downloads/'+await sha(download[1])+'.json';
+  const object=await env.RELEASES.get(key);if(!object)fail(404,'download not found');
+  const record=JSON.parse(await object.text());
+  if(!Number.isSafeInteger(record.expires)||record.expires<=now()){await env.RELEASES.delete(key);fail(404,'download expired');}
+  const file=record.files.find(item=>item.name===download[2]);if(!file)fail(404,'file not found');
+  const bytes=unbase64(file.data);
+  const headers={...security,'Content-Type':'application/octet-stream','Content-Disposition':'attachment; filename="'+file.name+'"','Content-Length':String(bytes.length),'X-Robots-Tag':'noindex, nofollow, noarchive'};
+  return new Response(request.method==='HEAD'?null:bytes,{headers});
+ }
 
  if(path==='/api/github-connect'&&request.method==='GET')return credentialPage(env);
  if(path==='/api/upload/page'&&request.method==='GET')return uploadPage();
