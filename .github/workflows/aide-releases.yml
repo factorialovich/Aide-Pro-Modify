@@ -1,12 +1,6 @@
 name: Publish signed AIDE APKs
 on:
-  schedule:
-    - cron: '*/5 * * * *'
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/aide-releases.yml'
-      - 'tools/sync_github_release.py'
 permissions:
   contents: write
 concurrency:
