@@ -1,0 +1,30 @@
+name: Publish signed AIDE APKs
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/aide-releases.yml'
+      - 'tools/sync_github_release.py'
+permissions:
+  contents: write
+concurrency:
+  group: aide-release-sync
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --require-hashes --only-binary=:all: -r tools/requirements-release.txt
+      - run: python tools/sync_github_release.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AIDE_UPDATE_PUBLIC_KEY: MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAv4FQZgB8MamANWQgKogRR8mBhUmQZKMi0zLYT7zwXaDWK54YvjYa3xRg8nv7bt3DyW/LQJNh32kkoEzr3jsP+FgdAzdHislSRXqXc6jI2Bc62vRynmvUQhYPLv0x5SE2q0QmSi6wMuDaBpAEuk8GjAajgWGppG3TufhjRxrDv+38eUUJUOKJzCyctFvKGRA6D84W9Gt2C+lgzM3q5PuYfmxfpWCZto54622bs2xkL9D7RBcgo7HpqRnhhRGojNxYqJWHBX7Ht9VAHI5O2oeYgln2cMPUwvRzf/2/M3Dh9/C7VxRQwwMJUSSxOXKg7m2TLHSfewt5CJM/P/fqrGrKfAJkuGmOTtXz0rp0zrhJok1/g6rNLrZUOgCkiRAo4GUDvpzzvvN81PeADA6EwH4ATxX81aluLY/AhhsrnZ429wHIUEf3QfXzawjJq4Tm1RF54jwDD6//ycViIpYlBP55lTGlrHUHWcjwhxdlL43H2lBtl1Mm38sAyOA/FwDAshGHAgMBAAE=
