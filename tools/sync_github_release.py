@@ -1,4 +1,3 @@
-"""GitHub Actions mirror: only server-signed, checksum-verified Cloudflare APKs are released."""
 import base64,hashlib,json,os,re,subprocess,tempfile,time,urllib.request,urllib.error
 from pathlib import Path
 from cryptography.hazmat.primitives import serialization,hashes
