@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": 1,
+  "revision": 2,
   "models": [
     {
       "provider": "gemini",
@@ -34,6 +34,55 @@
       "provider": "chatgpt",
       "id": "gpt-5.4-mini",
       "label": "ChatGPT Mini",
+      "vision": true,
+      "enabled": true
+    },
+    {
+      "provider": "gemini",
+      "id": "gemini-3.5-flash-lite",
+      "label": "Gemini 3.5 Flash-Lite",
+      "vision": true,
+      "enabled": true
+    },
+    {
+      "provider": "gemini",
+      "id": "gemini-3.1-pro-preview",
+      "label": "Gemini 3.1 Pro",
+      "vision": true,
+      "enabled": true
+    },
+    {
+      "provider": "grok",
+      "id": "grok-4.7-latest",
+      "label": "Grok 4.7 Latest (alias)",
+      "vision": true,
+      "enabled": true
+    },
+    {
+      "provider": "claude",
+      "id": "claude-opus-5-5",
+      "label": "Claude Opus 5.5",
+      "vision": true,
+      "enabled": true
+    },
+    {
+      "provider": "claude",
+      "id": "claude-haiku-5-5",
+      "label": "Claude Haiku 5.5",
+      "vision": true,
+      "enabled": true
+    },
+    {
+      "provider": "deepseek",
+      "id": "deepseek-v4-pro",
+      "label": "DeepSeek V4 Pro",
+      "vision": false,
+      "enabled": true
+    },
+    {
+      "provider": "chatgpt",
+      "id": "gpt-5.4",
+      "label": "GPT-5.4",
       "vision": true,
       "enabled": true
     }
