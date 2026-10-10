@@ -1,11 +1,33 @@
 const encoder = new TextEncoder();
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const digest = /^[0-9a-f]{64}$/;
-const security = {"Cache-Control":"no-store", "Content-Type":"application/json; charset=utf-8", "X-Content-Type-Options":"nosniff", "Content-Security-Policy":"default-src 'none'; frame-ancestors 'none'", "Referrer-Policy":"no-referrer", "Strict-Transport-Security":"max-age=31536000"};
+const security = {"Cache-Control":"no-store", "Content-Type":"application/json; charset=utf-8", "X-Content-Type-Options":"nosniff", "Content-Security-Policy":"default-src 'none'; frame-ancestors 'none'", "Referrer-Policy":"no-referrer", "X-Frame-Options":"DENY", "Cross-Origin-Resource-Policy":"same-origin", "Permissions-Policy":"camera=(), microphone=(), geolocation=(), payment=()", "Strict-Transport-Security":"max-age=31536000"};
 class ApiError extends Error { constructor(status, message) { super(message); this.status=status; } }
 const fail=(status,message)=>{throw new ApiError(status,message);};
 const json=(value,status=200)=>new Response(JSON.stringify(value),{status,headers:security});
 const now=()=>Math.floor(Date.now()/1000);
+// Best-effort burst gate before storage. D1 quotas below remain authoritative.
+const burstState=new WeakMap();
+function burst(request,env) {
+ const peer=request.headers.get('CF-Connecting-IP')||'unknown';
+ if(peer.length>64)fail(400,'invalid peer');
+ let state=burstState.get(env);if(!state){state={bucket:-1,peers:new Map()};burstState.set(env,state);}
+ const bucket=Math.floor(now()/60);if(state.bucket!==bucket){state.bucket=bucket;state.peers.clear();}
+ if(!state.peers.has(peer)&&state.peers.size>=2000)fail(429,'rate limit');
+ const count=(state.peers.get(peer)||0)+1;state.peers.set(peer,count);
+ if(count>240)fail(429,'rate limit');
+}
+const maintenanceState=new WeakMap();
+function maintenance(env,ctx) {
+ if(!ctx||!env.DB||now()-(maintenanceState.get(env)||0)<600)return;
+ maintenanceState.set(env,now());
+ // Pages has no cron trigger: bounded request-driven expiry cleanup is required.
+ ctx.waitUntil(env.DB.batch([
+  env.DB.prepare('DELETE FROM quotas WHERE key IN (SELECT key FROM quotas WHERE expires<? LIMIT 500)').bind(now()),
+  env.DB.prepare('DELETE FROM nonces WHERE id IN (SELECT id FROM nonces WHERE expires<? LIMIT 500)').bind(now()),
+  env.DB.prepare('DELETE FROM crashes WHERE id IN (SELECT id FROM crashes WHERE acknowledged=1 AND created<? LIMIT 100)').bind(now()-30*86400)
+ ]).catch(()=>{}));
+}
 const base64=bytes=>btoa(String.fromCharCode(...new Uint8Array(bytes)));
 const unbase64=value=>Uint8Array.from(atob(value),char=>char.charCodeAt(0));
 export async function sha(value) { const bytes=typeof value==='string'?encoder.encode(value):value; return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),byte=>byte.toString(16).padStart(2,'0')).join(''); }
@@ -76,12 +98,118 @@ async function verifyRelease(env,envelope,origin) {
  if(release.url!==origin+'/api/apk/'+release.sha256+'.apk'||release.issued>now()+300||release.expires<=now()||release.expires-release.issued>86400)fail(422,'invalid release validity');
  return release;
 }
+
+async function verifiedMessage(env,envelope) {
+ text(envelope.payload,22000);text(envelope.signature,700);
+ const key=await crypto.subtle.importKey('spki',unbase64(env.SERVER_PUBLIC_KEY),{name:'RSASSA-PKCS1-v1_5',hash:'SHA-256'},false,['verify']);
+ const payload=unbase64(envelope.payload);
+ if(!await crypto.subtle.verify('RSASSA-PKCS1-v1_5',key,unbase64(envelope.signature),payload))fail(422,'invalid message signature');
+ const value=JSON.parse(new TextDecoder().decode(payload));
+ if(!uuid.test(value.id)||!['notification','dialog','both'].includes(value.kind))fail(422,'invalid message');
+ text(value.title,80);text(value.text,2000);
+ if(!Number.isSafeInteger(value.created)||!Number.isSafeInteger(value.expires)||value.created>now()+300||value.expires<=now()||value.expires-value.created>30*86400)fail(422,'invalid message validity');
+ if(!Array.isArray(value.versions)||value.versions.length>20||value.versions.some(v=>typeof v!=='string'||!v.length||v.length>80))fail(422,'invalid audience');
+ return value;
+}
+async function messageIndex(env) {
+ const object=await env.RELEASES.get('messages/index.json');
+ return object?JSON.parse(await object.text()):[];
+}
+async function changeMessages(env,mutate) {
+ for(let attempt=0;attempt<3;attempt++) {
+  const object=await env.RELEASES.get('messages/index.json');
+  const index=mutate(object?JSON.parse(await object.text()):[]);
+  const raw=JSON.stringify(index);if(encoder.encode(raw).byteLength>60000)fail(409,'message storage full; remove old announcements');
+  const condition=new Headers(object?{'If-Match':object.httpEtag}:{'If-None-Match':'*'});
+  const stored=await env.RELEASES.put('messages/index.json',raw,{onlyIf:condition});
+  if(stored)return;
+ }
+ fail(409,'concurrent message update; retry');
+}
+function finiteObject(object,length,ctx) {
+ const stream=typeof FixedLengthStream==='function'?new FixedLengthStream(length):new TransformStream({start(){this.count=0;},transform(chunk,c){this.count+=chunk.byteLength;if(this.count>length)throw Error('overflow');c.enqueue(chunk);},flush(){if(this.count!==length)throw Error('truncated');}});
+ const transfer=object.body.pipeTo(stream.writable);if(ctx)ctx.waitUntil(transfer);else transfer.catch(()=>{});
+ return new Response(stream.readable,{headers:{...security,'Content-Type':'application/vnd.android.package-archive','Content-Length':String(length)}});
+}
+
+async function credentialPage(env) {
+ if(!/^[A-Za-z0-9+/=]{100,1000}$/.test(env.SERVER_PUBLIC_KEY||''))fail(503,'verification key unavailable');
+ const style='body{font:16px system-ui;background:#14141a;color:#eee;max-width:520px;margin:60px auto;padding:24px}input,button{font:inherit;width:100%;padding:16px;margin:16px 0;border-radius:16px;box-sizing:border-box}button{background:#bdb6ff;border:0}p{line-height:1.5}';
+ const script=`const ticket=location.hash.slice(1);history.replaceState(null,'',location.pathname);document.querySelector('button').onclick=async()=>{const input=document.querySelector('input'),status=document.querySelector('#status'),value=input.value.trim();if(!/^(github_pat_|ghp_)[A-Za-z0-9_]{20,220}$/.test(value)){status.textContent='Введите fine-grained GitHub token для выбранного репозитория.';return;}try{const der=Uint8Array.from(atob('${env.SERVER_PUBLIC_KEY}'),c=>c.charCodeAt(0));const key=await crypto.subtle.importKey('spki',der,{name:'RSA-OAEP',hash:'SHA-256'},false,['encrypt']);const encrypted=new Uint8Array(await crypto.subtle.encrypt({name:'RSA-OAEP'},key,new TextEncoder().encode(value)));input.value='';const ciphertext=btoa(String.fromCharCode(...encrypted));const result=await fetch('/api/credential',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+ticket},body:JSON.stringify({ciphertext})});if(!result.ok)throw Error('HTTP '+result.status);status.textContent='Зашифрованные данные переданы. Вернитесь в бот: он проверит доступ.';}catch(error){status.textContent='Подключение не завершено: '+error.message;}};`;
+ const hash=async value=>base64(await crypto.subtle.digest('SHA-256',encoder.encode(value)));
+ return new Response('<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Подключение GitHub</title><style>'+style+'</style><h1>Подключить GitHub</h1><p>Создайте fine-grained token только для factorialovich/Aide-Pro-Modify, с правом Contents: Read and write. Токен шифруется в браузере; расшифровать его сможет только сервер бота.</p><input type="password" autocomplete="off" aria-label="GitHub token"><button>Подключить</button><p id="status" role="status"></p><script>'+script+'</script></html>',{headers:{...security,'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; script-src 'sha256-"+await hash(script)+"'; style-src 'sha256-"+await hash(style)+"'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'"}});
+}
+
+async function uploadPage() {
+ const css='body{font:16px system-ui;background:#14141a;color:#eee;max-width:520px;margin:60px auto;padding:24px}h1{font-size:28px}input,button{font:inherit;padding:16px;margin:16px 0;border-radius:16px;max-width:100%;box-sizing:border-box}button{background:#bdb6ff;color:#16121e;border:0;width:100%}progress{width:100%;height:18px;accent-color:#bdb6ff}#status{line-height:1.5;overflow-wrap:anywhere}';
+ const js=`const token=location.hash.slice(1);history.replaceState(null,'',location.pathname);const button=document.querySelector('button'),status=document.querySelector('#status'),progress=document.querySelector('progress');button.onclick=async()=>{const file=document.querySelector('input').files[0];if(!file||!file.name.toLowerCase().endsWith('.apk')||file.size>99000000){status.textContent='Выберите APK размером до 99 МБ.';return;}if(!/^[A-Za-z0-9_-]{43}$/.test(token)){status.textContent='Откройте новую ссылку из бота.';return;}button.disabled=true;try{status.textContent='Проверяем файл…';const hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',await file.arrayBuffer())),b=>b.toString(16).padStart(2,'0')).join('');await new Promise((resolve,reject)=>{const xhr=new XMLHttpRequest();xhr.open('POST','/api/upload');xhr.timeout=600000;xhr.setRequestHeader('Authorization','Bearer '+token);xhr.setRequestHeader('X-Aide-SHA256',hash);xhr.setRequestHeader('Content-Type','application/vnd.android.package-archive');xhr.upload.onprogress=e=>{if(e.lengthComputable){progress.value=Math.floor(100*e.loaded/e.total);status.textContent=progress.value+'% — '+(e.loaded/1048576).toFixed(1)+' из '+(e.total/1048576).toFixed(1)+' МБ';}};xhr.onload=()=>{if(xhr.status>=200&&xhr.status<300)resolve();else reject(Error('HTTP '+xhr.status+'. Создайте новую ссылку в боте.'));};xhr.onerror=()=>reject(Error('Сбой сети. Создайте новую ссылку в боте.'));xhr.ontimeout=()=>reject(Error('Время передачи истекло.'));xhr.send(file);});progress.value=100;status.textContent='Файл загружен. Вернитесь в бот: он проверит APK и предложит публикацию.';}catch(error){status.textContent=error.message;button.disabled=false;}};`;
+ const hash=async value=>base64(await crypto.subtle.digest('SHA-256',encoder.encode(value)));
+ return new Response('<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Загрузка AIDE APK</title><style>'+css+'</style><h1>Загрузить APK</h1><p>Файл будет передан целиком. Ссылка действует 20 минут и принимает одну загрузку.</p><input type="file" accept=".apk"><button>Загрузить</button><progress value="0" max="100"></progress><p id="status" role="status">Выберите файл.</p><script>'+js+'</script></html>',{headers:{...security,'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; script-src 'sha256-"+await hash(js)+"'; style-src 'sha256-"+await hash(css)+"'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'"}});
+}
+
 export async function handle(request,env,ctx) {
  const url=new URL(request.url),path=url.pathname;
+ if(url.origin!==(env.PUBLIC_ORIGIN||'https://aide-pro-modify.pages.dev'))fail(421,'origin not allowed');
  if(url.protocol!=='https:') fail(400,'HTTPS required');
+ burst(request,env);
  if(!['GET','HEAD','POST'].includes(request.method)) fail(405,'method not allowed');
  if(path.startsWith('/admin/')) {
   await admin(request,env);
+
+  if(path==='/admin/messages'&&request.method==='POST') {
+   const envelope=await body(request,['payload','signature']);const value=await verifiedMessage(env,envelope);
+   await changeMessages(env,current=>{
+    const index=current.filter(item=>item.id!==value.id&&item.expires>now());
+    if(index.length>=20)fail(409,'20 active messages; remove one first');
+    index.push({id:value.id,expires:value.expires,created:value.created,envelope});return index;
+   });return json({ok:true,id:value.id});
+  }
+  if(path==='/admin/messages'&&request.method==='GET') {
+   const items=[];for(const item of await messageIndex(env))if(item.expires>now())items.push(await verifiedMessage(env,item.envelope));
+   return json({items});
+  }
+  if(path==='/admin/messages/delete'&&request.method==='POST') {
+   const value=await body(request,['id']);if(!uuid.test(value.id))fail(422,'invalid ID');
+   await changeMessages(env,index=>index.filter(item=>item.id!==value.id&&item.expires>now()));return json({ok:true});
+  }
+  if((path==='/admin/upload-ticket'||path==='/admin/credential-ticket')&&request.method==='POST') {
+   await quota(env,'admin-upload-tickets',30,3600);
+   const value=await body(request,['id']);if(!uuid.test(value.id))fail(422,'invalid ID');
+   const token=base64(crypto.getRandomValues(new Uint8Array(32))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+   const ticket={id:value.id,expires:now()+1200,status:'waiting',kind:path==='/admin/credential-ticket'?'github':'apk',token_hash:await sha(token)};
+   const previous=await env.RELEASES.get('staging/status/'+value.id+'.json');
+   if(previous){const old=JSON.parse(await previous.text());await env.RELEASES.delete('staging/tickets/'+old.token_hash+'.json');if(old.object_key)await env.RELEASES.delete(old.object_key);}
+   await env.RELEASES.put('staging/status/'+value.id+'.json',JSON.stringify(ticket));
+   await env.RELEASES.put('staging/tickets/'+ticket.token_hash+'.json',JSON.stringify(ticket));
+   return json({url:url.origin+(ticket.kind==='github'?'/api/github-connect#':'/api/upload/page#')+token,expires:ticket.expires});
+  }
+
+  if(path==='/admin/credential'&&request.method==='GET') {
+   const id=url.searchParams.get('id')||'';if(!uuid.test(id))fail(422,'invalid ID');
+   const object=await env.RELEASES.get('staging/status/'+id+'.json');if(!object)fail(404,'not found');
+   const value=JSON.parse(await object.text());if(value.kind!=='github'||value.status!=='uploaded')fail(404,'not uploaded');
+   return json({ciphertext:value.ciphertext});
+  }
+
+  const staged=/^\/admin\/staged\/([0-9a-f-]{36})\.apk$/.exec(path);
+  if(staged&&request.method==='GET') {
+   const status=await env.RELEASES.get('staging/status/'+staged[1]+'.json');if(!status)fail(404,'not found');
+   const value=JSON.parse(await status.text());if(value.status!=='uploaded'||!value.object_key)fail(404,'not uploaded');
+   const object=await env.RELEASES.get(value.object_key);if(!object)fail(404,'not found');
+   return finiteObject(object,object.size,ctx);
+  }
+  if(path==='/admin/upload-status'&&request.method==='GET') {
+   const id=url.searchParams.get('id')||'';if(!uuid.test(id))fail(422,'invalid ID');
+   const object=await env.RELEASES.get('staging/status/'+id+'.json');if(!object)fail(404,'not found');
+   const value=JSON.parse(await object.text());delete value.token_hash;delete value.object_key;delete value.ciphertext;return json(value);
+  }
+  if(path==='/admin/upload-delete'&&request.method==='POST') {
+   const value=await body(request,['id']);if(!uuid.test(value.id))fail(422,'invalid ID');
+   const object=await env.RELEASES.get('staging/status/'+value.id+'.json');
+   if(object){const ticket=JSON.parse(await object.text());await env.RELEASES.delete('staging/tickets/'+ticket.token_hash+'.json');if(ticket.object_key)await env.RELEASES.delete(ticket.object_key);}
+   await env.RELEASES.delete('staging/status/'+value.id+'.json');await env.RELEASES.delete('staging/apk/'+value.id+'.apk');return json({ok:true});
+  }
+
   if(path==='/admin/prune'&&request.method==='POST') {
    await body(request,[]);
    await env.DB.batch([
@@ -110,8 +238,18 @@ export async function handle(request,env,ctx) {
    text(value.versionName,80);if(value.notes!==undefined)text(value.notes,3000);
    const apk=await env.RELEASES.head(value.sha256+'.apk');if(!apk||apk.size!==value.size)fail(409,'upload APK first');
    const previous=await env.RELEASES.get('release.json');
-   if(previous&&JSON.parse(new TextDecoder().decode(unbase64(JSON.parse(await previous.text()).payload))).versionCode>value.versionCode)fail(409,'release downgrade blocked');
-   await env.RELEASES.put('release.json',JSON.stringify(envelope),{httpMetadata:{contentType:'application/json'}});
+   if(previous) {
+    const old=JSON.parse(new TextDecoder().decode(unbase64(JSON.parse(await previous.text()).payload)));
+    if(old.versionCode>value.versionCode)fail(409,'release downgrade blocked');
+    if(old.versionCode===value.versionCode&&(old.sha256!==value.sha256||old.versionName!==value.versionName))fail(409,'version code already belongs to another APK');
+   }
+   const stored=await env.RELEASES.put('release.json',JSON.stringify(envelope),{httpMetadata:{contentType:'application/json'},onlyIf:new Headers(previous?{'If-Match':previous.httpEtag}:{'If-None-Match':'*'})});
+   if(!stored)fail(409,'concurrent release update; retry');
+   const archive=await env.RELEASES.get('release-history.json');
+   let history=archive?JSON.parse(await archive.text()):[];
+   history=history.filter(item=>JSON.parse(new TextDecoder().decode(unbase64(item.payload))).versionCode!==value.versionCode);
+   history.push(envelope);history.sort((a,b)=>JSON.parse(new TextDecoder().decode(unbase64(a.payload))).versionCode-JSON.parse(new TextDecoder().decode(unbase64(b.payload))).versionCode);
+   await env.RELEASES.put('release-history.json',JSON.stringify(history.slice(-20)));
    return json({ok:true});
   }
   if(path==='/admin/events'&&request.method==='GET') {
@@ -143,9 +281,52 @@ export async function handle(request,env,ctx) {
  // Native Cloudflare rate limiting reduces database amplification under floods.
  if(env.API_LIMIT) {if(!(await env.API_LIMIT.limit({key:peer})).success)fail(429,'rate limit');}
  else await quota(env,'ip-minute:'+await sha(peer),120,60);
+
+ if(path==='/api/github-connect'&&request.method==='GET')return credentialPage(env);
+ if(path==='/api/upload/page'&&request.method==='GET')return uploadPage();
+ if((path==='/api/upload'||path==='/api/credential')&&request.method==='POST') {
+  const origin=request.headers.get('Origin');if(origin&&origin!==url.origin)fail(403,'cross-origin upload blocked');
+  const authorization=request.headers.get('Authorization')||'';if(!/^Bearer [A-Za-z0-9_-]{43}$/.test(authorization))fail(401,'invalid upload ticket');
+  const hash=await sha(authorization.slice(7));const object=await env.RELEASES.get('staging/tickets/'+hash+'.json');if(!object)fail(401,'invalid upload ticket');
+  const ticket=JSON.parse(await object.text());if(ticket.expires<=now())fail(401,'upload ticket expired');
+  const latest=await env.RELEASES.get('staging/status/'+ticket.id+'.json');if(!latest||JSON.parse(await latest.text()).token_hash!==hash)fail(401,'superseded upload ticket');
+
+  if(path==='/api/credential') {
+   if(ticket.kind!=='github')fail(401,'wrong ticket scope');
+   const value=await body(request,['ciphertext']);text(value.ciphertext,700);
+   const encrypted=unbase64(value.ciphertext);if(encrypted.byteLength<256||encrypted.byteLength>512)fail(422,'invalid encrypted credential');
+   const used=await env.DB.prepare('INSERT OR IGNORE INTO nonces(id,expires) VALUES(?,?)').bind('upload:'+hash,ticket.expires).run();if(used.meta.changes!==1)fail(409,'ticket already used');
+   ticket.status='uploaded';ticket.ciphertext=value.ciphertext;
+   const updated=await env.RELEASES.put('staging/status/'+ticket.id+'.json',JSON.stringify(ticket),{onlyIf:new Headers({'If-Match':latest.httpEtag})});if(!updated)fail(409,'ticket superseded');
+   return json({ok:true});
+  }
+  if(ticket.kind!=='apk')fail(401,'wrong ticket scope');
+
+  const length=Number(request.headers.get('Content-Length')),checksum=request.headers.get('X-Aide-SHA256')||'';
+  if(!Number.isSafeInteger(length)||length<=0||length>99000000||!request.body)fail(413,'invalid APK size');if(!digest.test(checksum))fail(422,'checksum required');
+  const used=await env.DB.prepare('INSERT OR IGNORE INTO nonces(id,expires) VALUES(?,?)').bind('upload:'+hash,ticket.expires).run();if(used.meta.changes!==1)fail(409,'ticket already used');
+  ticket.object_key='staging/apk/'+ticket.id+'/'+hash+'.apk';
+  try {
+   const stored=await env.RELEASES.put(ticket.object_key,request.body,{sha256:Uint8Array.from(checksum.match(/../g),byte=>parseInt(byte,16)).buffer});
+   if(!stored||stored.size!==length){await env.RELEASES.delete(ticket.object_key);fail(400,'APK length mismatch');}
+   ticket.status='uploaded';ticket.sha256=checksum;ticket.size=length;
+   const updated=await env.RELEASES.put('staging/status/'+ticket.id+'.json',JSON.stringify(ticket),{onlyIf:new Headers({'If-Match':latest.httpEtag})});
+   if(!updated){await env.RELEASES.delete(ticket.object_key);fail(409,'upload ticket superseded');}return json({ok:true});
+  }catch(error){ticket.status='failed';await env.RELEASES.put('staging/status/'+ticket.id+'.json',JSON.stringify(ticket),{onlyIf:new Headers({'If-Match':latest.httpEtag})});throw error;}
+ }
+ if(path==='/api/messages'&&request.method==='GET') {
+  const installation=await authenticated(request,env);await quota(env,'messages:'+installation.id,120,3600);
+  const items=[];for(const item of await messageIndex(env))if(item.expires>now()){
+   const value=await verifiedMessage(env,item.envelope);
+   if(!value.versions.length||value.versions.includes(installation.version))items.push(item.envelope);
+  }
+  return json({items});
+ }
+
  if(path==='/api/register'&&request.method==='POST') {
   if(env.REGISTER_LIMIT&&!(await env.REGISTER_LIMIT.limit({key:peer})).success)fail(429,'rate limit');
   await quota(env,'register:'+await sha(peer),20,3600);
+  await quota(env,'register-global',1000,3600);
   const value=await body(request,['installation','version']);
   if(typeof value.installation!=='string'||!uuid.test(value.installation))fail(422,'invalid installation');
   text(value.version,80);
@@ -178,6 +359,11 @@ export async function handle(request,env,ctx) {
   const value=await body(request,['version']);text(value.version,80);
   await env.DB.prepare('UPDATE installations SET seen=?,version=? WHERE id=?').bind(now(),value.version,installation.id).run();
   return json({ok:true});
+ }
+ if(path==='/api/releases'&&request.method==='GET') {
+  const archive=await env.RELEASES.get('release-history.json');
+  const current=archive?null:await env.RELEASES.get('release.json');
+  return json({items:archive?JSON.parse(await archive.text()):(current?[JSON.parse(await current.text())]:[])});
  }
  if(path==='/api/update'&&request.method==='GET')return signedRelease(env,url.origin);
  const match=/^\/api\/apk\/([a-f0-9]{64})\.apk$/.exec(path);
@@ -216,7 +402,7 @@ export async function handle(request,env,ctx) {
  fail(404,'not found');
 }
 export default {
- async fetch(request,env,ctx) {try {return await handle(request,env,ctx);}catch(error) {return json({detail:error instanceof ApiError?error.message:'service unavailable'},error instanceof ApiError?error.status:503);}},
+ async fetch(request,env,ctx) {try {const response=await handle(request,env,ctx);maintenance(env,ctx);return response;}catch(error) {return json({detail:error instanceof ApiError?error.message:'service unavailable'},error instanceof ApiError?error.status:503);}},
  async scheduled(event,env,ctx) {
   ctx.waitUntil(env.DB.batch([
    env.DB.prepare('DELETE FROM quotas WHERE expires<?').bind(now()),
