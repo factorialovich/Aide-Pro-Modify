@@ -294,7 +294,7 @@ async function credentialPage(env) {
  return new Response('<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Подключение GitHub</title><style>'+style+'</style><h1>Подключить GitHub</h1><p>Создайте fine-grained token только для factorialovich/Aide-Pro-Modify, с правом Contents: Read and write. Токен шифруется в браузере; расшифровать его сможет только сервер бота.</p><input type="password" autocomplete="off" aria-label="GitHub token"><button>Подключить</button><p id="status" role="status"></p><script>'+script+'</script></html>',{headers:{...security,'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; script-src 'sha256-"+await hash(script)+"'; style-src 'sha256-"+await hash(style)+"'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'"}});
 }
 
-export function uploadClient() {
+export const uploadClientScript=String.raw`(()=>{
  let token=location.hash.slice(1),expires=0;
  try {
   if(token)sessionStorage.setItem('aide-upload-ticket',token);
@@ -420,11 +420,11 @@ export function uploadClient() {
   button.textContent=current.size?'Продолжить':'Загрузить';
   status.textContent=current.size?'Сохранено '+(current.offset/1048576).toFixed(1)+' из '+(current.size/1048576).toFixed(1)+' МБ. Выберите тот же APK, чтобы продолжить.':'Выберите APK. При обрыве сети загрузка продолжится автоматически.';
  }).catch(error=>{status.textContent=error.message;});
-}
+})();`;
 
 async function uploadPage() {
  const css='body{font:16px system-ui;background:#14141a;color:#eee;max-width:520px;margin:60px auto;padding:24px}h1{font-size:28px}input,button{font:inherit;padding:16px;margin:16px 0;border-radius:16px;max-width:100%;box-sizing:border-box}button{background:#bdb6ff;color:#16121e;border:0;width:100%}progress{width:100%;height:18px;accent-color:#bdb6ff}#status{line-height:1.5;overflow-wrap:anywhere}';
- const js='('+uploadClient.toString()+')();';
+ const js=uploadClientScript;
  const hash=async value=>base64(await crypto.subtle.digest('SHA-256',encoder.encode(value)));
  return new Response('<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Загрузка AIDE APK</title><style>'+css+'</style><h1>Загрузить APK</h1><p>Ссылка действует сутки. При обрыве сети загрузка продолжится автоматически. После обновления страницы выберите тот же APK — сохранённые части отправлять заново не нужно.</p><input type="file" accept=".apk" aria-label="APK для загрузки"><button>Загрузить</button><progress value="0" max="100" aria-label="Ход загрузки"></progress><p id="status" role="status">Выберите файл.</p><script>'+js+'</script></html>',{headers:{...security,'X-Aide-Upload-Version':'2','Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; script-src 'sha256-"+await hash(js)+"'; style-src 'sha256-"+await hash(css)+"'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'"}});
 }
