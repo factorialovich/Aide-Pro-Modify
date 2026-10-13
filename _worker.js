@@ -347,24 +347,30 @@ export function uploadClient() {
  }
  function sendChunk(file,start,end,checksum) {
   return new Promise((resolve,reject)=>{
-   const xhr=new XMLHttpRequest();xhr.open('POST','/api/upload/chunk');xhr.timeout=180000;
+   const xhr=new XMLHttpRequest();xhr.open('POST','/api/upload/chunk');
+   let idleTimer,lastLoaded=-1;
+   const stalled=()=>xhr.abort();
+   const resetIdle=()=>{clearTimeout(idleTimer);idleTimer=setTimeout(stalled,45000);};
+   const cleanup=()=>{clearTimeout(idleTimer);window.removeEventListener('offline',stalled);};
    xhr.setRequestHeader('Authorization','Bearer '+token);
    xhr.setRequestHeader('Content-Type','application/vnd.android.package-archive');
    xhr.setRequestHeader('Content-Range','bytes '+start+'-'+(end-1)+'/'+file.size);
    xhr.setRequestHeader('X-Aide-SHA256',checksum);
    xhr.upload.onprogress=event=>{
+    if(event.loaded>lastLoaded){lastLoaded=event.loaded;resetIdle();}
     if(event.lengthComputable) {
      const sent=Math.min(file.size,start+event.loaded);
      progress.value=Math.floor(sent/file.size*100);
      status.textContent=progress.value+'% — '+(sent/1048576).toFixed(1)+' из '+(file.size/1048576).toFixed(1)+' МБ';
     }
    };
-   xhr.onload=()=>{try {
+   xhr.onload=()=>{cleanup();try {
     if(xhr.status<200||xhr.status>=300)throw failure(xhr.status);
     resolve(state(JSON.parse(xhr.responseText)));
    }catch(error){reject(error);}};
-   xhr.onerror=xhr.ontimeout=()=>reject(failure(0));
-   xhr.send(file.slice(start,end));
+   xhr.onerror=xhr.ontimeout=xhr.onabort=()=>{cleanup();reject(failure(0));};
+   window.addEventListener('offline',stalled,{once:true});resetIdle();
+   try {xhr.send(file.slice(start,end));}catch(error){cleanup();reject(error);}
   });
  }
  function completed() {
