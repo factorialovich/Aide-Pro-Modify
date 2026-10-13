@@ -6,6 +6,7 @@ class ApiError extends Error { constructor(status, message) { super(message); th
 const fail=(status,message)=>{throw new ApiError(status,message);};
 const json=(value,status=200)=>new Response(JSON.stringify(value),{status,headers:security});
 const now=()=>Math.floor(Date.now()/1000);
+const uploadChunkSize=5*1024*1024;
 // Best-effort burst gate before storage. D1 quotas below remain authoritative.
 const burstState=new WeakMap();
 function burst(request,env) {
@@ -24,6 +25,14 @@ async function pruneDownloads(env) {
  const expired=page.objects.filter(item=>Number(item.customMetadata?.expires)<=now());
  if(expired.length)await env.RELEASES.delete(expired.map(item=>item.key));
 }
+const stagingCursors=new WeakMap();
+async function pruneStaging(env) {
+ if(!env.RELEASES?.list)return;
+ const page=await env.RELEASES.list({prefix:'staging/',limit:100,include:['customMetadata'],cursor:stagingCursors.get(env)});
+ stagingCursors.set(env,page.truncated?page.cursor:undefined);
+ const expired=page.objects.filter(item=>Number(item.customMetadata?.expires)<=now());
+ if(expired.length)await env.RELEASES.delete(expired.map(item=>item.key));
+}
 function maintenance(env,ctx) {
  if(!ctx||!env.DB||now()-(maintenanceState.get(env)||0)<600)return;
  maintenanceState.set(env,now());
@@ -34,6 +43,7 @@ function maintenance(env,ctx) {
   env.DB.prepare('DELETE FROM crashes WHERE id IN (SELECT id FROM crashes WHERE acknowledged=1 AND created<? LIMIT 100)').bind(now()-30*86400)
  ]).catch(()=>{}));
  ctx.waitUntil(pruneDownloads(env).catch(()=>{}));
+ ctx.waitUntil(pruneStaging(env).catch(()=>{}));
 }
 const base64=bytes=>btoa(String.fromCharCode(...new Uint8Array(bytes)));
 const unbase64=value=>Uint8Array.from(atob(value),char=>char.charCodeAt(0));
@@ -148,6 +158,134 @@ function finiteObject(object,length,ctx) {
  return new Response(stream.readable,{headers:{...security,'Content-Type':'application/vnd.android.package-archive','Content-Length':String(length)}});
 }
 
+function uploadProgress(ticket) {
+ return {status:ticket.status,offset:ticket.status==='uploaded'?ticket.size:(ticket.parts||[]).reduce((sum,part)=>sum+part.size,0),
+  size:ticket.size||0,sha256:ticket.sha256||'',chunkSize:uploadChunkSize,expires:ticket.expires};
+}
+async function loadUpload(request,env,url) {
+ const origin=request.headers.get('Origin');if(origin&&origin!==url.origin)fail(403,'cross-origin upload blocked');
+ const authorization=request.headers.get('Authorization')||'';
+ if(!/^Bearer [A-Za-z0-9_-]{43}$/.test(authorization))fail(401,'invalid upload ticket');
+ const hash=await sha(authorization.slice(7));
+ const object=await env.RELEASES.get('staging/tickets/'+hash+'.json');if(!object)fail(401,'invalid upload ticket');
+ const issued=JSON.parse(await object.text());if(issued.expires<=now())fail(401,'upload ticket expired');
+ const latest=await env.RELEASES.get('staging/status/'+issued.id+'.json');if(!latest)fail(401,'invalid upload ticket');
+ const ticket=JSON.parse(await latest.text());
+ if(ticket.token_hash!==hash)fail(401,'superseded upload ticket');
+ return {ticket,latest,hash};
+}
+async function saveUpload(env,ticket,latest) {
+ return env.RELEASES.put('staging/status/'+ticket.id+'.json',JSON.stringify(ticket),
+  {onlyIf:new Headers({'If-Match':latest.httpEtag}),customMetadata:{expires:String(ticket.expires)}});
+}
+async function deleteUploadFiles(env,ticket,receipt=false) {
+ const keys=(ticket.parts||[]).map(part=>part.key);
+ if(ticket.object_key)keys.push(ticket.object_key);
+ keys.push('staging/apk/'+ticket.id+'.apk');
+ if(!receipt)keys.push('staging/tickets/'+ticket.token_hash+'.json','staging/status/'+ticket.id+'.json');
+ await env.RELEASES.delete(keys);
+}
+async function assembleUpload(env,ticket,latest) {
+ const parts=ticket.parts||[];
+ if(uploadProgress(ticket).offset!==ticket.size)fail(409,'upload is incomplete');
+ ticket.object_key='staging/resumable/'+ticket.id+'/'+ticket.token_hash+'/'+crypto.randomUUID()+'.apk';
+ let index=0;
+ const source=new ReadableStream({async pull(controller) {
+  if(index===parts.length){controller.close();return;}
+  const part=parts[index++],object=await env.RELEASES.get(part.key);
+  if(!object||object.size!==part.size)throw Error('missing upload part');
+  const bytes=await new Response(object.body).arrayBuffer();
+  if(bytes.byteLength!==part.size)throw Error('truncated upload part');
+  controller.enqueue(new Uint8Array(bytes));
+ }});
+ const stream=typeof FixedLengthStream==='function'?new FixedLengthStream(ticket.size):new TransformStream();
+ const abort=new AbortController(),transfer=source.pipeTo(stream.writable,{signal:abort.signal});
+ transfer.catch(()=>{});
+ try {
+  const stored=await env.RELEASES.put(ticket.object_key,stream.readable,{
+   sha256:Uint8Array.from(ticket.sha256.match(/../g),byte=>parseInt(byte,16)).buffer,
+   httpMetadata:{contentType:'application/vnd.android.package-archive'},customMetadata:{expires:String(ticket.expires)}});
+  await transfer;
+  if(!stored||stored.size!==ticket.size)throw Error('APK length mismatch');
+ }catch(error) {
+  abort.abort();await transfer.catch(()=>{});
+  await env.RELEASES.delete(ticket.object_key);
+  if(/checksum/i.test(error.message||''))fail(422,'APK checksum mismatch');
+  throw error;
+ }
+ ticket.status='uploaded';
+ if(!await saveUpload(env,ticket,latest)) {
+  const current=await env.RELEASES.get('staging/status/'+ticket.id+'.json');
+  const state=current?JSON.parse(await current.text()):null;
+  // A concurrent completion or the bot's receipt may already acknowledge these bytes.
+  if(state?.token_hash===ticket.token_hash&&state.status==='uploaded'&&state.sha256===ticket.sha256) {
+   await env.RELEASES.delete(ticket.object_key);return json(uploadProgress(state));
+  }
+  await env.RELEASES.delete(ticket.object_key);fail(409,'upload ticket superseded');
+ }
+ return json(uploadProgress(ticket));
+}
+async function resumableUpload(request,env,url) {
+ const {ticket,latest,hash}=await loadUpload(request,env,url);
+ if(ticket.kind!=='apk')fail(401,'wrong ticket scope');
+ const path=url.pathname;
+ if(path==='/api/upload/status'&&request.method==='GET')return json(uploadProgress(ticket));
+ if(request.method!=='POST')fail(405,'method not allowed');
+ if(path==='/api/upload/start') {
+  const value=await body(request,['size','sha256']);
+  if(!Number.isSafeInteger(value.size)||value.size<=0||value.size>99000000)fail(413,'invalid APK size');
+  if(!digest.test(value.sha256||''))fail(422,'checksum required');
+  if(ticket.protocol===2||ticket.status==='uploaded') {
+   if(ticket.size!==value.size||ticket.sha256!==value.sha256)fail(409,'ticket belongs to another file');
+   return json(uploadProgress(ticket));
+  }
+  ticket.protocol=2;ticket.status='receiving';ticket.size=value.size;ticket.sha256=value.sha256;ticket.parts=[];
+  delete ticket.object_key;
+  if(!await saveUpload(env,ticket,latest))fail(409,'concurrent upload; retry');
+  return json(uploadProgress(ticket));
+ }
+ if(ticket.protocol!==2)fail(409,'start the upload first');
+ if(path==='/api/upload/complete') {
+  await body(request,[]);
+  if(ticket.status==='uploaded')return json(uploadProgress(ticket));
+  return assembleUpload(env,ticket,latest);
+ }
+ if(path!=='/api/upload/chunk')fail(404,'not found');
+ const range=/^bytes (\d+)-(\d+)\/(\d+)$/.exec(request.headers.get('Content-Range')||'');
+ const length=Number(request.headers.get('Content-Length')),checksum=request.headers.get('X-Aide-SHA256')||'';
+ if(!range||!digest.test(checksum))fail(422,'chunk range and checksum required');
+ const [start,end,total]=range.slice(1).map(Number);
+ if(![start,end,total,length].every(Number.isSafeInteger)||total!==ticket.size||start<0||start>=total||
+  start%uploadChunkSize!==0||end!==Math.min(total,start+uploadChunkSize)-1||length!==end-start+1||!request.body)fail(422,'invalid chunk range');
+ const offset=uploadProgress(ticket).offset,index=start/uploadChunkSize;
+ if(start<offset) {
+  const part=ticket.parts?.[index];
+  if(ticket.status!=='uploaded'&&part?.sha256!==checksum)fail(409,'chunk differs from saved file');
+  await request.body.cancel();return json(uploadProgress(ticket));
+ }
+ if(start!==offset||ticket.status==='uploaded')fail(409,'chunk offset mismatch');
+ const key='staging/parts/'+ticket.id+'/'+hash+'/'+crypto.randomUUID();
+ let acknowledging=false;
+ try {
+  const stored=await env.RELEASES.put(key,request.body,{sha256:Uint8Array.from(checksum.match(/../g),byte=>parseInt(byte,16)).buffer,customMetadata:{expires:String(ticket.expires)}});
+  if(!stored||stored.size!==length)fail(422,'chunk length mismatch');
+  ticket.parts.push({key,size:length,sha256:checksum});
+  acknowledging=true;
+  if(!await saveUpload(env,ticket,latest))fail(409,'chunk offset changed; retry');
+ }catch(error) {
+  if(acknowledging) {
+   let current;
+   try {const object=await env.RELEASES.get('staging/status/'+ticket.id+'.json');current=object?JSON.parse(await object.text()):null;}
+   catch {throw error;}
+   if(current?.token_hash===hash&&current.parts?.some(part=>part.key===key))return json(uploadProgress(current));
+  }
+  await env.RELEASES.delete(key);
+  if(/checksum/i.test(error.message||''))fail(422,'chunk checksum mismatch');
+  throw error;
+ }
+ return json(uploadProgress(ticket));
+}
+
 async function credentialPage(env) {
  if(!/^[A-Za-z0-9+/=]{100,1000}$/.test(env.SERVER_PUBLIC_KEY||''))fail(503,'verification key unavailable');
  const style='body{font:16px system-ui;background:#14141a;color:#eee;max-width:520px;margin:60px auto;padding:24px}input,button{font:inherit;width:100%;padding:16px;margin:16px 0;border-radius:16px;box-sizing:border-box}button{background:#bdb6ff;border:0}p{line-height:1.5}';
@@ -156,11 +294,133 @@ async function credentialPage(env) {
  return new Response('<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Подключение GitHub</title><style>'+style+'</style><h1>Подключить GitHub</h1><p>Создайте fine-grained token только для factorialovich/Aide-Pro-Modify, с правом Contents: Read and write. Токен шифруется в браузере; расшифровать его сможет только сервер бота.</p><input type="password" autocomplete="off" aria-label="GitHub token"><button>Подключить</button><p id="status" role="status"></p><script>'+script+'</script></html>',{headers:{...security,'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; script-src 'sha256-"+await hash(script)+"'; style-src 'sha256-"+await hash(style)+"'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'"}});
 }
 
+export function uploadClient() {
+ let token=location.hash.slice(1),expires=0;
+ try {
+  if(token)sessionStorage.setItem('aide-upload-ticket',token);
+  else token=sessionStorage.getItem('aide-upload-ticket')||'';
+ }catch {}
+ history.replaceState(null,'',location.pathname);
+ window.addEventListener('hashchange',()=>{if(location.hash)location.reload();});
+ const input=document.querySelector('input'),button=document.querySelector('button');
+ const status=document.querySelector('#status'),progress=document.querySelector('progress');
+ button.disabled=true;
+ const hash=async bytes=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');
+ function failure(code,message) {
+  const error=new Error(message||({401:'Ссылка истекла или отменена. Получите новую в боте.',403:'Откройте ссылку непосредственно из бота.',
+   409:'Эта ссылка уже связана с другим файлом. Выберите прежний APK или получите новую ссылку.',
+   413:'Выберите APK размером до 99 МБ.',422:'Проверка файла не прошла. Выберите исходный APK повторно.'}[code])||'Не удалось выполнить запрос.');
+  error.status=code;return error;
+ }
+ function state(value) {
+  if(!value||!Number.isSafeInteger(value.offset)||!Number.isSafeInteger(value.size)||value.offset<0||value.offset>value.size||
+   !Number.isSafeInteger(value.chunkSize)||value.chunkSize<=0||!Number.isSafeInteger(value.expires))throw failure(422,'Некорректный ответ сервера.');
+  expires=value.expires;
+  progress.value=value.size?Math.floor(value.offset/value.size*100):0;
+  return value;
+ }
+ async function api(path,data,timeout=30000) {
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeout);
+  try {
+   const response=await fetch('/api/upload/'+path,{method:data===undefined?'GET':'POST',cache:'no-store',signal:controller.signal,
+    headers:{Authorization:'Bearer '+token,...(data===undefined?{}:{'Content-Type':'application/json'})},body:data===undefined?undefined:JSON.stringify(data)});
+   if(!response.ok)throw failure(response.status);
+   return state(await response.json());
+  }finally {clearTimeout(timer);}
+ }
+ async function retry(operation) {
+  let attempt=0;
+  while(true) {
+   if(expires&&Date.now()>=expires*1000)throw failure(401);
+   try{return await operation();}
+   catch(error) {
+    if(error.status&&error.status!==408&&error.status!==425&&error.status!==429&&error.status<500)throw error;
+    const delay=Math.min(30000,1000*2**Math.min(++attempt,5));
+    status.textContent=error.status===429?'Сервер занят. Загрузка продолжится автоматически.':
+     'Связь прервалась. Сохранённые части остаются на сервере; загрузка продолжится после восстановления сети.';
+    await new Promise(resolve=>{
+     const done=()=>{clearTimeout(timer);window.removeEventListener('online',done);resolve();};
+     const timer=setTimeout(done,delay);window.addEventListener('online',done,{once:true});
+    });
+   }
+  }
+ }
+ function sendChunk(file,start,end,checksum) {
+  return new Promise((resolve,reject)=>{
+   const xhr=new XMLHttpRequest();xhr.open('POST','/api/upload/chunk');xhr.timeout=180000;
+   xhr.setRequestHeader('Authorization','Bearer '+token);
+   xhr.setRequestHeader('Content-Type','application/vnd.android.package-archive');
+   xhr.setRequestHeader('Content-Range','bytes '+start+'-'+(end-1)+'/'+file.size);
+   xhr.setRequestHeader('X-Aide-SHA256',checksum);
+   xhr.upload.onprogress=event=>{
+    if(event.lengthComputable) {
+     const sent=Math.min(file.size,start+event.loaded);
+     progress.value=Math.floor(sent/file.size*100);
+     status.textContent=progress.value+'% — '+(sent/1048576).toFixed(1)+' из '+(file.size/1048576).toFixed(1)+' МБ';
+    }
+   };
+   xhr.onload=()=>{try {
+    if(xhr.status<200||xhr.status>=300)throw failure(xhr.status);
+    resolve(state(JSON.parse(xhr.responseText)));
+   }catch(error){reject(error);}};
+   xhr.onerror=xhr.ontimeout=()=>reject(failure(0));
+   xhr.send(file.slice(start,end));
+  });
+ }
+ function completed() {
+  progress.value=100;button.textContent='Загружено';button.disabled=true;input.disabled=true;
+  status.textContent='Файл загружен и проверен на целостность. Вернитесь в бот: он проверит подпись и версию APK.';
+ }
+ button.onclick=async()=>{
+  const file=input.files[0];
+  if(!file||!file.name.toLowerCase().endsWith('.apk')||file.size<=0||file.size>99000000) {
+   status.textContent='Выберите APK размером до 99 МБ.';return;
+  }
+  button.disabled=true;input.disabled=true;button.textContent='Загрузка…';
+  try {
+   status.textContent='Проверяем выбранный файл…';
+   const checksum=await hash(await file.arrayBuffer());
+   let current;
+   try {current=await retry(()=>api('start',{size:file.size,sha256:checksum}));}
+   catch(error) {
+    if(error.status!==409)throw error;
+    current=await retry(()=>api('status'));
+    if(current.size!==file.size||current.sha256!==checksum)throw error;
+   }
+   if(current.status==='uploaded'){completed();return;}
+   while(current.offset<file.size) {
+    const start=current.offset,end=Math.min(file.size,start+current.chunkSize);
+    const partHash=await hash(await file.slice(start,end).arrayBuffer());
+    try {current=await retry(()=>sendChunk(file,start,end,partHash));}
+    catch(error) {
+     if(error.status!==409)throw error;
+     current=await retry(()=>api('status'));
+     if(current.sha256!==checksum||current.offset<end)throw error;
+    }
+    if(current.offset<end)throw failure(422,'Сервер не подтвердил сохранение части файла.');
+   }
+   status.textContent='Все части получены. Проверяем целостность APK…';
+   await retry(()=>api('complete',{},180000));completed();
+  }catch(error) {
+   status.textContent=error.message;button.textContent='Продолжить';button.disabled=false;input.disabled=false;
+  }
+ };
+ if(!/^[A-Za-z0-9_-]{43}$/.test(token)) {
+  status.textContent='Откройте ссылку загрузки из бота.';return;
+ }
+ retry(()=>api('status')).then(current=>{
+  if(current.status==='uploaded'){completed();return;}
+  button.disabled=false;
+  button.textContent=current.size?'Продолжить':'Загрузить';
+  status.textContent=current.size?'Сохранено '+(current.offset/1048576).toFixed(1)+' из '+(current.size/1048576).toFixed(1)+' МБ. Выберите тот же APK, чтобы продолжить.':'Выберите APK. При обрыве сети загрузка продолжится автоматически.';
+ }).catch(error=>{status.textContent=error.message;});
+}
+
 async function uploadPage() {
  const css='body{font:16px system-ui;background:#14141a;color:#eee;max-width:520px;margin:60px auto;padding:24px}h1{font-size:28px}input,button{font:inherit;padding:16px;margin:16px 0;border-radius:16px;max-width:100%;box-sizing:border-box}button{background:#bdb6ff;color:#16121e;border:0;width:100%}progress{width:100%;height:18px;accent-color:#bdb6ff}#status{line-height:1.5;overflow-wrap:anywhere}';
- const js=`const token=location.hash.slice(1);history.replaceState(null,'',location.pathname);const button=document.querySelector('button'),status=document.querySelector('#status'),progress=document.querySelector('progress');button.onclick=async()=>{const file=document.querySelector('input').files[0];if(!file||!file.name.toLowerCase().endsWith('.apk')||file.size>99000000){status.textContent='Выберите APK размером до 99 МБ.';return;}if(!/^[A-Za-z0-9_-]{43}$/.test(token)){status.textContent='Откройте новую ссылку из бота.';return;}button.disabled=true;try{status.textContent='Проверяем файл…';const hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',await file.arrayBuffer())),b=>b.toString(16).padStart(2,'0')).join('');await new Promise((resolve,reject)=>{const xhr=new XMLHttpRequest();xhr.open('POST','/api/upload');xhr.timeout=600000;xhr.setRequestHeader('Authorization','Bearer '+token);xhr.setRequestHeader('X-Aide-SHA256',hash);xhr.setRequestHeader('Content-Type','application/vnd.android.package-archive');xhr.upload.onprogress=e=>{if(e.lengthComputable){progress.value=Math.floor(100*e.loaded/e.total);status.textContent=progress.value+'% — '+(e.loaded/1048576).toFixed(1)+' из '+(e.total/1048576).toFixed(1)+' МБ';}};xhr.onload=()=>{if(xhr.status>=200&&xhr.status<300)resolve();else reject(Error('HTTP '+xhr.status+'. Создайте новую ссылку в боте.'));};xhr.onerror=()=>reject(Error('Сбой сети. Создайте новую ссылку в боте.'));xhr.ontimeout=()=>reject(Error('Время передачи истекло.'));xhr.send(file);});progress.value=100;status.textContent='Файл загружен. Вернитесь в бот: он проверит APK и предложит публикацию.';}catch(error){status.textContent=error.message;button.disabled=false;}};`;
+ const js='('+uploadClient.toString()+')();';
  const hash=async value=>base64(await crypto.subtle.digest('SHA-256',encoder.encode(value)));
- return new Response('<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Загрузка AIDE APK</title><style>'+css+'</style><h1>Загрузить APK</h1><p>Файл будет передан целиком. Ссылка действует 20 минут и принимает одну загрузку.</p><input type="file" accept=".apk"><button>Загрузить</button><progress value="0" max="100"></progress><p id="status" role="status">Выберите файл.</p><script>'+js+'</script></html>',{headers:{...security,'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; script-src 'sha256-"+await hash(js)+"'; style-src 'sha256-"+await hash(css)+"'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'"}});
+ return new Response('<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Загрузка AIDE APK</title><style>'+css+'</style><h1>Загрузить APK</h1><p>Ссылка действует сутки. При обрыве сети загрузка продолжится автоматически. После обновления страницы выберите тот же APK — сохранённые части отправлять заново не нужно.</p><input type="file" accept=".apk" aria-label="APK для загрузки"><button>Загрузить</button><progress value="0" max="100" aria-label="Ход загрузки"></progress><p id="status" role="status">Выберите файл.</p><script>'+js+'</script></html>',{headers:{...security,'X-Aide-Upload-Version':'2','Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; script-src 'sha256-"+await hash(js)+"'; style-src 'sha256-"+await hash(css)+"'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'"}});
 }
 
 export async function handle(request,env,ctx) {
@@ -213,11 +473,13 @@ export async function handle(request,env,ctx) {
    await quota(env,'admin-upload-tickets',30,3600);
    const value=await body(request,['id']);if(!uuid.test(value.id))fail(422,'invalid ID');
    const token=base64(crypto.getRandomValues(new Uint8Array(32))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
-   const ticket={id:value.id,expires:now()+1200,status:'waiting',kind:path==='/admin/credential-ticket'?'github':'apk',token_hash:await sha(token)};
+   const kind=path==='/admin/credential-ticket'?'github':'apk';
+   const ticket={id:value.id,expires:now()+(kind==='apk'?86400:1200),status:'waiting',kind,token_hash:await sha(token)};
    const previous=await env.RELEASES.get('staging/status/'+value.id+'.json');
-   if(previous){const old=JSON.parse(await previous.text());await env.RELEASES.delete('staging/tickets/'+old.token_hash+'.json');if(old.object_key)await env.RELEASES.delete(old.object_key);}
-   await env.RELEASES.put('staging/status/'+value.id+'.json',JSON.stringify(ticket));
-   await env.RELEASES.put('staging/tickets/'+ticket.token_hash+'.json',JSON.stringify(ticket));
+   if(previous)await deleteUploadFiles(env,JSON.parse(await previous.text()));
+   const options={customMetadata:{expires:String(ticket.expires)}};
+   await env.RELEASES.put('staging/status/'+value.id+'.json',JSON.stringify(ticket),options);
+   await env.RELEASES.put('staging/tickets/'+ticket.token_hash+'.json',JSON.stringify(ticket),options);
    return json({url:url.origin+(ticket.kind==='github'?'/api/github-connect#':'/api/upload/page#')+token,expires:ticket.expires});
   }
 
@@ -238,13 +500,22 @@ export async function handle(request,env,ctx) {
   if(path==='/admin/upload-status'&&request.method==='GET') {
    const id=url.searchParams.get('id')||'';if(!uuid.test(id))fail(422,'invalid ID');
    const object=await env.RELEASES.get('staging/status/'+id+'.json');if(!object)fail(404,'not found');
-   const value=JSON.parse(await object.text());delete value.token_hash;delete value.object_key;delete value.ciphertext;return json(value);
+   const value=JSON.parse(await object.text());delete value.token_hash;delete value.object_key;delete value.ciphertext;delete value.parts;return json(value);
   }
   if(path==='/admin/upload-delete'&&request.method==='POST') {
-   const value=await body(request,['id']);if(!uuid.test(value.id))fail(422,'invalid ID');
+   const value=await body(request,['id','keep_receipt']);if(!uuid.test(value.id))fail(422,'invalid ID');
+   if(value.keep_receipt!==undefined&&typeof value.keep_receipt!=='boolean')fail(422,'invalid receipt flag');
    const object=await env.RELEASES.get('staging/status/'+value.id+'.json');
-   if(object){const ticket=JSON.parse(await object.text());await env.RELEASES.delete('staging/tickets/'+ticket.token_hash+'.json');if(ticket.object_key)await env.RELEASES.delete(ticket.object_key);}
-   await env.RELEASES.delete('staging/status/'+value.id+'.json');await env.RELEASES.delete('staging/apk/'+value.id+'.apk');return json({ok:true});
+   if(object) {
+    const ticket=JSON.parse(await object.text());
+    const receipt=value.keep_receipt===true&&ticket.protocol===2&&ticket.status==='uploaded';
+    if(receipt) {
+     const retained={...ticket,parts:[],consumed:true};delete retained.object_key;
+     if(!await saveUpload(env,retained,object))fail(409,'upload changed; retry');
+    }
+    await deleteUploadFiles(env,ticket,receipt);
+   }
+   return json({ok:true});
   }
 
   if(path==='/admin/prune'&&request.method==='POST') {
@@ -255,6 +526,7 @@ export async function handle(request,env,ctx) {
     env.DB.prepare('DELETE FROM crashes WHERE acknowledged=1 AND created<?').bind(now()-30*86400)
    ]);
    await pruneDownloads(env);
+   await pruneStaging(env);
    return json({ok:true});
   }
   const upload=/^\/admin\/apk\/([a-f0-9]{64})$/.exec(path);
@@ -334,12 +606,9 @@ export async function handle(request,env,ctx) {
 
  if(path==='/api/github-connect'&&request.method==='GET')return credentialPage(env);
  if(path==='/api/upload/page'&&request.method==='GET')return uploadPage();
+ if(['/api/upload/status','/api/upload/start','/api/upload/chunk','/api/upload/complete'].includes(path))return resumableUpload(request,env,url);
  if((path==='/api/upload'||path==='/api/credential')&&request.method==='POST') {
-  const origin=request.headers.get('Origin');if(origin&&origin!==url.origin)fail(403,'cross-origin upload blocked');
-  const authorization=request.headers.get('Authorization')||'';if(!/^Bearer [A-Za-z0-9_-]{43}$/.test(authorization))fail(401,'invalid upload ticket');
-  const hash=await sha(authorization.slice(7));const object=await env.RELEASES.get('staging/tickets/'+hash+'.json');if(!object)fail(401,'invalid upload ticket');
-  const ticket=JSON.parse(await object.text());if(ticket.expires<=now())fail(401,'upload ticket expired');
-  const latest=await env.RELEASES.get('staging/status/'+ticket.id+'.json');if(!latest||JSON.parse(await latest.text()).token_hash!==hash)fail(401,'superseded upload ticket');
+  const {ticket,latest,hash}=await loadUpload(request,env,url);
 
   if(path==='/api/credential') {
    if(ticket.kind!=='github')fail(401,'wrong ticket scope');
@@ -351,6 +620,7 @@ export async function handle(request,env,ctx) {
    return json({ok:true});
   }
   if(ticket.kind!=='apk')fail(401,'wrong ticket scope');
+  if(ticket.protocol===2)fail(409,'continue using resumable upload');
 
   const length=Number(request.headers.get('Content-Length')),checksum=request.headers.get('X-Aide-SHA256')||'';
   if(!Number.isSafeInteger(length)||length<=0||length>99000000||!request.body)fail(413,'invalid APK size');if(!digest.test(checksum))fail(422,'checksum required');
