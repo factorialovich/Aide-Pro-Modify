@@ -34,7 +34,7 @@ async function pruneStaging(env) {
 }
 function maintenance(env,ctx) {
  if(!ctx||!env.DB||now()-(maintenanceState.get(env)||0)<600)return;
- maintenanceState.set(env,now()
+ maintenanceState.set(env,now());
  ctx.waitUntil(env.DB.batch([
   env.DB.prepare('DELETE FROM quotas WHERE key IN (SELECT key FROM quotas WHERE expires<? LIMIT 500)').bind(now()),
   env.DB.prepare('DELETE FROM nonces WHERE id IN (SELECT id FROM nonces WHERE expires<? LIMIT 500)').bind(now()),
@@ -692,7 +692,7 @@ export async function handle(request,env,ctx) {
   const key=match[1]+'.apk',metadata=await env.RELEASES.head(key);
   if(!metadata)fail(404,'not found');
   const etag=metadata.httpEtag||'"'+match[1]+'"';
-  const headers={...security,'Cache-Control':'private, no-transform','Content-Type':'application/vnd.android.package-archive','Content-Disposition':'attachment; filename="AIDE-Sora.apk"','Accept-Ranges':'bytes','ETag':etag,'X-Aide-Download-Version':'2'};
+  const headers={...security,'Cache-Control':'private, no-transform','Content-Type':'application/vnd.android.package-archive','Content-Disposition':'attachment; filename="AIDE+.Pro.apk"','Accept-Ranges':'bytes','ETag':etag,'X-Aide-Download-Version':'2'};
   let offset=0,length=metadata.size,status=200;
   const range=request.headers.get('Range');
   if(request.method==='GET'&&range&&(!request.headers.get('If-Range')||request.headers.get('If-Range')===etag)) {
@@ -731,3 +731,4 @@ export default {
   ]));
  }
 };
+
