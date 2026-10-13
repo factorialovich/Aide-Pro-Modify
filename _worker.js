@@ -7,7 +7,6 @@ const fail=(status,message)=>{throw new ApiError(status,message);};
 const json=(value,status=200)=>new Response(JSON.stringify(value),{status,headers:security});
 const now=()=>Math.floor(Date.now()/1000);
 const uploadChunkSize=5*1024*1024;
-// Best-effort burst gate before storage. D1 quotas below remain authoritative.
 const burstState=new WeakMap();
 function burst(request,env) {
  const peer=request.headers.get('CF-Connecting-IP')||'unknown';
@@ -35,8 +34,7 @@ async function pruneStaging(env) {
 }
 function maintenance(env,ctx) {
  if(!ctx||!env.DB||now()-(maintenanceState.get(env)||0)<600)return;
- maintenanceState.set(env,now());
- // Pages has no cron trigger: bounded request-driven expiry cleanup is required.
+ maintenanceState.set(env,now()
  ctx.waitUntil(env.DB.batch([
   env.DB.prepare('DELETE FROM quotas WHERE key IN (SELECT key FROM quotas WHERE expires<? LIMIT 500)').bind(now()),
   env.DB.prepare('DELETE FROM nonces WHERE id IN (SELECT id FROM nonces WHERE expires<? LIMIT 500)').bind(now()),
@@ -90,7 +88,6 @@ async function authenticated(request,env) {
  return row;
 }
 async function admin(request,env) {
- // Only the origin has the private key; Cloudflare stores a public verification key.
  const timestamp=Number(request.headers.get('X-Aide-Timestamp'));
  const nonce=request.headers.get('X-Aide-Nonce')||'';
  const bodyHash=request.headers.get('X-Aide-Body-SHA256')||'';
@@ -217,7 +214,6 @@ async function assembleUpload(env,ticket,latest) {
  if(!await saveUpload(env,ticket,latest)) {
   const current=await env.RELEASES.get('staging/status/'+ticket.id+'.json');
   const state=current?JSON.parse(await current.text()):null;
-  // A concurrent completion or the bot's receipt may already acknowledge these bytes.
   if(state?.token_hash===ticket.token_hash&&state.status==='uploaded'&&state.sha256===ticket.sha256) {
    await env.RELEASES.delete(ticket.object_key);return json(uploadProgress(state));
   }
@@ -594,7 +590,6 @@ export async function handle(request,env,ctx) {
  }
  if((path==='/health'||path==='/')&&request.method==='GET')return json({ok:true,service:'AIDE mobile API',configured:!!(env.DB&&env.SERVER_PUBLIC_KEY&&env.RELEASES)});
  const peer=request.headers.get('CF-Connecting-IP')||'unknown';
- // Native Cloudflare rate limiting reduces database amplification under floods.
  if(env.API_LIMIT) {if(!(await env.API_LIMIT.limit({key:peer})).success)fail(429,'rate limit');}
  else await quota(env,'ip-minute:'+await sha(peer),120,60);
 
@@ -717,7 +712,6 @@ export async function handle(request,env,ctx) {
   if(request.method==='HEAD')return new Response(null,{headers});
   const object=await env.RELEASES.get(key,status===206?{range:{offset,length}}:undefined);
   if(!object||!object.body)fail(503,'download unavailable');
-  // Explicit fixed length gives the download a finite body and detects truncated storage reads.
   const stream=typeof FixedLengthStream==='function'?new FixedLengthStream(length):new TransformStream({
    start(){this.count=0;},transform(chunk,controller){this.count+=chunk.byteLength;if(this.count>length)throw new Error('download overflow');controller.enqueue(chunk);},flush(){if(this.count!==length)throw new Error('download truncated');}
   });
