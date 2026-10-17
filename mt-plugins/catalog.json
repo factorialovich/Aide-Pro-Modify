@@ -1,36 +1,96 @@
 {
   "schema": 91,
-  "revision": 1792274093,
+  "revision": 1792274755,
   "items": [
     {
-      "id": "com.kggzs.cn.mt",
-      "name": "AI Smart Programming Assistant",
-      "description": "An AI-powered smart programming assistant plugin for MT Manager, providing intelligent code analysis, optimization suggestions, and issue diagnosis services. Deeply integrated with AI model, supporting full-text analysis and quick code snippet diagnosis. Also includes practical development tools such as encoding/decoding, hash calculation, and timestamp conversion to comprehensively improve mobile programming efficiency.",
-      "icon": "icons/bec737d4bb3132209a4129f7871700e253e0f1be3f0574d2f23c4bd73b06c0c3.webp",
+      "id": "com.android.mtai",
+      "name": "MT AI 插件",
+      "description": "AI-powered enhancement plugin for MT Manager, built for developers. AI code intelligence: full-document analysis, selection diagnosis, optimization suggestions, writing & polishing, code patching, code minification, encryption & decryption, compatible with OpenAI-style APIs (DeepSeek/OpenAI/Groq...). Multi-engine translation: 12 standalone engines — 8 free & keyless (Google CN, Bing, Yandex, Baidu Web, Youdao, MyMemory, LibreTranslate, Lingva) plus 4 paid options (Tencent Cloud, Alibaba Cloud, DeepL, Baidu Translate API). Developer utilities: Base64/Base32/Hex/URL codec, MD5/SHA hashing, Unix timestamp & date conversion, AES/DES encryption; code formatting (JSON/XML/SQL pretty & minify); regex tester. Multi-format previewer: native rich-text (Html.fromHtml) rendering inside MT for Markdown, JSON, XML, SQL, HTML, ELF/SO libraries, hex, Base64 images — no browser kernel, never crashes. Text tools: character stats, UUID generation, case & naming-style (snake/camel) conversion, base converter (2/8/10/16), line ops (dedup/sort/strip-blank/duplicate-count), random password generator, color converter (HEX↔RGB). More tools: text diff, URL parsing & param extraction, mojibake fix / encoding conversion, batch find-replace (regex supported), fake data generator (name/phone/email/ID/address). The \"About\" button at the bottom-left of the main panel shows the author team and homepage links. Settings page links your homepage (nekoaidev.top) and GitHub (github.com/xiaohondan) — one tap opens them in MT's built-in browser. Entry: the \"MT AI\" item in the editor's bottom function bar or top \"Edit\" group.",
+      "icon": "icons/be6e44d5075689786dde4c5dcc6919d832977b2206b1d5be5a8050601de9dcff.png",
       "versions": [
         {
-          "version": "v2.1.1",
-          "versionCode": 6,
-          "sha256": "bec737d4bb3132209a4129f7871700e253e0f1be3f0574d2f23c4bd73b06c0c3",
-          "size": 187769,
-          "file": "files/com.kggzs.cn.mt-6.mtp",
+          "version": "1.2.5",
+          "versionCode": 205,
+          "sha256": "be6e44d5075689786dde4c5dcc6919d832977b2206b1d5be5a8050601de9dcff",
+          "size": 71194,
+          "file": "files/com.android.mtai-205.mtp",
           "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.kggzs.cn.mt-6.mtp",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.android.mtai-205.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "An AI-powered smart programming assistant plugin for MT Manager, providing intelligent code analysis, optimization suggestions, and issue diagnosis services. Deeply integrated with AI model, supporting full-text analysis and quick code snippet diagnosis. Also includes practical development tools such as encoding/decoding, hash calculation, and timestamp conversion to comprehensively improve mobile programming efficiency.",
+          "notes": "AI-powered enhancement plugin for MT Manager, built for developers. AI code intelligence: full-document analysis, selection diagnosis, optimization suggestions, writing & polishing, code patching, code minification, encryption & decryption, compatible with OpenAI-style APIs (DeepSeek/OpenAI/Groq...). Multi-engine translation: 12 standalone engines — 8 free & keyless (Google CN, Bing, Yandex, Baidu Web, Youdao, MyMemory, LibreTranslate, Lingva) plus 4 paid options (Tencent Cloud, Alibaba Cloud, DeepL, Baidu Translate API). Developer utilities: Base64/Base32/Hex/URL codec, MD5/SHA hashing, Unix timestamp & date conversion, AES/DES encryption; code formatting (JSON/XML/SQL pretty & minify); regex tester. Multi-format previewer: native rich-text (Html.fromHtml) rendering inside MT for Markdown, JSON, XML, SQL, HTML, ELF/SO libraries, hex, Base64 images — no browser kernel, never crashes. Text tools: character stats, UUID generation, case & naming-style (snake/camel) conversion, base converter (2/8/10/16), line ops (dedup/sort/strip-blank/duplicate-count), random password generator, color converter (HEX↔RGB). More tools: text diff, URL parsing & param extraction, mojibake fix / encoding conversion, batch find-replace (regex supported), fake data generator (name/phone/email/ID/address). The \"About\" button at the bottom-left of the main panel shows the author team and homepage links. Settings page links your homepage (nekoaidev.top) and GitHub (github.com/xiaohondan) — one tap opens them in MT's built-in browser. Entry: the \"MT AI\" item in the editor's bottom function bar or top \"Edit\" group.",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 12,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1792218203349
+        }
+      ],
+      "developer": "小红蛋"
+    },
+    {
+      "id": "com.artchen520.expander",
+      "name": "代码修补",
+      "description": "IDEA 风格的安卓代码修补工具：缩写一键展开（自定义分组+按文件类型生效）；框选批量注释（对齐缩进列，注释符跟随文件类型）；环绕包裹（自定义模板库）；顶部编辑菜单分组开关面板。项目地址：https://github.com/Artchen520/MTexpander",
+      "icon": "icons/747ad434ced87374033c87f11c2dbdba476f4be09b839d862a0d6310653fc4a4.webp",
+      "versions": [
+        {
+          "version": "v4.5.2",
+          "versionCode": 8,
+          "sha256": "747ad434ced87374033c87f11c2dbdba476f4be09b839d862a0d6310653fc4a4",
+          "size": 39818,
+          "file": "files/com.artchen520.expander-8.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.artchen520.expander-8.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "IDEA 风格的安卓代码修补工具：缩写一键展开（自定义分组+按文件类型生效）；框选批量注释（对齐缩进列，注释符跟随文件类型）；环绕包裹（自定义模板库）；顶部编辑菜单分组开关面板。项目地址：https://github.com/Artchen520/MTexpander",
           "published": "",
           "sdk": 3,
           "interfaces": {
             "TextEditorFloatingMenu": 3,
-            "TextEditorToolMenu": 2,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 3
+          },
+          "updatedAt": 1791083124822
+        }
+      ],
+      "developer": "Artchen"
+    },
+    {
+      "id": "com.nexuszero.mt",
+      "name": "NEXUS MT Ultimate",
+      "description": "Türkçe DEX/Smali/WebSocket/XREF/diff kanıt çalışma merkezi",
+      "icon": "",
+      "versions": [
+        {
+          "version": "5.0.0-alpha4",
+          "versionCode": 8,
+          "sha256": "0a7919c212d22d49730ae4a536ca9a77f8e35faf694c2d12687d1998d644d483",
+          "size": 8956,
+          "file": "files/com.nexuszero.mt-8.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.nexuszero.mt-8.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "Türkçe DEX/Smali/WebSocket/XREF/diff kanıt çalışma merkezi",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 6,
             "TranslationEngine": 0,
             "TextEditorFunction": 0
           },
-          "updatedAt": 1782307513531
+          "updatedAt": 1790750594062
         }
       ],
-      "developer": "康哥工作室"
+      "developer": "frknozdmr"
     },
     {
       "id": "com.tec.aiedit",
@@ -63,34 +123,64 @@
       "developer": "皓月千里"
     },
     {
-      "id": "com.zeyan.ai_code_tools",
-      "name": "AI代码工具包",
-      "description": "集成AI逐行注释、SO文件分析修改、代码正确性校验三大功能，兼容所有OpenAI格式接口（DeepSeek/OpenAI/中转站等）",
-      "icon": "icons/46d74ed767d524d541947742f5083ea283e44333cf5292fda9c0c9c93c503d14.webp",
+      "id": "com.brarchive.extractor",
+      "name": "mc工具箱",
+      "description": "Minecraft基岩版.brarchive解包/打包 + manifest工具 + AI助手",
+      "icon": "",
       "versions": [
         {
-          "version": "1.0.0",
-          "versionCode": 1,
-          "sha256": "46d74ed767d524d541947742f5083ea283e44333cf5292fda9c0c9c93c503d14",
-          "size": 35696,
-          "file": "files/com.zeyan.ai_code_tools-1.mtp",
+          "version": "v2.0",
+          "versionCode": 11,
+          "sha256": "0dadf4f15414e54d2a4cda084e7fd9ca4227702d192768a29e96985caac43ee4",
+          "size": 21925,
+          "file": "files/com.brarchive.extractor-11.mtp",
           "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.zeyan.ai_code_tools-1.mtp",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.brarchive.extractor-11.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "集成AI逐行注释、SO文件分析修改、代码正确性校验三大功能，兼容所有OpenAI格式接口（DeepSeek/OpenAI/中转站等）",
+          "notes": "Minecraft基岩版.brarchive解包/打包 + manifest工具 + AI助手",
           "published": "",
           "sdk": 3,
           "interfaces": {
             "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 3,
+            "TextEditorToolMenu": 2,
             "TranslationEngine": 0,
             "TextEditorFunction": 0
           },
-          "updatedAt": 1786746570848
+          "updatedAt": 1790512482163
         }
       ],
-      "developer": "棠哥"
+      "developer": "Petrichor5648"
+    },
+    {
+      "id": "com.android.settings.new",
+      "name": "MT浏览器",
+      "description": "内置75种搜索引擎，输入关键词，点击立即开始搜索。入口在插件中心设置里面！！！",
+      "icon": "icons/27745202a6066fddd2cd4ebd0de65eb323f205445846e35fecba21c378246754.webp",
+      "versions": [
+        {
+          "version": "v1.2",
+          "versionCode": 12,
+          "sha256": "27745202a6066fddd2cd4ebd0de65eb323f205445846e35fecba21c378246754",
+          "size": 99213,
+          "file": "files/com.android.settings.new-12.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.android.settings.new-12.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "内置75种搜索引擎，输入关键词，点击立即开始搜索。入口在插件中心设置里面！！！",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1790049525522
+        }
+      ],
+      "developer": "鹏鹤明志"
     },
     {
       "id": "bin.plugin.translator.aimodel",
@@ -123,22 +213,22 @@
       "developer": "Lyx_2299_baby"
     },
     {
-      "id": "bin.plugin.translator.baidu",
-      "name": "Baidu Translator",
-      "description": "Using the Baidu translate web interface.\\nhttps://fanyi.baidu.com",
-      "icon": "icons/dc836a639d8c5501cb0787283a443026e6c11be45f443b3e29f4cf272cc4558b.png",
+      "id": "by.plugin.translator.kimi",
+      "name": "Kimi Translator",
+      "description": "Uses the Kimi (Moonshot AI) Chat API for translation. You need to provide your own API Key.",
+      "icon": "icons/2aaf99f5f60f813f5f500a2470c8fd4ed50032630b28df397a9fd11098f4a01d.webp",
       "versions": [
         {
           "version": "v1.1",
           "versionCode": 2,
-          "sha256": "dc836a639d8c5501cb0787283a443026e6c11be45f443b3e29f4cf272cc4558b",
-          "size": 28494,
-          "file": "files/bin.plugin.translator.baidu-2.mtp",
+          "sha256": "2aaf99f5f60f813f5f500a2470c8fd4ed50032630b28df397a9fd11098f4a01d",
+          "size": 14018,
+          "file": "files/by.plugin.translator.kimi-2.mtp",
           "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.baidu-2.mtp",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/by.plugin.translator.kimi-2.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "Using the Baidu translate web interface.\\nhttps://fanyi.baidu.com",
+          "notes": "Uses the Kimi (Moonshot AI) Chat API for translation. You need to provide your own API Key.",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -147,214 +237,10 @@
             "TranslationEngine": 1,
             "TextEditorFunction": 0
           },
-          "updatedAt": 1772393693648
+          "updatedAt": 1789887522844
         }
       ],
-      "developer": "Bin"
-    },
-    {
-      "id": "bin.plugin.translator.baiduapi",
-      "name": "Baidu Translator (API)",
-      "description": "Using the API interface of Baidu Translate Open Platform, you need to apply for an APP ID and SecurityKey by yourself.",
-      "icon": "icons/a015efa9e03029e06406727b251411465f23b7c8dd51d279b7883e79f610a9fe.png",
-      "versions": [
-        {
-          "version": "v1.3",
-          "versionCode": 6,
-          "sha256": "a015efa9e03029e06406727b251411465f23b7c8dd51d279b7883e79f610a9fe",
-          "size": 28144,
-          "file": "files/bin.plugin.translator.baiduapi-6.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.baiduapi-6.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Using the API interface of Baidu Translate Open Platform, you need to apply for an APP ID and SecurityKey by yourself.",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 1,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1772394223056
-        }
-      ],
-      "developer": "Bin"
-    },
-    {
-      "id": "bin.plugin.translator.google_ctn",
-      "name": "bin.plugin.translator.google_ctn",
-      "description": "bin.plugin.translator.google_ctn",
-      "icon": "icons/4af8482f066f5ec195594bb3c70d1c9d09794c2244cc2914f0a77ca0bf1ca342.png",
-      "versions": [
-        {
-          "version": "v1.1",
-          "versionCode": 5,
-          "sha256": "4af8482f066f5ec195594bb3c70d1c9d09794c2244cc2914f0a77ca0bf1ca342",
-          "size": 70527,
-          "file": "files/bin.plugin.translator.google_ctn-5.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.google_ctn-5.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "bin.plugin.translator.google_ctn",
-          "published": "",
-          "sdk": 2,
-          "interfaces": {
-            "TranslationEngine": 1
-          },
-          "updatedAt": 1768065224271
-        }
-      ],
-      "developer": "ctnBobong32"
-    },
-    {
-      "id": "bin.plugin.translator.bing",
-      "name": "Bing Translator",
-      "description": "Using the Bing Microsoft translate web interface.\\nhttps://www.bing.com/translator",
-      "icon": "icons/b62a975eb7702ce7022f96e1c8892e785e46a5fa03f8da0e2437c794521760ff.png",
-      "versions": [
-        {
-          "version": "v1.4",
-          "versionCode": 5,
-          "sha256": "b62a975eb7702ce7022f96e1c8892e785e46a5fa03f8da0e2437c794521760ff",
-          "size": 14224,
-          "file": "files/bin.plugin.translator.bing-5.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.bing-5.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Using the Bing Microsoft translate web interface.\\nhttps://www.bing.com/translator",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 1,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1772393194762
-        }
-      ],
-      "developer": "Bin"
-    },
-    {
-      "id": "bin.mt.plugin.bypasshelper",
-      "name": "Bypass Helper",
-      "description": "Plugin untuk injeksi Smali dan Bypass cepat by Yusuf Ardiansyah",
-      "icon": "icons/addd9e29cfe4a8332140637092be31f43af7f7764ed2c84f86a9d31d2190263d.webp",
-      "versions": [
-        {
-          "version": "v1.3.1",
-          "versionCode": 5,
-          "sha256": "addd9e29cfe4a8332140637092be31f43af7f7764ed2c84f86a9d31d2190263d",
-          "size": 15528,
-          "file": "files/bin.mt.plugin.bypasshelper-5.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.mt.plugin.bypasshelper-5.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Plugin untuk injeksi Smali dan Bypass cepat by Yusuf Ardiansyah",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 9,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1776553737009
-        }
-      ],
-      "developer": "yusufardiansyah"
-    },
-    {
-      "id": "com.vlrs.plugin.deepl_transl",
-      "name": "com.vlrs.plugin.deepl_transl",
-      "description": "com.vlrs.plugin.deepl_transl",
-      "icon": "icons/0bfcb0dc33ebb485e043a6c6e931f03c5d0eff1b89571980a5527dc9aca53016.png",
-      "versions": [
-        {
-          "version": "v1.16",
-          "versionCode": 16,
-          "sha256": "0bfcb0dc33ebb485e043a6c6e931f03c5d0eff1b89571980a5527dc9aca53016",
-          "size": 17103,
-          "file": "files/com.vlrs.plugin.deepl_transl-16.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.vlrs.plugin.deepl_transl-16.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "com.vlrs.plugin.deepl_transl",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 3,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1785857368436
-        }
-      ],
-      "developer": "vladrevers"
-    },
-    {
-      "id": "com.whitesev.plugin.whitesev",
-      "name": "com.whitesev.plugin.whitesev",
-      "description": "com.whitesev.plugin.whitesev",
-      "icon": "",
-      "versions": [
-        {
-          "version": "v0.2",
-          "versionCode": 2,
-          "sha256": "c7881e43cecdd44cb20e4a9f0d57575e7c6fe58a8fd0068b42dadbc0a16db22b",
-          "size": 9221,
-          "file": "files/com.whitesev.plugin.whitesev-2.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.whitesev.plugin.whitesev-2.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "com.whitesev.plugin.whitesev",
-          "published": "",
-          "sdk": 1,
-          "interfaces": {
-            "TranslationEngine": 1
-          },
-          "updatedAt": 1618913782443
-        }
-      ],
-      "developer": "戒酒的李白"
-    },
-    {
-      "id": "dat.mt.cccyn",
-      "name": "dat Encrypt/Decrypt",
-      "description": "Encrypt/decrypt FuncConfig.dat / UiConfig.dat / GblConfig.json",
-      "icon": "icons/9251ede23f788884cf765181c2aa6e4e413aa764deb4665addb0a72b9e5f7b8f.webp",
-      "versions": [
-        {
-          "version": "168",
-          "versionCode": 168,
-          "sha256": "9251ede23f788884cf765181c2aa6e4e413aa764deb4665addb0a72b9e5f7b8f",
-          "size": 50668,
-          "file": "files/dat.mt.cccyn-168.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/dat.mt.cccyn-168.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Encrypt/decrypt FuncConfig.dat / UiConfig.dat / GblConfig.json",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 2,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 1
-          },
-          "updatedAt": 1785231179194
-        }
-      ],
-      "developer": "Gingko"
+      "developer": "北岩"
     },
     {
       "id": "bin.plugin.translator.deepseek",
@@ -387,151 +273,64 @@
       "developer": "Bin"
     },
     {
-      "id": "bc.deepseek.demo",
-      "name": "DeepSeek翻译",
-      "description": "使用DeepSeekAPI进行文本翻译处理，支持多种语言",
-      "icon": "icons/fd4604e22b909b4f6eac72aefa19361f711a010a5622742f78daef876b7fc44e.jpg",
+      "id": "mt.plugin.translatekit",
+      "name": "TranslateKit",
+      "description": "Translate Android strings with Gemini, OpenAI, Claude, OpenRouter, or any OpenAI-compatible endpoint",
+      "icon": "icons/88a637dde86412dc72f38503075515000b9fdbcada22e88bcb2c38c5561ff9d6.png",
       "versions": [
         {
-          "version": "v1.1",
-          "versionCode": 2,
-          "sha256": "fd4604e22b909b4f6eac72aefa19361f711a010a5622742f78daef876b7fc44e",
-          "size": 256043,
-          "file": "files/bc.deepseek.demo-2.mtp",
+          "version": "0.6.1",
+          "versionCode": 15,
+          "sha256": "88a637dde86412dc72f38503075515000b9fdbcada22e88bcb2c38c5561ff9d6",
+          "size": 227240,
+          "file": "files/mt.plugin.translatekit-15.mtp",
           "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bc.deepseek.demo-2.mtp",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.plugin.translatekit-15.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "使用DeepSeekAPI进行文本翻译处理，支持多种语言",
-          "published": "",
-          "sdk": 2,
-          "interfaces": {
-            "TranslationEngine": 1
-          },
-          "updatedAt": 1758630678958
-        }
-      ],
-      "developer": "bczzyyds"
-    },
-    {
-      "id": "bin.plugin.transcoder",
-      "name": "Encoder Decoder",
-      "description": "Supports text encoding and decoding for Base64, Base32, URL, Unicode, and Hex",
-      "icon": "icons/d1060123d4fcfb8c5ef962875b7636db715d22d7af948c85192a48834f4f7f5f.webp",
-      "versions": [
-        {
-          "version": "v1.0",
-          "versionCode": 1,
-          "sha256": "d1060123d4fcfb8c5ef962875b7636db715d22d7af948c85192a48834f4f7f5f",
-          "size": 22239,
-          "file": "files/bin.plugin.transcoder-1.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.transcoder-1.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Supports text encoding and decoding for Base64, Base32, URL, Unicode, and Hex",
+          "notes": "Translate Android strings with Gemini, OpenAI, Claude, OpenRouter, or any OpenAI-compatible endpoint",
           "published": "",
           "sdk": 3,
           "interfaces": {
             "TextEditorFloatingMenu": 1,
             "TextEditorToolMenu": 1,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 1
-          },
-          "updatedAt": 1774541561875
-        }
-      ],
-      "developer": "Bin"
-    },
-    {
-      "id": "com.andreykamd4pda.expandline",
-      "name": "Expand Line Selection",
-      "description": "Expand selection line by line",
-      "icon": "icons/4db46f220388cf47e8d8a5d6fc2e54d5e97e5db0c470829c317d96ebace181bf.webp",
-      "versions": [
-        {
-          "version": "v1.0",
-          "versionCode": 1,
-          "sha256": "4db46f220388cf47e8d8a5d6fc2e54d5e97e5db0c470829c317d96ebace181bf",
-          "size": 12046,
-          "file": "files/com.andreykamd4pda.expandline-1.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.andreykamd4pda.expandline-1.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Expand selection line by line",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 3
-          },
-          "updatedAt": 1783358432389
-        }
-      ],
-      "developer": "drakulaboy"
-    },
-    {
-      "id": "cai.goole.translate",
-      "name": "Google Translate (PA)",
-      "description": "Uses the Google translateHtml endpoint\\n",
-      "icon": "icons/df515ea60d90ffef9f3af534f81572a2f25309e2eafaf35ca3eefc4208a58b95.webp",
-      "versions": [
-        {
-          "version": "v1.0",
-          "versionCode": 1,
-          "sha256": "df515ea60d90ffef9f3af534f81572a2f25309e2eafaf35ca3eefc4208a58b95",
-          "size": 42445,
-          "file": "files/cai.goole.translate-1.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/cai.goole.translate-1.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Uses the Google translateHtml endpoint\\n",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 1,
+            "TranslationEngine": 2,
             "TextEditorFunction": 0
           },
-          "updatedAt": 1776834556095
+          "updatedAt": 1788856143528
         }
       ],
-      "developer": "菜燃乐"
+      "developer": "binzedd"
     },
     {
-      "id": "bin.plugin.translator.google",
-      "name": "Google Translator",
-      "description": "Using the Google translate web interface.\\nhttps://translate.google.com",
-      "icon": "icons/f6949eee5f0cef084a984551f29b17a56c5a1a1b3443fe63c3c1c6363c90149e.png",
+      "id": "vlrs.plugin.translator.microsoft",
+      "name": "vlrs.plugin.translator.microsoft",
+      "description": "vlrs.plugin.translator.microsoft",
+      "icon": "icons/abab612571be1fce1c275a7bca9a7082bc58a3fa87b8fb1740d395cf4fdc29f3.png",
       "versions": [
         {
-          "version": "v1.5",
-          "versionCode": 6,
-          "sha256": "f6949eee5f0cef084a984551f29b17a56c5a1a1b3443fe63c3c1c6363c90149e",
-          "size": 17224,
-          "file": "files/bin.plugin.translator.google-6.mtp",
+          "version": "v1.8",
+          "versionCode": 9,
+          "sha256": "abab612571be1fce1c275a7bca9a7082bc58a3fa87b8fb1740d395cf4fdc29f3",
+          "size": 9378,
+          "file": "files/vlrs.plugin.translator.microsoft-9.mtp",
           "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.google-6.mtp",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/vlrs.plugin.translator.microsoft-9.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "Using the Google translate web interface.\\nhttps://translate.google.com",
+          "notes": "vlrs.plugin.translator.microsoft",
           "published": "",
           "sdk": 3,
           "interfaces": {
             "TextEditorFloatingMenu": 0,
             "TextEditorToolMenu": 0,
-            "TranslationEngine": 1,
+            "TranslationEngine": 2,
             "TextEditorFunction": 0
           },
-          "updatedAt": 1772458366953
+          "updatedAt": 1788811270576
         }
       ],
-      "developer": "Bin"
+      "developer": "vladrevers"
     },
     {
       "id": "guobao.plugin.deeplx",
@@ -564,256 +363,82 @@
       "developer": "是果宝呐"
     },
     {
-      "id": "com.hand.hex_to_dec",
-      "name": "Hex To Dec",
-      "description": "Convert hexadecimal numbers (starting with 0x) in the selected or all text to decimal",
-      "icon": "icons/c0ba3b6fd98243c483911f380e715b9b875cb0e24eedc13adbaa238872c9d005.webp",
-      "versions": [
-        {
-          "version": "v1.0.260409",
-          "versionCode": 1,
-          "sha256": "c0ba3b6fd98243c483911f380e715b9b875cb0e24eedc13adbaa238872c9d005",
-          "size": 23651,
-          "file": "files/com.hand.hex_to_dec-1.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.hand.hex_to_dec-1.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Convert hexadecimal numbers (starting with 0x) in the selected or all text to decimal",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 1,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1775754504719
-        }
-      ],
-      "developer": "THKAMT"
-    },
-    {
-      "id": "impl.mt.ai",
-      "name": "impl.mt.ai",
-      "description": "impl.mt.ai",
-      "icon": "icons/f3d57b3e55af779d216ccea8455736561759c648a6172f6a698f1878acdfac33.jpg",
+      "id": "com.example.postpreview",
+      "name": "Post Preview",
+      "description": "Preview BBCode post content in text editor",
+      "icon": "icons/0faf5421645298ddcd26e25eb5dffbb4e17aba9d9926f89d867d8ad3903d2b6a.webp",
       "versions": [
         {
           "version": "v1.0",
           "versionCode": 1,
-          "sha256": "f3d57b3e55af779d216ccea8455736561759c648a6172f6a698f1878acdfac33",
-          "size": 198689,
-          "file": "files/impl.mt.ai-1.mtp",
+          "sha256": "0faf5421645298ddcd26e25eb5dffbb4e17aba9d9926f89d867d8ad3903d2b6a",
+          "size": 12932,
+          "file": "files/com.example.postpreview-1.mtp",
           "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/impl.mt.ai-1.mtp",
-          "minAndroid": 26,
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.example.postpreview-1.mtp",
+          "minAndroid": 21,
           "minHost": 0,
-          "notes": "impl.mt.ai",
+          "notes": "Preview BBCode post content in text editor",
           "published": "",
           "sdk": 3,
           "interfaces": {
-            "TextEditorFloatingMenu": 1,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 1,
-            "TextEditorFunction": 1
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
           },
-          "updatedAt": 1772408410142
+          "updatedAt": 1788327013443
         }
       ],
-      "developer": "sjlz"
+      "developer": "闲云野鹤"
     },
     {
-      "id": "io.kiber.plugin.formatix",
-      "name": "io.kiber.plugin.formatix",
-      "description": "io.kiber.plugin.formatix",
-      "icon": "icons/916bb4211eaba26f20e61abe1ceb1ad4adb82b35a04dc3a95b48b0da05b912d3.png",
+      "id": "mt.gdtool",
+      "name": "解析工具",
+      "description": "提取/写回车标图片 与 SO 文件解析/写回 与 dat 加解密",
+      "icon": "icons/fe260726abcb02d2c6ba90cd4e07c134cf3394864e4dd04244db32f42a8d5ef9.webp",
+      "versions": [
+        {
+          "version": "1.1",
+          "versionCode": 2,
+          "sha256": "fe260726abcb02d2c6ba90cd4e07c134cf3394864e4dd04244db32f42a8d5ef9",
+          "size": 50451,
+          "file": "files/mt.gdtool-2.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.gdtool-2.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "提取/写回车标图片 与 SO 文件解析/写回 与 dat 加解密",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 7,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1787839514110
+        }
+      ],
+      "developer": "cmo"
+    },
+    {
+      "id": "com.cloudbin.tgcl",
+      "name": "TGCL Bin Decoder",
+      "description": "In-place decode/encode CloudObjects Objects.level.bin (TGCL) to/from JSON",
+      "icon": "icons/281260eea86235855d25f7cef1afe57c327b7787d1a69cd5e9d52311ed934902.webp",
       "versions": [
         {
           "version": "v1.0",
           "versionCode": 1,
-          "sha256": "916bb4211eaba26f20e61abe1ceb1ad4adb82b35a04dc3a95b48b0da05b912d3",
-          "size": 12584,
-          "file": "files/io.kiber.plugin.formatix-1.mtp",
+          "sha256": "281260eea86235855d25f7cef1afe57c327b7787d1a69cd5e9d52311ed934902",
+          "size": 31784,
+          "file": "files/com.cloudbin.tgcl-1.mtp",
           "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/io.kiber.plugin.formatix-1.mtp",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.cloudbin.tgcl-1.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "io.kiber.plugin.formatix",
-          "published": "",
-          "sdk": 2,
-          "interfaces": {
-            "TranslationEngine": 1
-          },
-          "updatedAt": 1746723705260
-        }
-      ],
-      "developer": "oleg543"
-    },
-    {
-      "id": "io.tooldroid.plugin.stringencoder",
-      "name": "io.tooldroid.plugin.stringencoder",
-      "description": "io.tooldroid.plugin.stringencoder",
-      "icon": "icons/d00523c97a0c8be0bba70cf15e83b3a73bc96b95726e044d544ecfcbb7b872ca.png",
-      "versions": [
-        {
-          "version": "v1.4",
-          "versionCode": 5,
-          "sha256": "d00523c97a0c8be0bba70cf15e83b3a73bc96b95726e044d544ecfcbb7b872ca",
-          "size": 19836,
-          "file": "files/io.tooldroid.plugin.stringencoder-5.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/io.tooldroid.plugin.stringencoder-5.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "io.tooldroid.plugin.stringencoder",
-          "published": "",
-          "sdk": 2,
-          "interfaces": {
-            "TranslationEngine": 1
-          },
-          "updatedAt": 1769682217847
-        }
-      ],
-      "developer": "ToolDroidYT"
-    },
-    {
-      "id": "by.plugin.translator.kimi",
-      "name": "Kimi Translator",
-      "description": "Uses the Kimi (Moonshot AI) Chat API for translation. You need to provide your own API Key.",
-      "icon": "icons/2aaf99f5f60f813f5f500a2470c8fd4ed50032630b28df397a9fd11098f4a01d.webp",
-      "versions": [
-        {
-          "version": "v1.1",
-          "versionCode": 2,
-          "sha256": "2aaf99f5f60f813f5f500a2470c8fd4ed50032630b28df397a9fd11098f4a01d",
-          "size": 14018,
-          "file": "files/by.plugin.translator.kimi-2.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/by.plugin.translator.kimi-2.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Uses the Kimi (Moonshot AI) Chat API for translation. You need to provide your own API Key.",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 1,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1789887522844
-        }
-      ],
-      "developer": "北岩"
-    },
-    {
-      "id": "zyplugin.luaj.format",
-      "name": "Luaj代码查错格式化",
-      "description": "查错并格式化Luaj语法代码\n使用教程：\n设置编辑快捷功能栏添加Luaj代码查错格式化。\n(注意代码规范不支持中文命名)\n即可在编辑器底栏添加绑定使用",
-      "icon": "icons/a4cdbc3532cd5040d2a2036864ef75ca278973200d60d49193ee3b70040cdaa1.webp",
-      "versions": [
-        {
-          "version": "v26.03.17",
-          "versionCode": 4,
-          "sha256": "a4cdbc3532cd5040d2a2036864ef75ca278973200d60d49193ee3b70040cdaa1",
-          "size": 225423,
-          "file": "files/zyplugin.luaj.format-4.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/zyplugin.luaj.format-4.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "查错并格式化Luaj语法代码\n使用教程：\n设置编辑快捷功能栏添加Luaj代码查错格式化。\n(注意代码规范不支持中文命名)\n即可在编辑器底栏添加绑定使用",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 1
-          },
-          "updatedAt": 1773721004303
-        }
-      ],
-      "developer": "ZY彩虹海"
-    },
-    {
-      "id": "com.mtplugin.m3u8downloader",
-      "name": "M3U8下载器",
-      "description": "多任务并发M3U8视频下载器，支持断点续传、仅WIFI下载、自动合并、请求头管理、失败片段重试/忽略",
-      "icon": "",
-      "versions": [
-        {
-          "version": "v1.3.1",
-          "versionCode": 7,
-          "sha256": "990b285ee2304205e6a5be7afb2f03355228695337781ffb73e7d471f580c485",
-          "size": 50066,
-          "file": "files/com.mtplugin.m3u8downloader-7.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.mtplugin.m3u8downloader-7.mtp",
-          "minAndroid": 26,
-          "minHost": 0,
-          "notes": "多任务并发M3U8视频下载器，支持断点续传、仅WIFI下载、自动合并、请求头管理、失败片段重试/忽略",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1786378206441
-        }
-      ],
-      "developer": "我的耳机可以绕脖子两圈"
-    },
-    {
-      "id": "com.linecode.manifestinspector",
-      "name": "Manifest 审计助手",
-      "description": "在文本编辑器中一键分析 AndroidManifest.xml 的权限、组件暴露、Android 12+ 兼容性与改包风险。",
-      "icon": "",
-      "versions": [
-        {
-          "version": "1.0.1",
-          "versionCode": 2,
-          "sha256": "4b74776e12b0d8cfefd6e57909f824763a074271d0adbb2fa9fb60091ea7fcc2",
-          "size": 14846,
-          "file": "files/com.linecode.manifestinspector-2.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.linecode.manifestinspector-2.mtp",
-          "minAndroid": 23,
-          "minHost": 26000,
-          "notes": "在文本编辑器中一键分析 AndroidManifest.xml 的权限、组件暴露、Android 12+ 兼容性与改包风险。",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 1,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 1
-          },
-          "updatedAt": 1783799502590
-        }
-      ],
-      "developer": "七年凉城安浮生°"
-    },
-    {
-      "id": "com.md.preview",
-      "name": "Markdown Preview",
-      "description": "Preview Markdown files with KaTeX math and syntax highlighting",
-      "icon": "",
-      "versions": [
-        {
-          "version": "1.0.0",
-          "versionCode": 1,
-          "sha256": "6a9ef0b314be5b4d8bc90b56f9b7676e43344c847ba4934cfaa890546309c10f",
-          "size": 330032,
-          "file": "files/com.md.preview-1.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.md.preview-1.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Preview Markdown files with KaTeX math and syntax highlighting",
+          "notes": "In-place decode/encode CloudObjects Objects.level.bin (TGCL) to/from JSON",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -822,100 +447,10 @@
             "TranslationEngine": 0,
             "TextEditorFunction": 0
           },
-          "updatedAt": 1780248757361
+          "updatedAt": 1787124654372
         }
       ],
-      "developer": "Minus"
-    },
-    {
-      "id": "com.brarchive.extractor",
-      "name": "mc工具箱",
-      "description": "Minecraft基岩版.brarchive解包/打包 + manifest工具 + AI助手",
-      "icon": "",
-      "versions": [
-        {
-          "version": "v2.0",
-          "versionCode": 11,
-          "sha256": "0dadf4f15414e54d2a4cda084e7fd9ca4227702d192768a29e96985caac43ee4",
-          "size": 21925,
-          "file": "files/com.brarchive.extractor-11.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.brarchive.extractor-11.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Minecraft基岩版.brarchive解包/打包 + manifest工具 + AI助手",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 2,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1790512482163
-        }
-      ],
-      "developer": "Petrichor5648"
-    },
-    {
-      "id": "com.android.mtai",
-      "name": "MT AI 插件",
-      "description": "AI-powered enhancement plugin for MT Manager, built for developers. AI code intelligence: full-document analysis, selection diagnosis, optimization suggestions, writing & polishing, code patching, code minification, encryption & decryption, compatible with OpenAI-style APIs (DeepSeek/OpenAI/Groq...). Multi-engine translation: 12 standalone engines — 8 free & keyless (Google CN, Bing, Yandex, Baidu Web, Youdao, MyMemory, LibreTranslate, Lingva) plus 4 paid options (Tencent Cloud, Alibaba Cloud, DeepL, Baidu Translate API). Developer utilities: Base64/Base32/Hex/URL codec, MD5/SHA hashing, Unix timestamp & date conversion, AES/DES encryption; code formatting (JSON/XML/SQL pretty & minify); regex tester. Multi-format previewer: native rich-text (Html.fromHtml) rendering inside MT for Markdown, JSON, XML, SQL, HTML, ELF/SO libraries, hex, Base64 images — no browser kernel, never crashes. Text tools: character stats, UUID generation, case & naming-style (snake/camel) conversion, base converter (2/8/10/16), line ops (dedup/sort/strip-blank/duplicate-count), random password generator, color converter (HEX↔RGB). More tools: text diff, URL parsing & param extraction, mojibake fix / encoding conversion, batch find-replace (regex supported), fake data generator (name/phone/email/ID/address). The \"About\" button at the bottom-left of the main panel shows the author team and homepage links. Settings page links your homepage (nekoaidev.top) and GitHub (github.com/xiaohondan) — one tap opens them in MT's built-in browser. Entry: the \"MT AI\" item in the editor's bottom function bar or top \"Edit\" group.",
-      "icon": "icons/be6e44d5075689786dde4c5dcc6919d832977b2206b1d5be5a8050601de9dcff.png",
-      "versions": [
-        {
-          "version": "1.2.5",
-          "versionCode": 205,
-          "sha256": "be6e44d5075689786dde4c5dcc6919d832977b2206b1d5be5a8050601de9dcff",
-          "size": 71194,
-          "file": "files/com.android.mtai-205.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.android.mtai-205.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "AI-powered enhancement plugin for MT Manager, built for developers. AI code intelligence: full-document analysis, selection diagnosis, optimization suggestions, writing & polishing, code patching, code minification, encryption & decryption, compatible with OpenAI-style APIs (DeepSeek/OpenAI/Groq...). Multi-engine translation: 12 standalone engines — 8 free & keyless (Google CN, Bing, Yandex, Baidu Web, Youdao, MyMemory, LibreTranslate, Lingva) plus 4 paid options (Tencent Cloud, Alibaba Cloud, DeepL, Baidu Translate API). Developer utilities: Base64/Base32/Hex/URL codec, MD5/SHA hashing, Unix timestamp & date conversion, AES/DES encryption; code formatting (JSON/XML/SQL pretty & minify); regex tester. Multi-format previewer: native rich-text (Html.fromHtml) rendering inside MT for Markdown, JSON, XML, SQL, HTML, ELF/SO libraries, hex, Base64 images — no browser kernel, never crashes. Text tools: character stats, UUID generation, case & naming-style (snake/camel) conversion, base converter (2/8/10/16), line ops (dedup/sort/strip-blank/duplicate-count), random password generator, color converter (HEX↔RGB). More tools: text diff, URL parsing & param extraction, mojibake fix / encoding conversion, batch find-replace (regex supported), fake data generator (name/phone/email/ID/address). The \"About\" button at the bottom-left of the main panel shows the author team and homepage links. Settings page links your homepage (nekoaidev.top) and GitHub (github.com/xiaohondan) — one tap opens them in MT's built-in browser. Entry: the \"MT AI\" item in the editor's bottom function bar or top \"Edit\" group.",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 1,
-            "TranslationEngine": 12,
-            "TextEditorFunction": 1
-          },
-          "updatedAt": 1792218203349
-        }
-      ],
-      "developer": "小红蛋"
-    },
-    {
-      "id": "mt.asm.converter",
-      "name": "mt.asm.converter",
-      "description": "mt.asm.converter",
-      "icon": "icons/0e0c7a3339ccab49ee9c6c89917a09b42ddb12e8d021736cc4647bac6aaa3a01.webp",
-      "versions": [
-        {
-          "version": "v1.2",
-          "versionCode": 2026,
-          "sha256": "0e0c7a3339ccab49ee9c6c89917a09b42ddb12e8d021736cc4647bac6aaa3a01",
-          "size": 9315,
-          "file": "files/mt.asm.converter-2026.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.asm.converter-2026.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "mt.asm.converter",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 1,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1786874204156
-        }
-      ],
-      "developer": "Maharna's_Tech"
+      "developer": "县小威"
     },
     {
       "id": "mt.base_converter",
@@ -948,6 +483,96 @@
       "developer": "Maharna's_Tech"
     },
     {
+      "id": "mt.asm.converter",
+      "name": "mt.asm.converter",
+      "description": "mt.asm.converter",
+      "icon": "icons/0e0c7a3339ccab49ee9c6c89917a09b42ddb12e8d021736cc4647bac6aaa3a01.webp",
+      "versions": [
+        {
+          "version": "v1.2",
+          "versionCode": 2026,
+          "sha256": "0e0c7a3339ccab49ee9c6c89917a09b42ddb12e8d021736cc4647bac6aaa3a01",
+          "size": 9315,
+          "file": "files/mt.asm.converter-2026.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.asm.converter-2026.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "mt.asm.converter",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786874204156
+        }
+      ],
+      "developer": "Maharna's_Tech"
+    },
+    {
+      "id": "com.zeyan.ai_code_tools",
+      "name": "AI代码工具包",
+      "description": "集成AI逐行注释、SO文件分析修改、代码正确性校验三大功能，兼容所有OpenAI格式接口（DeepSeek/OpenAI/中转站等）",
+      "icon": "icons/46d74ed767d524d541947742f5083ea283e44333cf5292fda9c0c9c93c503d14.webp",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "versionCode": 1,
+          "sha256": "46d74ed767d524d541947742f5083ea283e44333cf5292fda9c0c9c93c503d14",
+          "size": 35696,
+          "file": "files/com.zeyan.ai_code_tools-1.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.zeyan.ai_code_tools-1.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "集成AI逐行注释、SO文件分析修改、代码正确性校验三大功能，兼容所有OpenAI格式接口（DeepSeek/OpenAI/中转站等）",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 3,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786746570848
+        }
+      ],
+      "developer": "棠哥"
+    },
+    {
+      "id": "mt.number_converter",
+      "name": "mt.number_converter",
+      "description": "mt.number_converter",
+      "icon": "icons/0faefbb289f3209e5ceafc5e221e4bc06831fba826be0857a80e2f46c1554db5.webp",
+      "versions": [
+        {
+          "version": "v1.1 MT",
+          "versionCode": 2026,
+          "sha256": "0faefbb289f3209e5ceafc5e221e4bc06831fba826be0857a80e2f46c1554db5",
+          "size": 11178,
+          "file": "files/mt.number_converter-2026.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.number_converter-2026.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "mt.number_converter",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786697736305
+        }
+      ],
+      "developer": "Maharna's_Tech"
+    },
+    {
       "id": "mt.english.dictionary",
       "name": "mt.english.dictionary",
       "description": "mt.english.dictionary",
@@ -973,6 +598,36 @@
             "TextEditorFunction": 0
           },
           "updatedAt": 1786697724247
+        }
+      ],
+      "developer": "Maharna's_Tech"
+    },
+    {
+      "id": "mt.oxford_english.dictionary",
+      "name": "mt.oxford_english.dictionary",
+      "description": "mt.oxford_english.dictionary",
+      "icon": "icons/4eda4d45e8c314325541fe6c6410e437624e9dc833b9debe264d07e0bcb3c715.webp",
+      "versions": [
+        {
+          "version": "v4.0.0 MT",
+          "versionCode": 2026,
+          "sha256": "4eda4d45e8c314325541fe6c6410e437624e9dc833b9debe264d07e0bcb3c715",
+          "size": 7695,
+          "file": "files/mt.oxford_english.dictionary-2026.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.oxford_english.dictionary-2026.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "mt.oxford_english.dictionary",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786697704098
         }
       ],
       "developer": "Maharna's_Tech"
@@ -1038,181 +693,34 @@
       "developer": "Maharna's_Tech"
     },
     {
-      "id": "mt.number_converter",
-      "name": "mt.number_converter",
-      "description": "mt.number_converter",
-      "icon": "icons/0faefbb289f3209e5ceafc5e221e4bc06831fba826be0857a80e2f46c1554db5.webp",
-      "versions": [
-        {
-          "version": "v1.1 MT",
-          "versionCode": 2026,
-          "sha256": "0faefbb289f3209e5ceafc5e221e4bc06831fba826be0857a80e2f46c1554db5",
-          "size": 11178,
-          "file": "files/mt.number_converter-2026.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.number_converter-2026.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "mt.number_converter",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 1,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1786697736305
-        }
-      ],
-      "developer": "Maharna's_Tech"
-    },
-    {
-      "id": "mt.oxford_english.dictionary",
-      "name": "mt.oxford_english.dictionary",
-      "description": "mt.oxford_english.dictionary",
-      "icon": "icons/4eda4d45e8c314325541fe6c6410e437624e9dc833b9debe264d07e0bcb3c715.webp",
-      "versions": [
-        {
-          "version": "v4.0.0 MT",
-          "versionCode": 2026,
-          "sha256": "4eda4d45e8c314325541fe6c6410e437624e9dc833b9debe264d07e0bcb3c715",
-          "size": 7695,
-          "file": "files/mt.oxford_english.dictionary-2026.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.oxford_english.dictionary-2026.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "mt.oxford_english.dictionary",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 1,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1786697704098
-        }
-      ],
-      "developer": "Maharna's_Tech"
-    },
-    {
-      "id": "com.android.settings.new",
-      "name": "MT浏览器",
-      "description": "内置75种搜索引擎，输入关键词，点击立即开始搜索。入口在插件中心设置里面！！！",
-      "icon": "icons/27745202a6066fddd2cd4ebd0de65eb323f205445846e35fecba21c378246754.webp",
-      "versions": [
-        {
-          "version": "v1.2",
-          "versionCode": 12,
-          "sha256": "27745202a6066fddd2cd4ebd0de65eb323f205445846e35fecba21c378246754",
-          "size": 99213,
-          "file": "files/com.android.settings.new-12.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.android.settings.new-12.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "内置75种搜索引擎，输入关键词，点击立即开始搜索。入口在插件中心设置里面！！！",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1790049525522
-        }
-      ],
-      "developer": "鹏鹤明志"
-    },
-    {
-      "id": "com.nexuszero.mt",
-      "name": "NEXUS MT Ultimate",
-      "description": "Türkçe DEX/Smali/WebSocket/XREF/diff kanıt çalışma merkezi",
+      "id": "com.mtplugin.m3u8downloader",
+      "name": "M3U8下载器",
+      "description": "多任务并发M3U8视频下载器，支持断点续传、仅WIFI下载、自动合并、请求头管理、失败片段重试/忽略",
       "icon": "",
       "versions": [
         {
-          "version": "5.0.0-alpha4",
-          "versionCode": 8,
-          "sha256": "0a7919c212d22d49730ae4a536ca9a77f8e35faf694c2d12687d1998d644d483",
-          "size": 8956,
-          "file": "files/com.nexuszero.mt-8.mtp",
+          "version": "v1.3.1",
+          "versionCode": 7,
+          "sha256": "990b285ee2304205e6a5be7afb2f03355228695337781ffb73e7d471f580c485",
+          "size": 50066,
+          "file": "files/com.mtplugin.m3u8downloader-7.mtp",
           "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.nexuszero.mt-8.mtp",
-          "minAndroid": 21,
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.mtplugin.m3u8downloader-7.mtp",
+          "minAndroid": 26,
           "minHost": 0,
-          "notes": "Türkçe DEX/Smali/WebSocket/XREF/diff kanıt çalışma merkezi",
+          "notes": "多任务并发M3U8视频下载器，支持断点续传、仅WIFI下载、自动合并、请求头管理、失败片段重试/忽略",
           "published": "",
           "sdk": 3,
           "interfaces": {
             "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 6,
+            "TextEditorToolMenu": 0,
             "TranslationEngine": 0,
             "TextEditorFunction": 0
           },
-          "updatedAt": 1790750594062
+          "updatedAt": 1786378206441
         }
       ],
-      "developer": "frknozdmr"
-    },
-    {
-      "id": "com.example.postpreview",
-      "name": "Post Preview",
-      "description": "Preview BBCode post content in text editor",
-      "icon": "icons/0faf5421645298ddcd26e25eb5dffbb4e17aba9d9926f89d867d8ad3903d2b6a.webp",
-      "versions": [
-        {
-          "version": "v1.0",
-          "versionCode": 1,
-          "sha256": "0faf5421645298ddcd26e25eb5dffbb4e17aba9d9926f89d867d8ad3903d2b6a",
-          "size": 12932,
-          "file": "files/com.example.postpreview-1.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.example.postpreview-1.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Preview BBCode post content in text editor",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 1,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1788327013443
-        }
-      ],
-      "developer": "闲云野鹤"
-    },
-    {
-      "id": "puppy.qy.plugin",
-      "name": "puppy.qy.plugin",
-      "description": "puppy.qy.plugin",
-      "icon": "icons/d899f403511ac0ed7700be04410e93bf05cb5259a1eae00a7765eecc26967088.png",
-      "versions": [
-        {
-          "version": "v1.0",
-          "versionCode": 1,
-          "sha256": "d899f403511ac0ed7700be04410e93bf05cb5259a1eae00a7765eecc26967088",
-          "size": 218005,
-          "file": "files/puppy.qy.plugin-1.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/puppy.qy.plugin-1.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "puppy.qy.plugin",
-          "published": "",
-          "sdk": 2,
-          "interfaces": {
-            "TranslationEngine": 1
-          },
-          "updatedAt": 1765826579575
-        }
-      ],
-      "developer": "七友"
+      "developer": "我的耳机可以绕脖子两圈"
     },
     {
       "id": "rime.mabiao_hu16000",
@@ -1245,34 +753,124 @@
       "developer": "合欢萱草"
     },
     {
-      "id": "com.ai.plugin.smali.commenter",
-      "name": "Smali AI Commenter",
-      "description": "Add AI-generated comments to Smali code. Supports DeepSeek, OpenAI, Claude, Gemini and other AI models.",
-      "icon": "icons/84ea55ea2620f178d14d272293740253d35f48d49c96b24acc671700ba5bd77d.png",
+      "id": "com.vlrs.plugin.deepl_transl",
+      "name": "com.vlrs.plugin.deepl_transl",
+      "description": "com.vlrs.plugin.deepl_transl",
+      "icon": "icons/0bfcb0dc33ebb485e043a6c6e931f03c5d0eff1b89571980a5527dc9aca53016.png",
+      "versions": [
+        {
+          "version": "v1.16",
+          "versionCode": 16,
+          "sha256": "0bfcb0dc33ebb485e043a6c6e931f03c5d0eff1b89571980a5527dc9aca53016",
+          "size": 17103,
+          "file": "files/com.vlrs.plugin.deepl_transl-16.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.vlrs.plugin.deepl_transl-16.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "com.vlrs.plugin.deepl_transl",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 3,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1785857368436
+        }
+      ],
+      "developer": "vladrevers"
+    },
+    {
+      "id": "dat.mt.cccyn",
+      "name": "dat Encrypt/Decrypt",
+      "description": "Encrypt/decrypt FuncConfig.dat / UiConfig.dat / GblConfig.json",
+      "icon": "icons/9251ede23f788884cf765181c2aa6e4e413aa764deb4665addb0a72b9e5f7b8f.webp",
+      "versions": [
+        {
+          "version": "168",
+          "versionCode": 168,
+          "sha256": "9251ede23f788884cf765181c2aa6e4e413aa764deb4665addb0a72b9e5f7b8f",
+          "size": 50668,
+          "file": "files/dat.mt.cccyn-168.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/dat.mt.cccyn-168.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "Encrypt/decrypt FuncConfig.dat / UiConfig.dat / GblConfig.json",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 2,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1785231179194
+        }
+      ],
+      "developer": "Gingko"
+    },
+    {
+      "id": "com.linecode.manifestinspector",
+      "name": "Manifest 审计助手",
+      "description": "在文本编辑器中一键分析 AndroidManifest.xml 的权限、组件暴露、Android 12+ 兼容性与改包风险。",
+      "icon": "",
+      "versions": [
+        {
+          "version": "1.0.1",
+          "versionCode": 2,
+          "sha256": "4b74776e12b0d8cfefd6e57909f824763a074271d0adbb2fa9fb60091ea7fcc2",
+          "size": 14846,
+          "file": "files/com.linecode.manifestinspector-2.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.linecode.manifestinspector-2.mtp",
+          "minAndroid": 23,
+          "minHost": 26000,
+          "notes": "在文本编辑器中一键分析 AndroidManifest.xml 的权限、组件暴露、Android 12+ 兼容性与改包风险。",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1783799502590
+        }
+      ],
+      "developer": "七年凉城安浮生°"
+    },
+    {
+      "id": "com.andreykamd4pda.expandline",
+      "name": "Expand Line Selection",
+      "description": "Expand selection line by line",
+      "icon": "icons/4db46f220388cf47e8d8a5d6fc2e54d5e97e5db0c470829c317d96ebace181bf.webp",
       "versions": [
         {
           "version": "v1.0",
           "versionCode": 1,
-          "sha256": "84ea55ea2620f178d14d272293740253d35f48d49c96b24acc671700ba5bd77d",
-          "size": 11822,
-          "file": "files/com.ai.plugin.smali.commenter-1.mtp",
+          "sha256": "4db46f220388cf47e8d8a5d6fc2e54d5e97e5db0c470829c317d96ebace181bf",
+          "size": 12046,
+          "file": "files/com.andreykamd4pda.expandline-1.mtp",
           "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.ai.plugin.smali.commenter-1.mtp",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.andreykamd4pda.expandline-1.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "Add AI-generated comments to Smali code. Supports DeepSeek, OpenAI, Claude, Gemini and other AI models.",
+          "notes": "Expand selection line by line",
           "published": "",
           "sdk": 3,
           "interfaces": {
             "TextEditorFloatingMenu": 0,
             "TextEditorToolMenu": 0,
             "TranslationEngine": 0,
-            "TextEditorFunction": 1
+            "TextEditorFunction": 3
           },
-          "updatedAt": 1774698559272
+          "updatedAt": 1783358432389
         }
       ],
-      "developer": "ppx"
+      "developer": "drakulaboy"
     },
     {
       "id": "impl.mt.previewer",
@@ -1305,6 +903,276 @@
       "developer": "sjlz"
     },
     {
+      "id": "bc.demo.gjld",
+      "name": "硅基流动多模型文本处理",
+      "description": "使用 硅基流动API 进行文本处理，支持多种语言，如需反馈请到\nMT论坛→MT专区→插件交流→发表新主题反馈\n或者到插件设置中最下面，跳转到帖子进行反馈",
+      "icon": "icons/33b9879640f8d9557f295b8da53299593a92d42be32c4174c699106e356d8f05.webp",
+      "versions": [
+        {
+          "version": "v1.0.8",
+          "versionCode": 9,
+          "sha256": "33b9879640f8d9557f295b8da53299593a92d42be32c4174c699106e356d8f05",
+          "size": 11798,
+          "file": "files/bc.demo.gjld-9.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bc.demo.gjld-9.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "使用 硅基流动API 进行文本处理，支持多种语言，如需反馈请到\nMT论坛→MT专区→插件交流→发表新主题反馈\n或者到插件设置中最下面，跳转到帖子进行反馈",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1782529124078
+        }
+      ],
+      "developer": "呀咩带"
+    },
+    {
+      "id": "com.kggzs.cn.mt",
+      "name": "AI Smart Programming Assistant",
+      "description": "An AI-powered smart programming assistant plugin for MT Manager, providing intelligent code analysis, optimization suggestions, and issue diagnosis services. Deeply integrated with AI model, supporting full-text analysis and quick code snippet diagnosis. Also includes practical development tools such as encoding/decoding, hash calculation, and timestamp conversion to comprehensively improve mobile programming efficiency.",
+      "icon": "icons/bec737d4bb3132209a4129f7871700e253e0f1be3f0574d2f23c4bd73b06c0c3.webp",
+      "versions": [
+        {
+          "version": "v2.1.1",
+          "versionCode": 6,
+          "sha256": "bec737d4bb3132209a4129f7871700e253e0f1be3f0574d2f23c4bd73b06c0c3",
+          "size": 187769,
+          "file": "files/com.kggzs.cn.mt-6.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.kggzs.cn.mt-6.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "An AI-powered smart programming assistant plugin for MT Manager, providing intelligent code analysis, optimization suggestions, and issue diagnosis services. Deeply integrated with AI model, supporting full-text analysis and quick code snippet diagnosis. Also includes practical development tools such as encoding/decoding, hash calculation, and timestamp conversion to comprehensively improve mobile programming efficiency.",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 3,
+            "TextEditorToolMenu": 2,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1782307513531
+        }
+      ],
+      "developer": "康哥工作室"
+    },
+    {
+      "id": "com.md.preview",
+      "name": "Markdown Preview",
+      "description": "Preview Markdown files with KaTeX math and syntax highlighting",
+      "icon": "",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "versionCode": 1,
+          "sha256": "6a9ef0b314be5b4d8bc90b56f9b7676e43344c847ba4934cfaa890546309c10f",
+          "size": 330032,
+          "file": "files/com.md.preview-1.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.md.preview-1.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "Preview Markdown files with KaTeX math and syntax highlighting",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1780248757361
+        }
+      ],
+      "developer": "Minus"
+    },
+    {
+      "id": "cai.goole.translate",
+      "name": "Google Translate (PA)",
+      "description": "Uses the Google translateHtml endpoint\\n",
+      "icon": "icons/df515ea60d90ffef9f3af534f81572a2f25309e2eafaf35ca3eefc4208a58b95.webp",
+      "versions": [
+        {
+          "version": "v1.0",
+          "versionCode": 1,
+          "sha256": "df515ea60d90ffef9f3af534f81572a2f25309e2eafaf35ca3eefc4208a58b95",
+          "size": 42445,
+          "file": "files/cai.goole.translate-1.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/cai.goole.translate-1.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "Uses the Google translateHtml endpoint\\n",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1776834556095
+        }
+      ],
+      "developer": "菜燃乐"
+    },
+    {
+      "id": "bin.mt.plugin.bypasshelper",
+      "name": "Bypass Helper",
+      "description": "Plugin untuk injeksi Smali dan Bypass cepat by Yusuf Ardiansyah",
+      "icon": "icons/addd9e29cfe4a8332140637092be31f43af7f7764ed2c84f86a9d31d2190263d.webp",
+      "versions": [
+        {
+          "version": "v1.3.1",
+          "versionCode": 5,
+          "sha256": "addd9e29cfe4a8332140637092be31f43af7f7764ed2c84f86a9d31d2190263d",
+          "size": 15528,
+          "file": "files/bin.mt.plugin.bypasshelper-5.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.mt.plugin.bypasshelper-5.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "Plugin untuk injeksi Smali dan Bypass cepat by Yusuf Ardiansyah",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 9,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1776553737009
+        }
+      ],
+      "developer": "yusufardiansyah"
+    },
+    {
+      "id": "com.hand.hex_to_dec",
+      "name": "Hex To Dec",
+      "description": "Convert hexadecimal numbers (starting with 0x) in the selected or all text to decimal",
+      "icon": "icons/c0ba3b6fd98243c483911f380e715b9b875cb0e24eedc13adbaa238872c9d005.webp",
+      "versions": [
+        {
+          "version": "v1.0.260409",
+          "versionCode": 1,
+          "sha256": "c0ba3b6fd98243c483911f380e715b9b875cb0e24eedc13adbaa238872c9d005",
+          "size": 23651,
+          "file": "files/com.hand.hex_to_dec-1.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.hand.hex_to_dec-1.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "Convert hexadecimal numbers (starting with 0x) in the selected or all text to decimal",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 1,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1775754504719
+        }
+      ],
+      "developer": "THKAMT"
+    },
+    {
+      "id": "com.ai.plugin.smali.commenter",
+      "name": "Smali AI Commenter",
+      "description": "Add AI-generated comments to Smali code. Supports DeepSeek, OpenAI, Claude, Gemini and other AI models.",
+      "icon": "icons/84ea55ea2620f178d14d272293740253d35f48d49c96b24acc671700ba5bd77d.png",
+      "versions": [
+        {
+          "version": "v1.0",
+          "versionCode": 1,
+          "sha256": "84ea55ea2620f178d14d272293740253d35f48d49c96b24acc671700ba5bd77d",
+          "size": 11822,
+          "file": "files/com.ai.plugin.smali.commenter-1.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.ai.plugin.smali.commenter-1.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "Add AI-generated comments to Smali code. Supports DeepSeek, OpenAI, Claude, Gemini and other AI models.",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1774698559272
+        }
+      ],
+      "developer": "ppx"
+    },
+    {
+      "id": "bin.plugin.transcoder",
+      "name": "Encoder Decoder",
+      "description": "Supports text encoding and decoding for Base64, Base32, URL, Unicode, and Hex",
+      "icon": "icons/d1060123d4fcfb8c5ef962875b7636db715d22d7af948c85192a48834f4f7f5f.webp",
+      "versions": [
+        {
+          "version": "v1.0",
+          "versionCode": 1,
+          "sha256": "d1060123d4fcfb8c5ef962875b7636db715d22d7af948c85192a48834f4f7f5f",
+          "size": 22239,
+          "file": "files/bin.plugin.transcoder-1.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.transcoder-1.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "Supports text encoding and decoding for Base64, Base32, URL, Unicode, and Hex",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 1,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1774541561875
+        }
+      ],
+      "developer": "Bin"
+    },
+    {
+      "id": "zyplugin.luaj.format",
+      "name": "Luaj代码查错格式化",
+      "description": "查错并格式化Luaj语法代码\n使用教程：\n设置编辑快捷功能栏添加Luaj代码查错格式化。\n(注意代码规范不支持中文命名)\n即可在编辑器底栏添加绑定使用",
+      "icon": "icons/a4cdbc3532cd5040d2a2036864ef75ca278973200d60d49193ee3b70040cdaa1.webp",
+      "versions": [
+        {
+          "version": "v26.03.17",
+          "versionCode": 4,
+          "sha256": "a4cdbc3532cd5040d2a2036864ef75ca278973200d60d49193ee3b70040cdaa1",
+          "size": 225423,
+          "file": "files/zyplugin.luaj.format-4.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/zyplugin.luaj.format-4.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "查错并格式化Luaj语法代码\n使用教程：\n设置编辑快捷功能栏添加Luaj代码查错格式化。\n(注意代码规范不支持中文命名)\n即可在编辑器底栏添加绑定使用",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1773721004303
+        }
+      ],
+      "developer": "ZY彩虹海"
+    },
+    {
       "id": "Han.text_editor_helper",
       "name": "Text Editor Assistant",
       "description": "Shortcut Bar Functions:\\",
@@ -1335,91 +1203,34 @@
       "developer": "情非得已c"
     },
     {
-      "id": "com.cloudbin.tgcl",
-      "name": "TGCL Bin Decoder",
-      "description": "In-place decode/encode CloudObjects Objects.level.bin (TGCL) to/from JSON",
-      "icon": "icons/281260eea86235855d25f7cef1afe57c327b7787d1a69cd5e9d52311ed934902.webp",
-      "versions": [
-        {
-          "version": "v1.0",
-          "versionCode": 1,
-          "sha256": "281260eea86235855d25f7cef1afe57c327b7787d1a69cd5e9d52311ed934902",
-          "size": 31784,
-          "file": "files/com.cloudbin.tgcl-1.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.cloudbin.tgcl-1.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "In-place decode/encode CloudObjects Objects.level.bin (TGCL) to/from JSON",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 1,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1787124654372
-        }
-      ],
-      "developer": "县小威"
-    },
-    {
-      "id": "mt.plugin.translatekit",
-      "name": "TranslateKit",
-      "description": "Translate Android strings with Gemini, OpenAI, Claude, OpenRouter, or any OpenAI-compatible endpoint",
-      "icon": "icons/88a637dde86412dc72f38503075515000b9fdbcada22e88bcb2c38c5561ff9d6.png",
-      "versions": [
-        {
-          "version": "0.6.1",
-          "versionCode": 15,
-          "sha256": "88a637dde86412dc72f38503075515000b9fdbcada22e88bcb2c38c5561ff9d6",
-          "size": 227240,
-          "file": "files/mt.plugin.translatekit-15.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.plugin.translatekit-15.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "Translate Android strings with Gemini, OpenAI, Claude, OpenRouter, or any OpenAI-compatible endpoint",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 1,
-            "TextEditorToolMenu": 1,
-            "TranslationEngine": 2,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1788856143528
-        }
-      ],
-      "developer": "binzedd"
-    },
-    {
-      "id": "tw.david082321",
-      "name": "tw.david082321",
-      "description": "tw.david082321",
-      "icon": "",
+      "id": "cai.plugin.caiyun",
+      "name": "彩云翻译",
+      "description": "使用彩云小译网页接口\\nhttps://fanyi.caiyunapp.com\\n适合日常、英中学术、擅长小说论文等长文翻译",
+      "icon": "icons/d9091ce355fbc6fab58d90530f897ae4f0a713b166490904ea0492ee82833acc.webp",
       "versions": [
         {
           "version": "v1.1",
           "versionCode": 2,
-          "sha256": "8c9bb41f1ac587815f533bfb05b9d048e05bf510d9a9aabf4ddebbddd9e0ce1d",
-          "size": 192810,
-          "file": "files/tw.david082321-2.mtp",
+          "sha256": "d9091ce355fbc6fab58d90530f897ae4f0a713b166490904ea0492ee82833acc",
+          "size": 30187,
+          "file": "files/cai.plugin.caiyun-2.mtp",
           "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/tw.david082321-2.mtp",
-          "minAndroid": 21,
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/cai.plugin.caiyun-2.mtp",
+          "minAndroid": 24,
           "minHost": 0,
-          "notes": "tw.david082321",
+          "notes": "使用彩云小译网页接口\\nhttps://fanyi.caiyunapp.com\\n适合日常、英中学术、擅长小说论文等长文翻译",
           "published": "",
-          "sdk": 2,
+          "sdk": 3,
           "interfaces": {
-            "TranslationEngine": 1
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
           },
-          "updatedAt": 1717340192375
+          "updatedAt": 1773071772105
         }
       ],
-      "developer": "david082321"
+      "developer": "菜燃乐"
     },
     {
       "id": "vlrs.plugin.translator.google_alt",
@@ -1452,34 +1263,214 @@
       "developer": "vladrevers"
     },
     {
-      "id": "vlrs.plugin.translator.microsoft",
-      "name": "vlrs.plugin.translator.microsoft",
-      "description": "vlrs.plugin.translator.microsoft",
-      "icon": "icons/abab612571be1fce1c275a7bca9a7082bc58a3fa87b8fb1740d395cf4fdc29f3.png",
+      "id": "lon.tools.qp",
+      "name": "文件预览器",
+      "description": "\\",
+      "icon": "icons/2f61972283fdd393189eefab60883b77e861ed783d88c25bf2406b165437c31a.webp",
       "versions": [
         {
-          "version": "v1.8",
-          "versionCode": 9,
-          "sha256": "abab612571be1fce1c275a7bca9a7082bc58a3fa87b8fb1740d395cf4fdc29f3",
-          "size": 9378,
-          "file": "files/vlrs.plugin.translator.microsoft-9.mtp",
+          "version": "v0.0.15-beta",
+          "versionCode": 15,
+          "sha256": "2f61972283fdd393189eefab60883b77e861ed783d88c25bf2406b165437c31a",
+          "size": 1026532,
+          "file": "files/lon.tools.qp-15.mtp",
           "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/vlrs.plugin.translator.microsoft-9.mtp",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/lon.tools.qp-15.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "vlrs.plugin.translator.microsoft",
+          "notes": "\\",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1773006251256
+        }
+      ],
+      "developer": "胧"
+    },
+    {
+      "id": "lon.tools.ls",
+      "name": "轻量脚本",
+      "description": "在mt上运行js脚本实现自定义功能",
+      "icon": "icons/4c9c9603466cfdb39b6b54e46234077ed4ac64764984760d5b98c141c03d45c5.webp",
+      "versions": [
+        {
+          "version": "v1.0",
+          "versionCode": 1,
+          "sha256": "4c9c9603466cfdb39b6b54e46234077ed4ac64764984760d5b98c141c03d45c5",
+          "size": 541076,
+          "file": "files/lon.tools.ls-1.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/lon.tools.ls-1.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "在mt上运行js脚本实现自定义功能",
           "published": "",
           "sdk": 3,
           "interfaces": {
             "TextEditorFloatingMenu": 0,
             "TextEditorToolMenu": 0,
-            "TranslationEngine": 2,
-            "TextEditorFunction": 0
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
           },
-          "updatedAt": 1788811270576
+          "updatedAt": 1772712060659
         }
       ],
-      "developer": "vladrevers"
+      "developer": "胧"
+    },
+    {
+      "id": "bin.plugin.translator.google",
+      "name": "Google Translator",
+      "description": "Using the Google translate web interface.\\nhttps://translate.google.com",
+      "icon": "icons/f6949eee5f0cef084a984551f29b17a56c5a1a1b3443fe63c3c1c6363c90149e.png",
+      "versions": [
+        {
+          "version": "v1.5",
+          "versionCode": 6,
+          "sha256": "f6949eee5f0cef084a984551f29b17a56c5a1a1b3443fe63c3c1c6363c90149e",
+          "size": 17224,
+          "file": "files/bin.plugin.translator.google-6.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.google-6.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "Using the Google translate web interface.\\nhttps://translate.google.com",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772458366953
+        }
+      ],
+      "developer": "Bin"
+    },
+    {
+      "id": "bin.plugin.translator.google_cn",
+      "name": "谷歌翻译CN",
+      "description": "可在国内使用的谷歌翻译",
+      "icon": "icons/d2742a201e038db6e005a5e4fbb4489cbf95e156750518987adadb824a673669.png",
+      "versions": [
+        {
+          "version": "v3.4",
+          "versionCode": 20,
+          "sha256": "d2742a201e038db6e005a5e4fbb4489cbf95e156750518987adadb824a673669",
+          "size": 19363,
+          "file": "files/bin.plugin.translator.google_cn-20.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.google_cn-20.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "可在国内使用的谷歌翻译",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772458312842
+        }
+      ],
+      "developer": "Bin"
+    },
+    {
+      "id": "impl.mt.ai",
+      "name": "impl.mt.ai",
+      "description": "impl.mt.ai",
+      "icon": "icons/f3d57b3e55af779d216ccea8455736561759c648a6172f6a698f1878acdfac33.jpg",
+      "versions": [
+        {
+          "version": "v1.0",
+          "versionCode": 1,
+          "sha256": "f3d57b3e55af779d216ccea8455736561759c648a6172f6a698f1878acdfac33",
+          "size": 198689,
+          "file": "files/impl.mt.ai-1.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/impl.mt.ai-1.mtp",
+          "minAndroid": 26,
+          "minHost": 0,
+          "notes": "impl.mt.ai",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 1,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1772408410142
+        }
+      ],
+      "developer": "sjlz"
+    },
+    {
+      "id": "bin.plugin.translator.baiduapi",
+      "name": "Baidu Translator (API)",
+      "description": "Using the API interface of Baidu Translate Open Platform, you need to apply for an APP ID and SecurityKey by yourself.",
+      "icon": "icons/a015efa9e03029e06406727b251411465f23b7c8dd51d279b7883e79f610a9fe.png",
+      "versions": [
+        {
+          "version": "v1.3",
+          "versionCode": 6,
+          "sha256": "a015efa9e03029e06406727b251411465f23b7c8dd51d279b7883e79f610a9fe",
+          "size": 28144,
+          "file": "files/bin.plugin.translator.baiduapi-6.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.baiduapi-6.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "Using the API interface of Baidu Translate Open Platform, you need to apply for an APP ID and SecurityKey by yourself.",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772394223056
+        }
+      ],
+      "developer": "Bin"
+    },
+    {
+      "id": "bin.plugin.translator.baidu",
+      "name": "Baidu Translator",
+      "description": "Using the Baidu translate web interface.\\nhttps://fanyi.baidu.com",
+      "icon": "icons/dc836a639d8c5501cb0787283a443026e6c11be45f443b3e29f4cf272cc4558b.png",
+      "versions": [
+        {
+          "version": "v1.1",
+          "versionCode": 2,
+          "sha256": "dc836a639d8c5501cb0787283a443026e6c11be45f443b3e29f4cf272cc4558b",
+          "size": 28494,
+          "file": "files/bin.plugin.translator.baidu-2.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.baidu-2.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "Using the Baidu translate web interface.\\nhttps://fanyi.baidu.com",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772393693648
+        }
+      ],
+      "developer": "Bin"
     },
     {
       "id": "bin.plugin.translator.yandex",
@@ -1542,126 +1533,6 @@
       "developer": "Bin"
     },
     {
-      "id": "com.artchen520.expander",
-      "name": "代码修补",
-      "description": "IDEA 风格的安卓代码修补工具：缩写一键展开（自定义分组+按文件类型生效）；框选批量注释（对齐缩进列，注释符跟随文件类型）；环绕包裹（自定义模板库）；顶部编辑菜单分组开关面板。项目地址：https://github.com/Artchen520/MTexpander",
-      "icon": "icons/747ad434ced87374033c87f11c2dbdba476f4be09b839d862a0d6310653fc4a4.webp",
-      "versions": [
-        {
-          "version": "v4.5.2",
-          "versionCode": 8,
-          "sha256": "747ad434ced87374033c87f11c2dbdba476f4be09b839d862a0d6310653fc4a4",
-          "size": 39818,
-          "file": "files/com.artchen520.expander-8.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.artchen520.expander-8.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "IDEA 风格的安卓代码修补工具：缩写一键展开（自定义分组+按文件类型生效）；框选批量注释（对齐缩进列，注释符跟随文件类型）；环绕包裹（自定义模板库）；顶部编辑菜单分组开关面板。项目地址：https://github.com/Artchen520/MTexpander",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 3,
-            "TextEditorToolMenu": 1,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 3
-          },
-          "updatedAt": 1791083124822
-        }
-      ],
-      "developer": "Artchen"
-    },
-    {
-      "id": "cai.plugin.caiyun",
-      "name": "彩云翻译",
-      "description": "使用彩云小译网页接口\\nhttps://fanyi.caiyunapp.com\\n适合日常、英中学术、擅长小说论文等长文翻译",
-      "icon": "icons/d9091ce355fbc6fab58d90530f897ae4f0a713b166490904ea0492ee82833acc.webp",
-      "versions": [
-        {
-          "version": "v1.1",
-          "versionCode": 2,
-          "sha256": "d9091ce355fbc6fab58d90530f897ae4f0a713b166490904ea0492ee82833acc",
-          "size": 30187,
-          "file": "files/cai.plugin.caiyun-2.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/cai.plugin.caiyun-2.mtp",
-          "minAndroid": 24,
-          "minHost": 0,
-          "notes": "使用彩云小译网页接口\\nhttps://fanyi.caiyunapp.com\\n适合日常、英中学术、擅长小说论文等长文翻译",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 1,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1773071772105
-        }
-      ],
-      "developer": "菜燃乐"
-    },
-    {
-      "id": "lon.tools.qp",
-      "name": "文件预览器",
-      "description": "\\",
-      "icon": "icons/2f61972283fdd393189eefab60883b77e861ed783d88c25bf2406b165437c31a.webp",
-      "versions": [
-        {
-          "version": "v0.0.15-beta",
-          "versionCode": 15,
-          "sha256": "2f61972283fdd393189eefab60883b77e861ed783d88c25bf2406b165437c31a",
-          "size": 1026532,
-          "file": "files/lon.tools.qp-15.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/lon.tools.qp-15.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "\\",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 1,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 1
-          },
-          "updatedAt": 1773006251256
-        }
-      ],
-      "developer": "胧"
-    },
-    {
-      "id": "bc.demo.gjld",
-      "name": "硅基流动多模型文本处理",
-      "description": "使用 硅基流动API 进行文本处理，支持多种语言，如需反馈请到\nMT论坛→MT专区→插件交流→发表新主题反馈\n或者到插件设置中最下面，跳转到帖子进行反馈",
-      "icon": "icons/33b9879640f8d9557f295b8da53299593a92d42be32c4174c699106e356d8f05.webp",
-      "versions": [
-        {
-          "version": "v1.0.8",
-          "versionCode": 9,
-          "sha256": "33b9879640f8d9557f295b8da53299593a92d42be32c4174c699106e356d8f05",
-          "size": 11798,
-          "file": "files/bc.demo.gjld-9.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bc.demo.gjld-9.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "使用 硅基流动API 进行文本处理，支持多种语言，如需反馈请到\nMT论坛→MT专区→插件交流→发表新主题反馈\n或者到插件设置中最下面，跳转到帖子进行反馈",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 1,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1782529124078
-        }
-      ],
-      "developer": "呀咩带"
-    },
-    {
       "id": "bin.plugin.translator.fanjian",
       "name": "繁简互转",
       "description": "繁体中文与简体中文相互转换",
@@ -1692,6 +1563,144 @@
       "developer": "Bin"
     },
     {
+      "id": "bin.plugin.translator.bing",
+      "name": "Bing Translator",
+      "description": "Using the Bing Microsoft translate web interface.\\nhttps://www.bing.com/translator",
+      "icon": "icons/b62a975eb7702ce7022f96e1c8892e785e46a5fa03f8da0e2437c794521760ff.png",
+      "versions": [
+        {
+          "version": "v1.4",
+          "versionCode": 5,
+          "sha256": "b62a975eb7702ce7022f96e1c8892e785e46a5fa03f8da0e2437c794521760ff",
+          "size": 14224,
+          "file": "files/bin.plugin.translator.bing-5.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.bing-5.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "Using the Bing Microsoft translate web interface.\\nhttps://www.bing.com/translator",
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772393194762
+        }
+      ],
+      "developer": "Bin"
+    },
+    {
+      "id": "io.tooldroid.plugin.stringencoder",
+      "name": "io.tooldroid.plugin.stringencoder",
+      "description": "io.tooldroid.plugin.stringencoder",
+      "icon": "icons/d00523c97a0c8be0bba70cf15e83b3a73bc96b95726e044d544ecfcbb7b872ca.png",
+      "versions": [
+        {
+          "version": "v1.4",
+          "versionCode": 5,
+          "sha256": "d00523c97a0c8be0bba70cf15e83b3a73bc96b95726e044d544ecfcbb7b872ca",
+          "size": 19836,
+          "file": "files/io.tooldroid.plugin.stringencoder-5.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/io.tooldroid.plugin.stringencoder-5.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "io.tooldroid.plugin.stringencoder",
+          "published": "",
+          "sdk": 2,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1769682217847
+        }
+      ],
+      "developer": "ToolDroidYT"
+    },
+    {
+      "id": "bin.plugin.translator.google_ctn",
+      "name": "bin.plugin.translator.google_ctn",
+      "description": "bin.plugin.translator.google_ctn",
+      "icon": "icons/4af8482f066f5ec195594bb3c70d1c9d09794c2244cc2914f0a77ca0bf1ca342.png",
+      "versions": [
+        {
+          "version": "v1.1",
+          "versionCode": 5,
+          "sha256": "4af8482f066f5ec195594bb3c70d1c9d09794c2244cc2914f0a77ca0bf1ca342",
+          "size": 70527,
+          "file": "files/bin.plugin.translator.google_ctn-5.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.google_ctn-5.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "bin.plugin.translator.google_ctn",
+          "published": "",
+          "sdk": 2,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1768065224271
+        }
+      ],
+      "developer": "ctnBobong32"
+    },
+    {
+      "id": "puppy.qy.plugin",
+      "name": "puppy.qy.plugin",
+      "description": "puppy.qy.plugin",
+      "icon": "icons/d899f403511ac0ed7700be04410e93bf05cb5259a1eae00a7765eecc26967088.png",
+      "versions": [
+        {
+          "version": "v1.0",
+          "versionCode": 1,
+          "sha256": "d899f403511ac0ed7700be04410e93bf05cb5259a1eae00a7765eecc26967088",
+          "size": 218005,
+          "file": "files/puppy.qy.plugin-1.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/puppy.qy.plugin-1.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "puppy.qy.plugin",
+          "published": "",
+          "sdk": 2,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1765826579575
+        }
+      ],
+      "developer": "七友"
+    },
+    {
+      "id": "bc.deepseek.demo",
+      "name": "DeepSeek翻译",
+      "description": "使用DeepSeekAPI进行文本翻译处理，支持多种语言",
+      "icon": "icons/fd4604e22b909b4f6eac72aefa19361f711a010a5622742f78daef876b7fc44e.jpg",
+      "versions": [
+        {
+          "version": "v1.1",
+          "versionCode": 2,
+          "sha256": "fd4604e22b909b4f6eac72aefa19361f711a010a5622742f78daef876b7fc44e",
+          "size": 256043,
+          "file": "files/bc.deepseek.demo-2.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bc.deepseek.demo-2.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "使用DeepSeekAPI进行文本翻译处理，支持多种语言",
+          "published": "",
+          "sdk": 2,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1758630678958
+        }
+      ],
+      "developer": "bczzyyds"
+    },
+    {
       "id": "jiaxin149.mt.tencent_translation",
       "name": "腾讯云免费翻译",
       "description": "腾讯云免费翻译，每月免费500万字符(约6本《三体》三部曲字数)，需要在插件设置里设置腾讯云key\n  详情见https://console.cloud.tencent.com/tmt",
@@ -1719,94 +1728,85 @@
       "developer": "QQ"
     },
     {
-      "id": "mt.gdtool",
-      "name": "解析工具",
-      "description": "提取/写回车标图片 与 SO 文件解析/写回 与 dat 加解密",
-      "icon": "icons/fe260726abcb02d2c6ba90cd4e07c134cf3394864e4dd04244db32f42a8d5ef9.webp",
-      "versions": [
-        {
-          "version": "1.1",
-          "versionCode": 2,
-          "sha256": "fe260726abcb02d2c6ba90cd4e07c134cf3394864e4dd04244db32f42a8d5ef9",
-          "size": 50451,
-          "file": "files/mt.gdtool-2.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.gdtool-2.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "提取/写回车标图片 与 SO 文件解析/写回 与 dat 加解密",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 7,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1787839514110
-        }
-      ],
-      "developer": "cmo"
-    },
-    {
-      "id": "bin.plugin.translator.google_cn",
-      "name": "谷歌翻译CN",
-      "description": "可在国内使用的谷歌翻译",
-      "icon": "icons/d2742a201e038db6e005a5e4fbb4489cbf95e156750518987adadb824a673669.png",
-      "versions": [
-        {
-          "version": "v3.4",
-          "versionCode": 20,
-          "sha256": "d2742a201e038db6e005a5e4fbb4489cbf95e156750518987adadb824a673669",
-          "size": 19363,
-          "file": "files/bin.plugin.translator.google_cn-20.mtp",
-          "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.google_cn-20.mtp",
-          "minAndroid": 21,
-          "minHost": 0,
-          "notes": "可在国内使用的谷歌翻译",
-          "published": "",
-          "sdk": 3,
-          "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 1,
-            "TextEditorFunction": 0
-          },
-          "updatedAt": 1772458312842
-        }
-      ],
-      "developer": "Bin"
-    },
-    {
-      "id": "lon.tools.ls",
-      "name": "轻量脚本",
-      "description": "在mt上运行js脚本实现自定义功能",
-      "icon": "icons/4c9c9603466cfdb39b6b54e46234077ed4ac64764984760d5b98c141c03d45c5.webp",
+      "id": "io.kiber.plugin.formatix",
+      "name": "io.kiber.plugin.formatix",
+      "description": "io.kiber.plugin.formatix",
+      "icon": "icons/916bb4211eaba26f20e61abe1ceb1ad4adb82b35a04dc3a95b48b0da05b912d3.png",
       "versions": [
         {
           "version": "v1.0",
           "versionCode": 1,
-          "sha256": "4c9c9603466cfdb39b6b54e46234077ed4ac64764984760d5b98c141c03d45c5",
-          "size": 541076,
-          "file": "files/lon.tools.ls-1.mtp",
+          "sha256": "916bb4211eaba26f20e61abe1ceb1ad4adb82b35a04dc3a95b48b0da05b912d3",
+          "size": 12584,
+          "file": "files/io.kiber.plugin.formatix-1.mtp",
           "source": "factorialovich",
-          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/lon.tools.ls-1.mtp",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/io.kiber.plugin.formatix-1.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "在mt上运行js脚本实现自定义功能",
+          "notes": "io.kiber.plugin.formatix",
           "published": "",
-          "sdk": 3,
+          "sdk": 2,
           "interfaces": {
-            "TextEditorFloatingMenu": 0,
-            "TextEditorToolMenu": 0,
-            "TranslationEngine": 0,
-            "TextEditorFunction": 1
+            "TranslationEngine": 1
           },
-          "updatedAt": 1772712060659
+          "updatedAt": 1746723705260
         }
       ],
-      "developer": "胧"
+      "developer": "oleg543"
+    },
+    {
+      "id": "tw.david082321",
+      "name": "tw.david082321",
+      "description": "tw.david082321",
+      "icon": "",
+      "versions": [
+        {
+          "version": "v1.1",
+          "versionCode": 2,
+          "sha256": "8c9bb41f1ac587815f533bfb05b9d048e05bf510d9a9aabf4ddebbddd9e0ce1d",
+          "size": 192810,
+          "file": "files/tw.david082321-2.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/tw.david082321-2.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "tw.david082321",
+          "published": "",
+          "sdk": 2,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1717340192375
+        }
+      ],
+      "developer": "david082321"
+    },
+    {
+      "id": "com.whitesev.plugin.whitesev",
+      "name": "com.whitesev.plugin.whitesev",
+      "description": "com.whitesev.plugin.whitesev",
+      "icon": "",
+      "versions": [
+        {
+          "version": "v0.2",
+          "versionCode": 2,
+          "sha256": "c7881e43cecdd44cb20e4a9f0d57575e7c6fe58a8fd0068b42dadbc0a16db22b",
+          "size": 9221,
+          "file": "files/com.whitesev.plugin.whitesev-2.mtp",
+          "source": "factorialovich",
+          "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.whitesev.plugin.whitesev-2.mtp",
+          "minAndroid": 21,
+          "minHost": 0,
+          "notes": "com.whitesev.plugin.whitesev",
+          "published": "",
+          "sdk": 1,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1618913782443
+        }
+      ],
+      "developer": "戒酒的李白"
     }
   ],
   "providers": [

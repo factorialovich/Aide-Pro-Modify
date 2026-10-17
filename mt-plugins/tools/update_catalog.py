@@ -1,4 +1,6 @@
 """Rebuild mt-plugins/catalog.json from ready-to-install MTP packages, keeping version history."""
+from datetime import datetime, timezone
+import subprocess
 import hashlib
 import io
 import json
@@ -62,6 +64,32 @@ def inspect(data):
         return manifest, labels, icon, icon_data
 
 
+def updated_at(version):
+    stamp=version.get('updatedAt',0)
+    if type(stamp) is int and stamp>0:return stamp
+    published=version.get('published')
+    if not isinstance(published,str) or not published:return 0
+    try:
+        value=datetime.fromisoformat(published.replace('Z','+00:00'))
+        if value.tzinfo is None:value=value.replace(tzinfo=timezone.utc)
+        return max(0,int(value.timestamp()*1000))
+    except (ValueError,OverflowError,OSError):return 0
+
+
+def order_key(item):
+    versions=item.get('versions',[])
+    stamp=updated_at(versions[0]) if versions else 0
+    return -stamp,item.get('name','').casefold(),item['id']
+
+
+def package_date(root,filename):
+    # Checkout mtimes change on every CI run; use the immutable package's commit date.
+    result=subprocess.run(['git','-C',str(root),'log','-1','--format=%ct','--',filename],
+        capture_output=True,text=True,timeout=10)
+    stamp=result.stdout.strip()
+    return int(stamp)*1000 if result.returncode==0 and stamp.isdigit() else int(time.time()*1000)
+
+
 def update(root):
     path = root / 'catalog.json'
     previous = json.loads(path.read_text()) if path.exists() else {'schema':91, 'revision':0, 'items':[]}
@@ -119,7 +147,12 @@ def update(root):
                     version.update(notes=past.get('notes',version['notes']), published=past.get('published',''))
                     for field in ['interfaces','updatedAt']:
                         if field in past:version[field]=past[field]
-    result = {'schema':91, 'revision':previous['revision'], 'items':sorted(items.values(),key=lambda i:i['name'].casefold()),
+    for item in items.values():
+        for version in item['versions']:
+            stamp=updated_at(version)
+            if not stamp:stamp=package_date(root,version['file'])
+            version['updatedAt']=stamp
+    result = {'schema':91, 'revision':previous['revision'], 'items':sorted(items.values(),key=order_key),
         'providers':[{'name':'factorialovich/Aide-Pro-Modify','url':BASE}]}
     if result != previous:
         result['revision'] = max(previous['revision']+1, int(time.time()))
