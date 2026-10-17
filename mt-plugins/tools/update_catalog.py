@@ -33,6 +33,8 @@ def inspect(data):
         if entry.file_size > 65536:
             raise ValueError('Manifest exceeds 64 KiB')
         manifest = json5.loads(archive.read(entry).decode('utf-8-sig'))
+        if not isinstance(manifest.get('developer',''),str) or len(manifest.get('developer',''))>128:
+            raise ValueError('Invalid plugin developer')
         if not re.fullmatch(ID, manifest['pluginID']) or type(manifest['versionCode']) is not int or manifest['versionCode'] < 1:
             raise ValueError('Invalid plugin identity/version')
         if manifest.get('pluginSdkVersion') not in (1,2,3) or not (manifest.get('interfaces') or manifest.get('mainPreference')):
