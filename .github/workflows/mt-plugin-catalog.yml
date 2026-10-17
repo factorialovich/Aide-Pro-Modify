@@ -1,0 +1,33 @@
+name: MT plugin catalog
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'mt-plugins/incoming/**'
+      - 'mt-plugins/files/**'
+      - 'mt-plugins/tools/**'
+permissions:
+  contents: write
+concurrency:
+  group: mt-plugin-catalog
+  cancel-in-progress: false
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install json5==0.12.1
+      - run: python mt-plugins/tools/update_catalog.py
+      - name: Save catalog
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add mt-plugins
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update MT plugin catalog'
+            git push
+          fi
