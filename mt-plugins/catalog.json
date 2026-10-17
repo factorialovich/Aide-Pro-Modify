@@ -1,6 +1,6 @@
 {
   "schema": 91,
-  "revision": 1,
+  "revision": 1792273827,
   "items": [
     {
       "id": "com.kggzs.cn.mt",
@@ -19,9 +19,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "An AI-powered smart programming assistant plugin for MT Manager, providing intelligent code analysis, optimization suggestions, and issue diagnosis services. Deeply integrated with AI model, supporting full-text analysis and quick code snippet diagnosis. Also includes practical development tools such as encoding/decoding, hash calculation, and timestamp conversion to comprehensively improve mobile programming efficiency.",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 3,
+            "TextEditorToolMenu": 2,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1782307513531
         }
-      ]
+      ],
+      "developer": "康哥工作室"
     },
     {
       "id": "com.tec.aiedit",
@@ -40,9 +49,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Call any common AI API from MT text editor and let AI edit your files",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1790604481889
         }
-      ]
+      ],
+      "developer": "皓月千里"
     },
     {
       "id": "com.zeyan.ai_code_tools",
@@ -61,9 +79,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "集成AI逐行注释、SO文件分析修改、代码正确性校验三大功能，兼容所有OpenAI格式接口（DeepSeek/OpenAI/中转站等）",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 3,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786746570848
         }
-      ]
+      ],
+      "developer": "棠哥"
     },
     {
       "id": "bin.plugin.translator.aimodel",
@@ -82,9 +109,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "支持自定义大模型 API 的翻译引擎，兼容 OpenAI 格式，可配置系统提示词",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1790009618606
         }
-      ]
+      ],
+      "developer": "Lyx_2299_baby"
     },
     {
       "id": "bin.plugin.translator.baidu",
@@ -103,9 +139,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Using the Baidu translate web interface.\\nhttps://fanyi.baidu.com",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772393693648
         }
-      ]
+      ],
+      "developer": "Bin"
     },
     {
       "id": "bin.plugin.translator.baiduapi",
@@ -124,9 +169,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Using the API interface of Baidu Translate Open Platform, you need to apply for an APP ID and SecurityKey by yourself.",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772394223056
         }
-      ]
+      ],
+      "developer": "Bin"
     },
     {
       "id": "bin.plugin.translator.google_ctn",
@@ -145,9 +199,15 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "bin.plugin.translator.google_ctn",
-          "published": ""
+          "published": "",
+          "sdk": 2,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1768065224271
         }
-      ]
+      ],
+      "developer": "ctnBobong32"
     },
     {
       "id": "bin.plugin.translator.bing",
@@ -166,9 +226,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Using the Bing Microsoft translate web interface.\\nhttps://www.bing.com/translator",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772393194762
         }
-      ]
+      ],
+      "developer": "Bin"
     },
     {
       "id": "bin.mt.plugin.bypasshelper",
@@ -187,9 +256,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Plugin untuk injeksi Smali dan Bypass cepat by Yusuf Ardiansyah",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 9,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1776553737009
         }
-      ]
+      ],
+      "developer": "yusufardiansyah"
     },
     {
       "id": "com.vlrs.plugin.deepl_transl",
@@ -208,9 +286,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "com.vlrs.plugin.deepl_transl",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 3,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1785857368436
         }
-      ]
+      ],
+      "developer": "vladrevers"
     },
     {
       "id": "com.whitesev.plugin.whitesev",
@@ -229,9 +316,15 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "com.whitesev.plugin.whitesev",
-          "published": ""
+          "published": "",
+          "sdk": 1,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1618913782443
         }
-      ]
+      ],
+      "developer": "戒酒的李白"
     },
     {
       "id": "dat.mt.cccyn",
@@ -250,9 +343,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Encrypt/decrypt FuncConfig.dat / UiConfig.dat / GblConfig.json",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 2,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1785231179194
         }
-      ]
+      ],
+      "developer": "Gingko"
     },
     {
       "id": "bin.plugin.translator.deepseek",
@@ -271,9 +373,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Uses the DeepSeek Chat API for translation. You need to provide your own API Key.",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1789061341361
         }
-      ]
+      ],
+      "developer": "Bin"
     },
     {
       "id": "bc.deepseek.demo",
@@ -292,9 +403,15 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "使用DeepSeekAPI进行文本翻译处理，支持多种语言",
-          "published": ""
+          "published": "",
+          "sdk": 2,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1758630678958
         }
-      ]
+      ],
+      "developer": "bczzyyds"
     },
     {
       "id": "bin.plugin.transcoder",
@@ -313,9 +430,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Supports text encoding and decoding for Base64, Base32, URL, Unicode, and Hex",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 1,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1774541561875
         }
-      ]
+      ],
+      "developer": "Bin"
     },
     {
       "id": "com.andreykamd4pda.expandline",
@@ -334,9 +460,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Expand selection line by line",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 3
+          },
+          "updatedAt": 1783358432389
         }
-      ]
+      ],
+      "developer": "drakulaboy"
     },
     {
       "id": "cai.goole.translate",
@@ -355,9 +490,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Uses the Google translateHtml endpoint\\n",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1776834556095
         }
-      ]
+      ],
+      "developer": "菜燃乐"
     },
     {
       "id": "bin.plugin.translator.google",
@@ -376,9 +520,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Using the Google translate web interface.\\nhttps://translate.google.com",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772458366953
         }
-      ]
+      ],
+      "developer": "Bin"
     },
     {
       "id": "guobao.plugin.deeplx",
@@ -397,9 +550,18 @@
           "minAndroid": 24,
           "minHost": 26022600,
           "notes": "guobao.plugin.deeplx",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1788466906498
         }
-      ]
+      ],
+      "developer": "是果宝呐"
     },
     {
       "id": "com.hand.hex_to_dec",
@@ -418,9 +580,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Convert hexadecimal numbers (starting with 0x) in the selected or all text to decimal",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 1,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1775754504719
         }
-      ]
+      ],
+      "developer": "THKAMT"
     },
     {
       "id": "impl.mt.ai",
@@ -439,9 +610,18 @@
           "minAndroid": 26,
           "minHost": 0,
           "notes": "impl.mt.ai",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 1,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1772408410142
         }
-      ]
+      ],
+      "developer": "sjlz"
     },
     {
       "id": "io.kiber.plugin.formatix",
@@ -460,9 +640,15 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "io.kiber.plugin.formatix",
-          "published": ""
+          "published": "",
+          "sdk": 2,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1746723705260
         }
-      ]
+      ],
+      "developer": "oleg543"
     },
     {
       "id": "io.tooldroid.plugin.stringencoder",
@@ -481,9 +667,15 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "io.tooldroid.plugin.stringencoder",
-          "published": ""
+          "published": "",
+          "sdk": 2,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1769682217847
         }
-      ]
+      ],
+      "developer": "ToolDroidYT"
     },
     {
       "id": "by.plugin.translator.kimi",
@@ -502,9 +694,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Uses the Kimi (Moonshot AI) Chat API for translation. You need to provide your own API Key.",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1789887522844
         }
-      ]
+      ],
+      "developer": "北岩"
     },
     {
       "id": "zyplugin.luaj.format",
@@ -523,9 +724,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "查错并格式化Luaj语法代码\n使用教程：\n设置编辑快捷功能栏添加Luaj代码查错格式化。\n(注意代码规范不支持中文命名)\n即可在编辑器底栏添加绑定使用",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1773721004303
         }
-      ]
+      ],
+      "developer": "ZY彩虹海"
     },
     {
       "id": "com.mtplugin.m3u8downloader",
@@ -544,9 +754,18 @@
           "minAndroid": 26,
           "minHost": 0,
           "notes": "多任务并发M3U8视频下载器，支持断点续传、仅WIFI下载、自动合并、请求头管理、失败片段重试/忽略",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786378206441
         }
-      ]
+      ],
+      "developer": "我的耳机可以绕脖子两圈"
     },
     {
       "id": "com.linecode.manifestinspector",
@@ -565,9 +784,18 @@
           "minAndroid": 23,
           "minHost": 26000,
           "notes": "在文本编辑器中一键分析 AndroidManifest.xml 的权限、组件暴露、Android 12+ 兼容性与改包风险。",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1783799502590
         }
-      ]
+      ],
+      "developer": "七年凉城安浮生°"
     },
     {
       "id": "com.md.preview",
@@ -586,9 +814,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Preview Markdown files with KaTeX math and syntax highlighting",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1780248757361
         }
-      ]
+      ],
+      "developer": "Minus"
     },
     {
       "id": "com.brarchive.extractor",
@@ -607,9 +844,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Minecraft基岩版.brarchive解包/打包 + manifest工具 + AI助手",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 2,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1790512482163
         }
-      ]
+      ],
+      "developer": "Petrichor5648"
     },
     {
       "id": "com.android.mtai",
@@ -628,9 +874,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "AI-powered enhancement plugin for MT Manager, built for developers. AI code intelligence: full-document analysis, selection diagnosis, optimization suggestions, writing & polishing, code patching, code minification, encryption & decryption, compatible with OpenAI-style APIs (DeepSeek/OpenAI/Groq...). Multi-engine translation: 12 standalone engines — 8 free & keyless (Google CN, Bing, Yandex, Baidu Web, Youdao, MyMemory, LibreTranslate, Lingva) plus 4 paid options (Tencent Cloud, Alibaba Cloud, DeepL, Baidu Translate API). Developer utilities: Base64/Base32/Hex/URL codec, MD5/SHA hashing, Unix timestamp & date conversion, AES/DES encryption; code formatting (JSON/XML/SQL pretty & minify); regex tester. Multi-format previewer: native rich-text (Html.fromHtml) rendering inside MT for Markdown, JSON, XML, SQL, HTML, ELF/SO libraries, hex, Base64 images — no browser kernel, never crashes. Text tools: character stats, UUID generation, case & naming-style (snake/camel) conversion, base converter (2/8/10/16), line ops (dedup/sort/strip-blank/duplicate-count), random password generator, color converter (HEX↔RGB). More tools: text diff, URL parsing & param extraction, mojibake fix / encoding conversion, batch find-replace (regex supported), fake data generator (name/phone/email/ID/address). The \"About\" button at the bottom-left of the main panel shows the author team and homepage links. Settings page links your homepage (nekoaidev.top) and GitHub (github.com/xiaohondan) — one tap opens them in MT's built-in browser. Entry: the \"MT AI\" item in the editor's bottom function bar or top \"Edit\" group.",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 12,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1792218203349
         }
-      ]
+      ],
+      "developer": "小红蛋"
     },
     {
       "id": "mt.asm.converter",
@@ -649,9 +904,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "mt.asm.converter",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786874204156
         }
-      ]
+      ],
+      "developer": "Maharna's_Tech"
     },
     {
       "id": "mt.base_converter",
@@ -670,9 +934,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "mt.base_converter",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786874211385
         }
-      ]
+      ],
+      "developer": "Maharna's_Tech"
     },
     {
       "id": "mt.english.dictionary",
@@ -691,9 +964,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "mt.english.dictionary",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786697724247
         }
-      ]
+      ],
+      "developer": "Maharna's_Tech"
     },
     {
       "id": "mt.font.generator",
@@ -712,9 +994,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "mt.font.generator",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786697615667
         }
-      ]
+      ],
+      "developer": "Maharna's_Tech"
     },
     {
       "id": "mt.mediafire.downloader",
@@ -733,9 +1024,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "mt.mediafire.downloader",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786696400331
         }
-      ]
+      ],
+      "developer": "Maharna's_Tech"
     },
     {
       "id": "mt.number_converter",
@@ -754,9 +1054,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "mt.number_converter",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786697736305
         }
-      ]
+      ],
+      "developer": "Maharna's_Tech"
     },
     {
       "id": "mt.oxford_english.dictionary",
@@ -775,9 +1084,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "mt.oxford_english.dictionary",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786697704098
         }
-      ]
+      ],
+      "developer": "Maharna's_Tech"
     },
     {
       "id": "com.android.settings.new",
@@ -796,9 +1114,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "内置75种搜索引擎，输入关键词，点击立即开始搜索。入口在插件中心设置里面！！！",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1790049525522
         }
-      ]
+      ],
+      "developer": "鹏鹤明志"
     },
     {
       "id": "com.nexuszero.mt",
@@ -817,9 +1144,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Türkçe DEX/Smali/WebSocket/XREF/diff kanıt çalışma merkezi",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 6,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1790750594062
         }
-      ]
+      ],
+      "developer": "frknozdmr"
     },
     {
       "id": "com.example.postpreview",
@@ -838,9 +1174,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Preview BBCode post content in text editor",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1788327013443
         }
-      ]
+      ],
+      "developer": "闲云野鹤"
     },
     {
       "id": "puppy.qy.plugin",
@@ -859,9 +1204,15 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "puppy.qy.plugin",
-          "published": ""
+          "published": "",
+          "sdk": 2,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1765826579575
         }
-      ]
+      ],
+      "developer": "七友"
     },
     {
       "id": "rime.mabiao_hu16000",
@@ -880,9 +1231,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Rime 词库工具\n1. 智能编码生成机制\n本 Rime 词库工具采用先进的翻译模式，针对无编码词条，能够自动化精准生成对应编码，进而输出完备的带编码词条，有效提升词库构建的准确性与便捷性。\n2. 精准文本限制策略\n出于系统稳定性考量，工具仅处理虎单字前 16000 字范围的文本内容。这一设定巧妙规避因数据量过载而衍生的潜在风险，保障词库生成流程平稳、高效。\n3. 高效批量处理能力\n为大幅提高操作效率，工具全面支持批量多行文本处理。用户一次性导入多行文本，即可同步开展编码生成作业，无需逐个词条依次处理，极大节省时间成本。\n4. 本地化独立运行环境\n整个词库生成流程完全基于本地运行，彻底摆脱网络依赖。此特性不仅保证操作不受网络波动干扰，更从根源上筑牢数据安全防线，全方位守护用户隐私。\n5. 灵活简码配置选项\n考虑到用户多样化需求，工具贴心设置简码去除功能，用户可按需自主决定是否去除简码，灵活适配不同使用场景。\n6. 多元输入法适配拓展\n值得一提的是，工具新增对五笔 98 的支持，进一步丰富了输入法适配范围，为更多用户群体提供专业、适配的词库构建服务。\n—— By 酷安@合欢萱草",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1786201949583
         }
-      ]
+      ],
+      "developer": "合欢萱草"
     },
     {
       "id": "com.ai.plugin.smali.commenter",
@@ -901,9 +1261,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Add AI-generated comments to Smali code. Supports DeepSeek, OpenAI, Claude, Gemini and other AI models.",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1774698559272
         }
-      ]
+      ],
+      "developer": "ppx"
     },
     {
       "id": "impl.mt.previewer",
@@ -922,9 +1291,18 @@
           "minAndroid": 26,
           "minHost": 0,
           "notes": "SO文件预览器：基于自定义脚本的文件预览插件，支持SO、Markdown、SQL等多种格式并可无限拓展。",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1783348097373
         }
-      ]
+      ],
+      "developer": "sjlz"
     },
     {
       "id": "Han.text_editor_helper",
@@ -943,9 +1321,18 @@
           "minAndroid": 21,
           "minHost": 26030788,
           "notes": "Shortcut Bar Functions:\\",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 2,
+            "TextEditorToolMenu": 2,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 18
+          },
+          "updatedAt": 1773473920124
         }
-      ]
+      ],
+      "developer": "情非得已c"
     },
     {
       "id": "com.cloudbin.tgcl",
@@ -964,9 +1351,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "In-place decode/encode CloudObjects Objects.level.bin (TGCL) to/from JSON",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1787124654372
         }
-      ]
+      ],
+      "developer": "县小威"
     },
     {
       "id": "mt.plugin.translatekit",
@@ -985,9 +1381,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Translate Android strings with Gemini, OpenAI, Claude, OpenRouter, or any OpenAI-compatible endpoint",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 1,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 2,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1788856143528
         }
-      ]
+      ],
+      "developer": "binzedd"
     },
     {
       "id": "tw.david082321",
@@ -1006,9 +1411,15 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "tw.david082321",
-          "published": ""
+          "published": "",
+          "sdk": 2,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1717340192375
         }
-      ]
+      ],
+      "developer": "david082321"
     },
     {
       "id": "vlrs.plugin.translator.google_alt",
@@ -1027,9 +1438,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "vlrs.plugin.translator.google_alt",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1773068878384
         }
-      ]
+      ],
+      "developer": "vladrevers"
     },
     {
       "id": "vlrs.plugin.translator.microsoft",
@@ -1048,9 +1468,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "vlrs.plugin.translator.microsoft",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 2,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1788811270576
         }
-      ]
+      ],
+      "developer": "vladrevers"
     },
     {
       "id": "bin.plugin.translator.yandex",
@@ -1069,9 +1498,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Using the Yandex translate web interface.\\nhttps://translate.yandex.com",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772393454056
         }
-      ]
+      ],
+      "developer": "Bin"
     },
     {
       "id": "bin.plugin.translator.youdao",
@@ -1090,9 +1528,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "Using the Youdao translate web interface.\\nhttps://fanyi.youdao.com",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772393381389
         }
-      ]
+      ],
+      "developer": "Bin"
     },
     {
       "id": "com.artchen520.expander",
@@ -1111,9 +1558,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "IDEA 风格的安卓代码修补工具：缩写一键展开（自定义分组+按文件类型生效）；框选批量注释（对齐缩进列，注释符跟随文件类型）；环绕包裹（自定义模板库）；顶部编辑菜单分组开关面板。项目地址：https://github.com/Artchen520/MTexpander",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 3,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 3
+          },
+          "updatedAt": 1791083124822
         }
-      ]
+      ],
+      "developer": "Artchen"
     },
     {
       "id": "cai.plugin.caiyun",
@@ -1132,9 +1588,18 @@
           "minAndroid": 24,
           "minHost": 0,
           "notes": "使用彩云小译网页接口\\nhttps://fanyi.caiyunapp.com\\n适合日常、英中学术、擅长小说论文等长文翻译",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1773071772105
         }
-      ]
+      ],
+      "developer": "菜燃乐"
     },
     {
       "id": "lon.tools.qp",
@@ -1153,9 +1618,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "\\",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 1,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1773006251256
         }
-      ]
+      ],
+      "developer": "胧"
     },
     {
       "id": "bc.demo.gjld",
@@ -1174,9 +1648,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "使用 硅基流动API 进行文本处理，支持多种语言，如需反馈请到\nMT论坛→MT专区→插件交流→发表新主题反馈\n或者到插件设置中最下面，跳转到帖子进行反馈",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1782529124078
         }
-      ]
+      ],
+      "developer": "呀咩带"
     },
     {
       "id": "bin.plugin.translator.fanjian",
@@ -1195,9 +1678,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "繁体中文与简体中文相互转换",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772393329210
         }
-      ]
+      ],
+      "developer": "Bin"
     },
     {
       "id": "jiaxin149.mt.tencent_translation",
@@ -1216,9 +1708,15 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "腾讯云免费翻译，每月免费500万字符(约6本《三体》三部曲字数)，需要在插件设置里设置腾讯云key\n  详情见https://console.cloud.tencent.com/tmt",
-          "published": ""
+          "published": "",
+          "sdk": 2,
+          "interfaces": {
+            "TranslationEngine": 1
+          },
+          "updatedAt": 1751810907538
         }
-      ]
+      ],
+      "developer": "QQ"
     },
     {
       "id": "mt.gdtool",
@@ -1237,9 +1735,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "提取/写回车标图片 与 SO 文件解析/写回 与 dat 加解密",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 7,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1787839514110
         }
-      ]
+      ],
+      "developer": "cmo"
     },
     {
       "id": "bin.plugin.translator.google_cn",
@@ -1258,9 +1765,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "可在国内使用的谷歌翻译",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 1,
+            "TextEditorFunction": 0
+          },
+          "updatedAt": 1772458312842
         }
-      ]
+      ],
+      "developer": "Bin"
     },
     {
       "id": "lon.tools.ls",
@@ -1279,9 +1795,18 @@
           "minAndroid": 21,
           "minHost": 0,
           "notes": "在mt上运行js脚本实现自定义功能",
-          "published": ""
+          "published": "",
+          "sdk": 3,
+          "interfaces": {
+            "TextEditorFloatingMenu": 0,
+            "TextEditorToolMenu": 0,
+            "TranslationEngine": 0,
+            "TextEditorFunction": 1
+          },
+          "updatedAt": 1772712060659
         }
-      ]
+      ],
+      "developer": "胧"
     }
   ],
   "providers": [

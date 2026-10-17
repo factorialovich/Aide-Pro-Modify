@@ -93,10 +93,11 @@ def update(root):
             raise ValueError('Rename package to ' + filename)
         digest = hashlib.sha256(data).hexdigest()
         item = items.setdefault(id, {'id':id, 'name':labels['name'], 'description':labels['description'], 'icon':'', 'versions':[]})
+        item['developer'] = manifest.get('developer', old.get(id, {}).get('developer', ''))
         item['versions'].append({'version':manifest.get('versionName',str(code)), 'versionCode':code,
             'sha256':digest, 'size':len(data), 'file':'files/'+filename, 'source':'factorialovich', 'url':BASE+'files/'+filename,
             'minAndroid':manifest.get('minAndroidVersion',21), 'minHost':manifest.get('minHostVersion',0),
-            'notes':labels['description'], 'published':''})
+            'notes':labels['description'], 'published':'', 'sdk':manifest.get('pluginSdkVersion',3)})
         # The highest version supplies the card's name, description and icon.
         if code == max(v['versionCode'] for v in item['versions']):
             item.update(name=labels['name'], description=labels['description'])
@@ -114,6 +115,8 @@ def update(root):
                     raise ValueError('Published version changed: ' + version['file'])
                 if past:
                     version.update(notes=past.get('notes',version['notes']), published=past.get('published',''))
+                    for field in ['interfaces','updatedAt']:
+                        if field in past:version[field]=past[field]
     result = {'schema':91, 'revision':previous['revision'], 'items':sorted(items.values(),key=lambda i:i['name'].casefold()),
         'providers':[{'name':'factorialovich/Aide-Pro-Modify','url':BASE}]}
     if result != previous:
