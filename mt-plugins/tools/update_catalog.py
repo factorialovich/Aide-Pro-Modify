@@ -21,6 +21,43 @@ decompressor = zipfile._get_decompressor
 zipfile._get_decompressor = lambda kind: lzma.LZMADecompressor() if kind == 95 else decompressor(kind)
 
 
+def parse_mtl(text):
+    entries={};line=''
+    for part in text.replace('\r\n','\n').replace('\r','\n').split('\n'):
+        line+=part
+        trailing=len(line)-len(line.rstrip('\\'))
+        if trailing%2:
+            line=line[:-1]
+            continue
+        match=re.fullmatch(r'\s*([\w.-]+)\s*:[ \t]*(.*)',line)
+        if match:
+            escapes={'n':'\n','r':'\r','t':'\t','\\':'\\','"':'"',"'":"'"}
+            entries[match[1]]=re.sub(r'\\([nrt\\"\'])',lambda m:escapes[m[1]],match[2].strip())
+        line=''
+    if line:raise ValueError('Unterminated MTL continuation')
+    return entries
+
+
+def resolve_label(archive,value,tables):
+    if not isinstance(value,str):raise ValueError('Plugin labels must be strings')
+    match=re.fullmatch(r'\{([\w.]+)(?::([\w.]+))?\}',value)
+    if not match:return value
+    resources=[match[1]] if match[2] else ['String','strings']
+    label=match[2] or match[1]
+    names=set(archive.namelist())
+    for resource in resources:
+        base='assets/'+resource
+        paths=[base+'.mtl']+sorted((n for n in names if n.startswith(base+'-') and n.endswith('.mtl')),
+            key=lambda n:(not n.startswith(base+'-en.'),not n.startswith(base+'-en-'),n))
+        for path in paths:
+            if path not in names:continue
+            if path not in tables:
+                if archive.getinfo(path).file_size>2*1024*1024:raise ValueError('MTL resource exceeds 2 MiB')
+                tables[path]=parse_mtl(archive.read(path).decode('utf-8-sig'))
+            if label in tables[path]:return tables[path][label]
+    raise ValueError('Missing plugin text resource: '+value)
+
+
 def inspect(data):
     if len(data) > 64 * 1024 * 1024:
         raise ValueError('MTP exceeds 64 MiB')
@@ -49,18 +86,9 @@ def inspect(data):
                     raise ValueError('Invalid plugin DEX')
         icon = next((n for n in names if re.fullmatch(r'icon\.(png|webp|jpe?g)', n)), '')
         icon_data = archive.read(icon) if icon else b''
-        labels = {}
-        for key in ['name', 'description']:
-            value = manifest.get(key, manifest['pluginID'] if key == 'name' else '')
-            match = re.fullmatch(r'\{([\w.]+)(?::([\w.]+))?\}', value)
-            if match:
-                resource, label = (match[1], match[2]) if match[2] else ('strings', match[1])
-                path = 'assets/' + resource + '.mtl'
-                if path not in names:
-                    path = next((n for n in names if n.startswith('assets/' + resource + '-') and n.endswith('.mtl')), '')
-                found = re.search(r'^\s*' + re.escape(label) + r'\s*:\s*(.*)$', archive.read(path).decode('utf-8-sig'), re.M) if path else None
-                value = found[1].strip() if found else manifest['pluginID']
-            labels[key] = value
+        tables = {}
+        labels = {key:resolve_label(archive,manifest.get(key,manifest['pluginID'] if key=='name' else ''),tables)
+                  for key in ['name','description']}
         return manifest, labels, icon, icon_data
 
 
@@ -144,7 +172,10 @@ def update(root):
                 if past and past['sha256'] != version['sha256']:
                     raise ValueError('Published version changed: ' + version['file'])
                 if past:
-                    version.update(notes=past.get('notes',version['notes']), published=past.get('published',''))
+                    notes=past.get('notes',version['notes'])
+                    # Earlier indexes used the unresolved package ID or truncated description as generated notes.
+                    if notes==old[item['id']].get('description') or notes==item['id']:notes=version['notes']
+                    version.update(notes=notes, published=past.get('published',''))
                     for field in ['interfaces','updatedAt']:
                         if field in past:version[field]=past[field]
     for item in items.values():

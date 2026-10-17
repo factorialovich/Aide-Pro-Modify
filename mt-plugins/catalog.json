@@ -1,6 +1,6 @@
 {
   "schema": 91,
-  "revision": 1792274755,
+  "revision": 1792275292,
   "items": [
     {
       "id": "com.android.mtai",
@@ -304,8 +304,8 @@
     },
     {
       "id": "vlrs.plugin.translator.microsoft",
-      "name": "vlrs.plugin.translator.microsoft",
-      "description": "vlrs.plugin.translator.microsoft",
+      "name": "Microsoft Translator",
+      "description": "Uses the Microsoft Edge and SwiftKey translation APIs",
       "icon": "icons/abab612571be1fce1c275a7bca9a7082bc58a3fa87b8fb1740d395cf4fdc29f3.png",
       "versions": [
         {
@@ -318,7 +318,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/vlrs.plugin.translator.microsoft-9.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "vlrs.plugin.translator.microsoft",
+          "notes": "Uses the Microsoft Edge and SwiftKey translation APIs",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -334,8 +334,8 @@
     },
     {
       "id": "guobao.plugin.deeplx",
-      "name": "guobao.plugin.deeplx",
-      "description": "guobao.plugin.deeplx",
+      "name": "DeepLX 翻译",
+      "description": "国内可用的免费DeepL翻译API插件，无需authkey。\n\n更新计划：\n  1. 增加设置界面\n  2. 增加自定义api\n\n插件旧版服务端已在github开源：\nhttps://github.com/guobao2333/DeepLX-Serverless\n欢迎前往Star~\n\n由于旧版插件服务端已被DeepL屏蔽，且DeepL服务现已可在内陆访问，因此新版直接访问DeepL获取翻译。如果您无法正常访问DeepL服务，请自行调整网络环境。",
       "icon": "icons/9148dff20713d6e3d64a2b62488aea16867b0439a38f654201f390e594a34d54.webp",
       "versions": [
         {
@@ -348,7 +348,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/guobao.plugin.deeplx-9.mtp",
           "minAndroid": 24,
           "minHost": 26022600,
-          "notes": "guobao.plugin.deeplx",
+          "notes": "国内可用的免费DeepL翻译API插件，无需authkey。\n\n更新计划：\n  1. 增加设置界面\n  2. 增加自定义api\n\n插件旧版服务端已在github开源：\nhttps://github.com/guobao2333/DeepLX-Serverless\n欢迎前往Star~\n\n由于旧版插件服务端已被DeepL屏蔽，且DeepL服务现已可在内陆访问，因此新版直接访问DeepL获取翻译。如果您无法正常访问DeepL服务，请自行调整网络环境。",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -454,8 +454,8 @@
     },
     {
       "id": "mt.base_converter",
-      "name": "mt.base_converter",
-      "description": "mt.base_converter",
+      "name": "MT Base Converter",
+      "description": "MT Base Converter is basically a MT Manager plugin that can help you to convert Base64 to text , Base16 to text , Unicode to text, and more you can check... And  there is available for reverse function also like text to base64 etc...",
       "icon": "icons/18988eabde8d3b42688a1e2b0b668906800f3ee21fd152431aa09c36eab76284.webp",
       "versions": [
         {
@@ -468,7 +468,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.base_converter-3001.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "mt.base_converter",
+          "notes": "MT Base Converter is basically a MT Manager plugin that can help you to convert Base64 to text , Base16 to text , Unicode to text, and more you can check... And  there is available for reverse function also like text to base64 etc...",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -484,8 +484,8 @@
     },
     {
       "id": "mt.asm.converter",
-      "name": "mt.asm.converter",
-      "description": "mt.asm.converter",
+      "name": "MT AsmConverter",
+      "description": "A powerful plugin  that converts ARM/Thumb assembly instructions into machine hex code and vice versa. Supports real-time assembly  and disassembly for ARM, ARM Big Endian, Thumb, Thumb BE, and ARM64 architectures.",
       "icon": "icons/0e0c7a3339ccab49ee9c6c89917a09b42ddb12e8d021736cc4647bac6aaa3a01.webp",
       "versions": [
         {
@@ -498,7 +498,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.asm.converter-2026.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "mt.asm.converter",
+          "notes": "A powerful plugin  that converts ARM/Thumb assembly instructions into machine hex code and vice versa. Supports real-time assembly  and disassembly for ARM, ARM Big Endian, Thumb, Thumb BE, and ARM64 architectures.",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -544,8 +544,8 @@
     },
     {
       "id": "mt.number_converter",
-      "name": "mt.number_converter",
-      "description": "mt.number_converter",
+      "name": "MT Number Converter",
+      "description": "MT Number Converter is basically a MT Manager plugin that can help you to convert a specific Number to Binary, decimal, octal , Hex",
       "icon": "icons/0faefbb289f3209e5ceafc5e221e4bc06831fba826be0857a80e2f46c1554db5.webp",
       "versions": [
         {
@@ -558,7 +558,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.number_converter-2026.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "mt.number_converter",
+          "notes": "MT Number Converter is basically a MT Manager plugin that can help you to convert a specific Number to Binary, decimal, octal , Hex",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -574,8 +574,8 @@
     },
     {
       "id": "mt.english.dictionary",
-      "name": "mt.english.dictionary",
-      "description": "mt.english.dictionary",
+      "name": "MT English Dictionary",
+      "description": "Using the Free English Dictionary web interface . Enjoy 🎉",
       "icon": "icons/c303819786c07b98c8f6237559b7b4163f4b1296fbc62388280623ded7d7472b.webp",
       "versions": [
         {
@@ -588,7 +588,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.english.dictionary-3001.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "mt.english.dictionary",
+          "notes": "Using the Free English Dictionary web interface . Enjoy 🎉",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -604,8 +604,8 @@
     },
     {
       "id": "mt.oxford_english.dictionary",
-      "name": "mt.oxford_english.dictionary",
-      "description": "mt.oxford_english.dictionary",
+      "name": "MT Oxford English Dictionary",
+      "description": "Using the Oxford English Dictionary web interface . Enjoy 🎉",
       "icon": "icons/4eda4d45e8c314325541fe6c6410e437624e9dc833b9debe264d07e0bcb3c715.webp",
       "versions": [
         {
@@ -618,7 +618,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.oxford_english.dictionary-2026.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "mt.oxford_english.dictionary",
+          "notes": "Using the Oxford English Dictionary web interface . Enjoy 🎉",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -634,8 +634,8 @@
     },
     {
       "id": "mt.font.generator",
-      "name": "mt.font.generator",
-      "description": "mt.font.generator",
+      "name": "MT Font Generator",
+      "description": "This plugin will help you to generate text to different Unicode styles (bold serif, bold sans, italic serif, bold italic, script, fraktur, double-struck, monospace, etc.)",
       "icon": "icons/518709be90439348fd554e46a16b5ed438a2ebf79a5f2fb71e071a3d1d0294bc.png",
       "versions": [
         {
@@ -648,7 +648,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.font.generator-2026.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "mt.font.generator",
+          "notes": "This plugin will help you to generate text to different Unicode styles (bold serif, bold sans, italic serif, bold italic, script, fraktur, double-struck, monospace, etc.)",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -664,8 +664,8 @@
     },
     {
       "id": "mt.mediafire.downloader",
-      "name": "mt.mediafire.downloader",
-      "description": "mt.mediafire.downloader",
+      "name": "Mediafire Downloader",
+      "description": "MediaFire Downloader is a powerful plugin for MT Manager that allows you to directly download files from MediaFire links without opening a browser. Simply paste or select any MediaFire share link, and the plugin will automatically extract the direct download link and download the file to your device.",
       "icon": "icons/7de7b23d63205b2cb3e355a54897a5642f386e2e4fabdf1d543219f6fd82ee86.webp",
       "versions": [
         {
@@ -678,7 +678,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/mt.mediafire.downloader-2026.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "mt.mediafire.downloader",
+          "notes": "MediaFire Downloader is a powerful plugin for MT Manager that allows you to directly download files from MediaFire links without opening a browser. Simply paste or select any MediaFire share link, and the plugin will automatically extract the direct download link and download the file to your device.",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -754,8 +754,8 @@
     },
     {
       "id": "com.vlrs.plugin.deepl_transl",
-      "name": "com.vlrs.plugin.deepl_transl",
-      "description": "com.vlrs.plugin.deepl_transl",
+      "name": "DeepL Translator",
+      "description": "Using the DeepL API interface, you may need to register to receive your personal Auth Key",
       "icon": "icons/0bfcb0dc33ebb485e043a6c6e931f03c5d0eff1b89571980a5527dc9aca53016.png",
       "versions": [
         {
@@ -768,7 +768,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.vlrs.plugin.deepl_transl-16.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "com.vlrs.plugin.deepl_transl",
+          "notes": "Using the DeepL API interface, you may need to register to receive your personal Auth Key",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -995,7 +995,7 @@
     {
       "id": "cai.goole.translate",
       "name": "Google Translate (PA)",
-      "description": "Uses the Google translateHtml endpoint\\n",
+      "description": "Uses the Google translateHtml endpoint\n",
       "icon": "icons/df515ea60d90ffef9f3af534f81572a2f25309e2eafaf35ca3eefc4208a58b95.webp",
       "versions": [
         {
@@ -1008,7 +1008,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/cai.goole.translate-1.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "Uses the Google translateHtml endpoint\\n",
+          "notes": "Uses the Google translateHtml endpoint\n",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -1175,7 +1175,7 @@
     {
       "id": "Han.text_editor_helper",
       "name": "Text Editor Assistant",
-      "description": "Shortcut Bar Functions:\\",
+      "description": "Shortcut Bar Functions:\nProcess content between two symbols: Supports custom start/end symbols and escape characters;perform select, delete, copy, cut, paste, jump operations on the content between symbols.(Note: The cursor can only be placed between the start and end symbols. The escape character skips the symbol if it appears right before the symbol; the escape character can be empty. Whether the symbol is set to a single character or multiple characters, only the first character at the beginning needs to be escaped, e.g.:\\\"\"\"）\n\nSelect content between brackets: Only select the content inside brackets.\n\nStart new line: Jump to end of line -> Enter -> Keep indentation of previous line.\n\nEnter and keep previous line indentation: Enter at the start of the cursor selection -> Keep indentation of previous line.\n\nCursor-anchored selection: Use the current cursor position as a fixed anchor to select text areas in different directions and ranges. Supported modes: start/end of line, start/end of file, previous/next string [greedy mode];perform select, delete, copy, cut, paste, jump operations.\n\nIndentation alignment: Align indentation for selected multi-line text. Alignment modes: use minimum/maximum indentation, remove indentation.\n\nMove line: Move line up/down (supports moving multiple selected lines).\n\nNaming conversion: Supports PascalCase, camelCase, UPPER_SNAKE_CASE, snake_case, kebab-case, all lowercase, sentence case, title case.\n\nPrepend text at line start: Add specified text at the start of the line where the cursor is located.\n\nAppend text at line end: Append specified text at the end of the line where the cursor is located.\n\nInsert time: Insert current time at the cursor position. Supports custom time format and timestamps (s/ms/µs/ns)\n\nReplace entire text: Replace all text with text from the clipboard.\n\nSelect text with regex: Use a regular expression to find and select text in the current line where the cursor is located.\n\nShow cursor position: Display the current cursor position (disabled by default; can be enabled in Settings).\n\nSelect line, word expansion, clear indentation and merge lines.\n\n\nFloating Menu Functions:\nOpen Link: Floating menu -> Supports opening links via external/built-in browser, similar to MT's \"Open Link\" function but without strict URL filtering.\n\nText Converter.\nTool Menu Functions: Select line, Text Converter.\n\n### Translation:",
       "icon": "",
       "versions": [
         {
@@ -1188,7 +1188,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/Han.text_editor_helper-6.mtp",
           "minAndroid": 21,
           "minHost": 26030788,
-          "notes": "Shortcut Bar Functions:\\",
+          "notes": "Shortcut Bar Functions:\nProcess content between two symbols: Supports custom start/end symbols and escape characters;perform select, delete, copy, cut, paste, jump operations on the content between symbols.(Note: The cursor can only be placed between the start and end symbols. The escape character skips the symbol if it appears right before the symbol; the escape character can be empty. Whether the symbol is set to a single character or multiple characters, only the first character at the beginning needs to be escaped, e.g.:\\\"\"\"）\n\nSelect content between brackets: Only select the content inside brackets.\n\nStart new line: Jump to end of line -> Enter -> Keep indentation of previous line.\n\nEnter and keep previous line indentation: Enter at the start of the cursor selection -> Keep indentation of previous line.\n\nCursor-anchored selection: Use the current cursor position as a fixed anchor to select text areas in different directions and ranges. Supported modes: start/end of line, start/end of file, previous/next string [greedy mode];perform select, delete, copy, cut, paste, jump operations.\n\nIndentation alignment: Align indentation for selected multi-line text. Alignment modes: use minimum/maximum indentation, remove indentation.\n\nMove line: Move line up/down (supports moving multiple selected lines).\n\nNaming conversion: Supports PascalCase, camelCase, UPPER_SNAKE_CASE, snake_case, kebab-case, all lowercase, sentence case, title case.\n\nPrepend text at line start: Add specified text at the start of the line where the cursor is located.\n\nAppend text at line end: Append specified text at the end of the line where the cursor is located.\n\nInsert time: Insert current time at the cursor position. Supports custom time format and timestamps (s/ms/µs/ns)\n\nReplace entire text: Replace all text with text from the clipboard.\n\nSelect text with regex: Use a regular expression to find and select text in the current line where the cursor is located.\n\nShow cursor position: Display the current cursor position (disabled by default; can be enabled in Settings).\n\nSelect line, word expansion, clear indentation and merge lines.\n\n\nFloating Menu Functions:\nOpen Link: Floating menu -> Supports opening links via external/built-in browser, similar to MT's \"Open Link\" function but without strict URL filtering.\n\nText Converter.\nTool Menu Functions: Select line, Text Converter.\n\n### Translation:",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -1205,7 +1205,7 @@
     {
       "id": "cai.plugin.caiyun",
       "name": "彩云翻译",
-      "description": "使用彩云小译网页接口\\nhttps://fanyi.caiyunapp.com\\n适合日常、英中学术、擅长小说论文等长文翻译",
+      "description": "使用彩云小译网页接口\nhttps://fanyi.caiyunapp.com\n适合日常、英中学术、擅长小说论文等长文翻译",
       "icon": "icons/d9091ce355fbc6fab58d90530f897ae4f0a713b166490904ea0492ee82833acc.webp",
       "versions": [
         {
@@ -1218,7 +1218,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/cai.plugin.caiyun-2.mtp",
           "minAndroid": 24,
           "minHost": 0,
-          "notes": "使用彩云小译网页接口\\nhttps://fanyi.caiyunapp.com\\n适合日常、英中学术、擅长小说论文等长文翻译",
+          "notes": "使用彩云小译网页接口\nhttps://fanyi.caiyunapp.com\n适合日常、英中学术、擅长小说论文等长文翻译",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -1234,8 +1234,8 @@
     },
     {
       "id": "vlrs.plugin.translator.google_alt",
-      "name": "vlrs.plugin.translator.google_alt",
-      "description": "vlrs.plugin.translator.google_alt",
+      "name": "Google Translator (Alt)",
+      "description": "Using the Google translate (Chrome extension) interface.\nhttps://translate.google.com",
       "icon": "icons/ea2e7f9490cae6f0c986fd8055c27adcf48d569524c4eef6ee8a21f51b523837.webp",
       "versions": [
         {
@@ -1248,7 +1248,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/vlrs.plugin.translator.google_alt-14.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "vlrs.plugin.translator.google_alt",
+          "notes": "Using the Google translate (Chrome extension) interface.\nhttps://translate.google.com",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -1265,7 +1265,7 @@
     {
       "id": "lon.tools.qp",
       "name": "文件预览器",
-      "description": "\\",
+      "description": "预览各种文件\n支持markdown,html,docx,xlsx,sqlite\n在工具菜单或快捷工具栏内添加使用",
       "icon": "icons/2f61972283fdd393189eefab60883b77e861ed783d88c25bf2406b165437c31a.webp",
       "versions": [
         {
@@ -1278,7 +1278,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/lon.tools.qp-15.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "\\",
+          "notes": "预览各种文件\n支持markdown,html,docx,xlsx,sqlite\n在工具菜单或快捷工具栏内添加使用",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -1325,7 +1325,7 @@
     {
       "id": "bin.plugin.translator.google",
       "name": "Google Translator",
-      "description": "Using the Google translate web interface.\\nhttps://translate.google.com",
+      "description": "Using the Google translate web interface.\nhttps://translate.google.com",
       "icon": "icons/f6949eee5f0cef084a984551f29b17a56c5a1a1b3443fe63c3c1c6363c90149e.png",
       "versions": [
         {
@@ -1338,7 +1338,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.google-6.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "Using the Google translate web interface.\\nhttps://translate.google.com",
+          "notes": "Using the Google translate web interface.\nhttps://translate.google.com",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -1384,8 +1384,8 @@
     },
     {
       "id": "impl.mt.ai",
-      "name": "impl.mt.ai",
-      "description": "impl.mt.ai",
+      "name": "AI文本分析助手",
+      "description": "AI文本分析助手：你的专属智能写作与分析伙伴！\n\n【快捷操作】\n1. 选中文本后点击浮动菜单或底部工具栏快捷启动\n2. 支持在分析前输入“补充要求”，精准引导AI理解你的意图。\n\n【多轮对话】\n1. 自动记录并管理所有会话历史，支持按时间排序。\n2. 轻松切换“新对话”或“继续对话”，让AI记住上下文，提供连贯的深度分析。\n3. 继续对话时，可选择弹出历史对话列表进行精确选择。\n\n【流式响应】\n1. 实时流式响应，像聊天一样看着AI结果逐步生成。\n2. 响应完成后一键复制结果到剪贴板，快速引用。\n3. 高度可配置：自定义API地址、模型和系统提示词，适配多种OpenAI兼容服务。",
       "icon": "icons/f3d57b3e55af779d216ccea8455736561759c648a6172f6a698f1878acdfac33.jpg",
       "versions": [
         {
@@ -1398,7 +1398,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/impl.mt.ai-1.mtp",
           "minAndroid": 26,
           "minHost": 0,
-          "notes": "impl.mt.ai",
+          "notes": "AI文本分析助手：你的专属智能写作与分析伙伴！\n\n【快捷操作】\n1. 选中文本后点击浮动菜单或底部工具栏快捷启动\n2. 支持在分析前输入“补充要求”，精准引导AI理解你的意图。\n\n【多轮对话】\n1. 自动记录并管理所有会话历史，支持按时间排序。\n2. 轻松切换“新对话”或“继续对话”，让AI记住上下文，提供连贯的深度分析。\n3. 继续对话时，可选择弹出历史对话列表进行精确选择。\n\n【流式响应】\n1. 实时流式响应，像聊天一样看着AI结果逐步生成。\n2. 响应完成后一键复制结果到剪贴板，快速引用。\n3. 高度可配置：自定义API地址、模型和系统提示词，适配多种OpenAI兼容服务。",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -1445,7 +1445,7 @@
     {
       "id": "bin.plugin.translator.baidu",
       "name": "Baidu Translator",
-      "description": "Using the Baidu translate web interface.\\nhttps://fanyi.baidu.com",
+      "description": "Using the Baidu translate web interface.\nhttps://fanyi.baidu.com",
       "icon": "icons/dc836a639d8c5501cb0787283a443026e6c11be45f443b3e29f4cf272cc4558b.png",
       "versions": [
         {
@@ -1458,7 +1458,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.baidu-2.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "Using the Baidu translate web interface.\\nhttps://fanyi.baidu.com",
+          "notes": "Using the Baidu translate web interface.\nhttps://fanyi.baidu.com",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -1475,7 +1475,7 @@
     {
       "id": "bin.plugin.translator.yandex",
       "name": "Yandex Translator",
-      "description": "Using the Yandex translate web interface.\\nhttps://translate.yandex.com",
+      "description": "Using the Yandex translate web interface.\nhttps://translate.yandex.com",
       "icon": "icons/03eac392d41d0aa541a5c68046b1b304ea830d0f410b480cfd61831adc075088.png",
       "versions": [
         {
@@ -1488,7 +1488,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.yandex-3.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "Using the Yandex translate web interface.\\nhttps://translate.yandex.com",
+          "notes": "Using the Yandex translate web interface.\nhttps://translate.yandex.com",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -1505,7 +1505,7 @@
     {
       "id": "bin.plugin.translator.youdao",
       "name": "Youdao Translator",
-      "description": "Using the Youdao translate web interface.\\nhttps://fanyi.youdao.com",
+      "description": "Using the Youdao translate web interface.\nhttps://fanyi.youdao.com",
       "icon": "icons/1e4fc40e54565314b2c135bfc1d8530c6395303f73bf6e5fd87e8e243c87a7a2.png",
       "versions": [
         {
@@ -1518,7 +1518,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.youdao-3.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "Using the Youdao translate web interface.\\nhttps://fanyi.youdao.com",
+          "notes": "Using the Youdao translate web interface.\nhttps://fanyi.youdao.com",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -1565,7 +1565,7 @@
     {
       "id": "bin.plugin.translator.bing",
       "name": "Bing Translator",
-      "description": "Using the Bing Microsoft translate web interface.\\nhttps://www.bing.com/translator",
+      "description": "Using the Bing Microsoft translate web interface.\nhttps://www.bing.com/translator",
       "icon": "icons/b62a975eb7702ce7022f96e1c8892e785e46a5fa03f8da0e2437c794521760ff.png",
       "versions": [
         {
@@ -1578,7 +1578,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.bing-5.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "Using the Bing Microsoft translate web interface.\\nhttps://www.bing.com/translator",
+          "notes": "Using the Bing Microsoft translate web interface.\nhttps://www.bing.com/translator",
           "published": "",
           "sdk": 3,
           "interfaces": {
@@ -1594,8 +1594,8 @@
     },
     {
       "id": "io.tooldroid.plugin.stringencoder",
-      "name": "io.tooldroid.plugin.stringencoder",
-      "description": "io.tooldroid.plugin.stringencoder",
+      "name": "String Encoder",
+      "description": "This plugin encodes strings to make them harder to read and protect your code.\n\nIt uses a combination of Base64 and byte encoding.\n\nInfo:\n\t• Now supports both android.util.Base64 and java.util.Base64\n\t• This extension has been implemented in a utility app; 'ByteHaven'. More info at https://t.me/ByteHavenPro\n\nHow to use:\n\t1. Highlight the text you want to encode.\n\t2. A menu will appear (e.g., copy, cut, paste). Find and click \"translate\".\n\t3. A dialog will appear. Select \"String Encoder\" at the top middle of the dialog.\n\t4. Start encoding!",
       "icon": "icons/d00523c97a0c8be0bba70cf15e83b3a73bc96b95726e044d544ecfcbb7b872ca.png",
       "versions": [
         {
@@ -1608,7 +1608,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/io.tooldroid.plugin.stringencoder-5.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "io.tooldroid.plugin.stringencoder",
+          "notes": "This plugin encodes strings to make them harder to read and protect your code.\n\nIt uses a combination of Base64 and byte encoding.\n\nInfo:\n\t• Now supports both android.util.Base64 and java.util.Base64\n\t• This extension has been implemented in a utility app; 'ByteHaven'. More info at https://t.me/ByteHavenPro\n\nHow to use:\n\t1. Highlight the text you want to encode.\n\t2. A menu will appear (e.g., copy, cut, paste). Find and click \"translate\".\n\t3. A dialog will appear. Select \"String Encoder\" at the top middle of the dialog.\n\t4. Start encoding!",
           "published": "",
           "sdk": 2,
           "interfaces": {
@@ -1621,8 +1621,8 @@
     },
     {
       "id": "bin.plugin.translator.google_ctn",
-      "name": "bin.plugin.translator.google_ctn",
-      "description": "bin.plugin.translator.google_ctn",
+      "name": "Google Translate (CTN transfer agent)",
+      "description": "Use Google Translate web interface\nhttps://translate.google.com\n+ctn& reverse generation and cloudflare proxy ip pool",
       "icon": "icons/4af8482f066f5ec195594bb3c70d1c9d09794c2244cc2914f0a77ca0bf1ca342.png",
       "versions": [
         {
@@ -1635,7 +1635,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/bin.plugin.translator.google_ctn-5.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "bin.plugin.translator.google_ctn",
+          "notes": "Use Google Translate web interface\nhttps://translate.google.com\n+ctn& reverse generation and cloudflare proxy ip pool",
           "published": "",
           "sdk": 2,
           "interfaces": {
@@ -1648,8 +1648,8 @@
     },
     {
       "id": "puppy.qy.plugin",
-      "name": "puppy.qy.plugin",
-      "description": "puppy.qy.plugin",
+      "name": "PUPPY-AI",
+      "description": "主人，小狗很乐意为您服务",
       "icon": "icons/d899f403511ac0ed7700be04410e93bf05cb5259a1eae00a7765eecc26967088.png",
       "versions": [
         {
@@ -1662,7 +1662,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/puppy.qy.plugin-1.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "puppy.qy.plugin",
+          "notes": "主人，小狗很乐意为您服务",
           "published": "",
           "sdk": 2,
           "interfaces": {
@@ -1729,8 +1729,8 @@
     },
     {
       "id": "io.kiber.plugin.formatix",
-      "name": "io.kiber.plugin.formatix",
-      "description": "io.kiber.plugin.formatix",
+      "name": "Formatix",
+      "description": "A plugin that automatically fixes malformed format specifiers in string resources (e.g. turns % 1$d into %1$d). Especially useful for cleaning up formatting issues after automatic translation.",
       "icon": "icons/916bb4211eaba26f20e61abe1ceb1ad4adb82b35a04dc3a95b48b0da05b912d3.png",
       "versions": [
         {
@@ -1743,7 +1743,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/io.kiber.plugin.formatix-1.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "io.kiber.plugin.formatix",
+          "notes": "A plugin that automatically fixes malformed format specifiers in string resources (e.g. turns % 1$d into %1$d). Especially useful for cleaning up formatting issues after automatic translation.",
           "published": "",
           "sdk": 2,
           "interfaces": {
@@ -1756,8 +1756,8 @@
     },
     {
       "id": "tw.david082321",
-      "name": "tw.david082321",
-      "description": "tw.david082321",
+      "name": "繁化姬翻譯插件",
+      "description": "本插件使用了繁化姬的 API 服務，僅供自用，商用必須付費。\nhttps://zhconvert.org",
       "icon": "",
       "versions": [
         {
@@ -1770,7 +1770,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/tw.david082321-2.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "tw.david082321",
+          "notes": "本插件使用了繁化姬的 API 服務，僅供自用，商用必須付費。\nhttps://zhconvert.org",
           "published": "",
           "sdk": 2,
           "interfaces": {
@@ -1783,8 +1783,8 @@
     },
     {
       "id": "com.whitesev.plugin.whitesev",
-      "name": "com.whitesev.plugin.whitesev",
-      "description": "com.whitesev.plugin.whitesev",
+      "name": "JavaSmali",
+      "description": "对Smali语法进行翻译",
       "icon": "",
       "versions": [
         {
@@ -1797,7 +1797,7 @@
           "url": "https://raw.githubusercontent.com/factorialovich/Aide-Pro-Modify/main/mt-plugins/files/com.whitesev.plugin.whitesev-2.mtp",
           "minAndroid": 21,
           "minHost": 0,
-          "notes": "com.whitesev.plugin.whitesev",
+          "notes": "对Smali语法进行翻译",
           "published": "",
           "sdk": 1,
           "interfaces": {
