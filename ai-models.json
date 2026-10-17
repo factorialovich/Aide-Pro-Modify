@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": 3,
+  "revision": 4,
   "models": [
     {
       "provider": "gemini",
@@ -153,6 +153,14 @@
       "vision": true,
       "enabled": false,
       "order": 100
+    },
+    {
+      "provider": "gemini",
+      "id": "gemini-4-argon",
+      "label": "Gemini 4 Argon",
+      "vision": false,
+      "enabled": true,
+      "order": 700
     }
   ]
 }
