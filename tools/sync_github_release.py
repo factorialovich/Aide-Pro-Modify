@@ -1,3 +1,4 @@
+"""GitHub Actions mirror: only server-signed, checksum-verified Cloudflare APKs are released."""
 import base64,hashlib,json,os,re,subprocess,tempfile,time,urllib.request,urllib.error
 from pathlib import Path
 from cryptography.hazmat.primitives import serialization,hashes
@@ -20,14 +21,14 @@ def verify(envelope):
  if not isinstance(value['versionCode'],int) or not 0<value['versionCode']<2147483648:raise ValueError('version code')
  if not re.fullmatch(r'\d{1,4}(?:\.\d{1,4}){2,3}(?:-(?:alpha|beta|rc)\d{0,3})?',value['versionName']):raise ValueError('version name')
  if not re.fullmatch('[a-f0-9]{64}',value['sha256']) or value['url']!=ORIGIN+'/api/apk/'+value['sha256']+'.apk':raise ValueError('origin or hash')
- if not 0<value['size']<=99000000 or value['issued']>time.time()+300 or not 0<value['expires']-value['issued']<=86400:raise ValueError('validity')
+ if not 0<value['size']<=150*1024*1024 or value['issued']>time.time()+300 or not 0<value['expires']-value['issued']<=86400:raise ValueError('validity')
  return value
 def main():
  with tempfile.TemporaryDirectory() as directory:
   root=Path(directory)
   result=get(ORIGIN+'/api/releases')
   for envelope in result.get('items',[]):
-   release=verify(envelope);tag='v'+release['versionName']+'-'+str(release['versionCode']);name='AIDE-'+release['versionName']+'.apk'
+   release=verify(envelope);tag='v'+release['versionName']+'-'+str(release['versionCode']);name='Aide+.Pro.apk'
    existing=gh('api','repos/'+REPOSITORY+'/releases/tags/'+tag,check=False)
    if existing.returncode==0:
     assets=json.loads(existing.stdout).get('assets',[])
