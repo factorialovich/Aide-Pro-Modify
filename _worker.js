@@ -229,7 +229,7 @@ async function resumableUpload(request,env,url) {
  if(request.method!=='POST')fail(405,'method not allowed');
  if(path==='/api/upload/start') {
   const value=await body(request,['size','sha256']);
-  if(!Number.isSafeInteger(value.size)||value.size<=0||value.size>99000000)fail(413,'invalid APK size');
+  if(!Number.isSafeInteger(value.size)||value.size<=0||value.size>150*1024*1024)fail(413,'invalid APK size');
   if(!digest.test(value.sha256||''))fail(422,'checksum required');
   if(ticket.protocol===2||ticket.status==='uploaded') {
    if(ticket.size!==value.size||ticket.sha256!==value.sha256)fail(409,'ticket belongs to another file');
@@ -305,7 +305,7 @@ export const uploadClientScript=String.raw`(()=>{
  function failure(code,message) {
   const error=new Error(message||({401:'Ссылка истекла или отменена. Получите новую в боте.',403:'Откройте ссылку непосредственно из бота.',
    409:'Эта ссылка уже связана с другим файлом. Выберите прежний APK или получите новую ссылку.',
-   413:'Выберите APK размером до 99 МБ.',422:'Проверка файла не прошла. Выберите исходный APK повторно.'}[code])||'Не удалось выполнить запрос.');
+   413:'Выберите APK размером до 150 МБ.',422:'Проверка файла не прошла. Выберите исходный APK повторно.'}[code])||'Не удалось выполнить запрос.');
   error.status=code;return error;
  }
  function state(value) {
@@ -375,8 +375,8 @@ export const uploadClientScript=String.raw`(()=>{
  }
  button.onclick=async()=>{
   const file=input.files[0];
-  if(!file||!file.name.toLowerCase().endsWith('.apk')||file.size<=0||file.size>99000000) {
-   status.textContent='Выберите APK размером до 99 МБ.';return;
+  if(!file||!file.name.toLowerCase().endsWith('.apk')||file.size<=0||file.size>150*1024*1024) {
+   status.textContent='Выберите APK размером до 150 МБ.';return;
   }
   button.disabled=true;input.disabled=true;button.textContent='Загрузка…';
   try {
@@ -533,9 +533,24 @@ export async function handle(request,env,ctx) {
   }
   const upload=/^\/admin\/apk\/([a-f0-9]{64})$/.exec(path);
   if(upload&&request.method==='POST') {
+   if((request.headers.get('Content-Type')||'').startsWith('application/json')) {
+    const value=await body(request,['id']);if(!uuid.test(value.id))fail(422,'invalid ID');
+    const state=await env.RELEASES.get('staging/status/'+value.id+'.json');
+    if(!state)fail(404,'not found');
+    const ticket=JSON.parse(await state.text());
+    if(ticket.kind!=='apk'||ticket.status!=='uploaded'||ticket.sha256!==upload[1]||!ticket.object_key)fail(409,'uploaded APK required');
+    if(!Number.isSafeInteger(ticket.size)||ticket.size<=0||ticket.size>150*1024*1024)fail(413,'invalid APK size');
+    const source=await env.RELEASES.get(ticket.object_key);
+    if(!source||source.size!==ticket.size)fail(409,'uploaded APK unavailable');
+    const stored=await env.RELEASES.put(upload[1]+'.apk',finiteObject(source,ticket.size,ctx).body,{
+     sha256:Uint8Array.from(upload[1].match(/../g),byte=>parseInt(byte,16)).buffer,
+     httpMetadata:{contentType:'application/vnd.android.package-archive'}});
+    if(!stored||stored.size!==ticket.size){await env.RELEASES.delete(upload[1]+'.apk');fail(400,'APK length mismatch');}
+    return json({ok:true,size:stored.size});
+   }
    if(upload[1]!==request.headers.get('X-Aide-Body-SHA256'))fail(401,'body signature mismatch');
    const length=Number(request.headers.get('Content-Length'));
-   if(!Number.isSafeInteger(length)||length<=0||length>99000000)fail(413,'invalid APK size');
+   if(!Number.isSafeInteger(length)||length<=0||length>150*1024*1024)fail(413,'invalid APK size');
    if(!request.body)fail(400,'APK body required');
    // Keep the native request stream's length; R2 verifies integrity while storing.
    const checksum=Uint8Array.from(upload[1].match(/../g),byte=>parseInt(byte,16));
@@ -546,7 +561,7 @@ export async function handle(request,env,ctx) {
   if(path==='/admin/release'&&request.method==='POST') {
    const envelope=await body(request,['payload','signature']);
    const value=await verifyRelease(env,envelope,url.origin);
-   if(!digest.test(value.sha256)||!Number.isSafeInteger(value.size)||value.size<=0||value.size>99000000||!Number.isSafeInteger(value.versionCode)||value.versionCode<=0||value.versionCode>2147483647)fail(422,'invalid release');
+   if(!digest.test(value.sha256)||!Number.isSafeInteger(value.size)||value.size<=0||value.size>150*1024*1024||!Number.isSafeInteger(value.versionCode)||value.versionCode<=0||value.versionCode>2147483647)fail(422,'invalid release');
    text(value.versionName,80);if(value.notes!==undefined)text(value.notes,3000);
    const apk=await env.RELEASES.head(value.sha256+'.apk');if(!apk||apk.size!==value.size)fail(409,'upload APK first');
    const previous=await env.RELEASES.get('release.json');
@@ -624,7 +639,7 @@ export async function handle(request,env,ctx) {
   if(ticket.protocol===2)fail(409,'continue using resumable upload');
 
   const length=Number(request.headers.get('Content-Length')),checksum=request.headers.get('X-Aide-SHA256')||'';
-  if(!Number.isSafeInteger(length)||length<=0||length>99000000||!request.body)fail(413,'invalid APK size');if(!digest.test(checksum))fail(422,'checksum required');
+  if(!Number.isSafeInteger(length)||length<=0||length>150*1024*1024||!request.body)fail(413,'invalid APK size');if(!digest.test(checksum))fail(422,'checksum required');
   const used=await env.DB.prepare('INSERT OR IGNORE INTO nonces(id,expires) VALUES(?,?)').bind('upload:'+hash,ticket.expires).run();if(used.meta.changes!==1)fail(409,'ticket already used');
   ticket.object_key='staging/apk/'+ticket.id+'/'+hash+'.apk';
   try {
