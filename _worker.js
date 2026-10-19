@@ -53,6 +53,7 @@ export function sanitize(stack) {
   .replace(/Bearer\s+[A-Za-z0-9_.-]+/gi,'Bearer [redacted]');
  return stack.split('\n').slice(0,256).map(line=>line.trim()).flatMap(line=>{
   if(line==='Diagnostic report')return [line];
+  if(/^(?:Build: [0-9]{1,10}|Android API: [0-9]{1,3}|Report thread: [A-Za-z0-9_. -]{1,80})$/.test(line))return [line];
   if(/^at [A-Za-z0-9_.$<>]+\([A-Za-z0-9_.$ :?-]+\)$/.test(line))return [line];
   const heading=/^((?:Caused by: |Suppressed: )?[A-Za-z0-9_.$]+(?:Exception|Error|Throwable|ToastMessage))(?:: (.*))?$/.exec(line);
   return heading?[heading[1]+(heading[2]?': '+message(heading[2]):'')]:[];
@@ -707,7 +708,7 @@ export async function handle(request,env,ctx) {
   const key=match[1]+'.apk',metadata=await env.RELEASES.head(key);
   if(!metadata)fail(404,'not found');
   const etag=metadata.httpEtag||'"'+match[1]+'"';
-  const headers={...security,'Cache-Control':'private, no-transform','Content-Type':'application/vnd.android.package-archive','Content-Disposition':'attachment; filename="AIDE+.Pro.apk"','Accept-Ranges':'bytes','ETag':etag,'X-Aide-Download-Version':'2'};
+  const headers={...security,'Cache-Control':'private, no-transform','Content-Type':'application/vnd.android.package-archive','Content-Disposition':'attachment; filename="Aide+.Pro.apk"','Accept-Ranges':'bytes','ETag':etag,'X-Aide-Download-Version':'2'};
   let offset=0,length=metadata.size,status=200;
   const range=request.headers.get('Range');
   if(request.method==='GET'&&range&&(!request.headers.get('If-Range')||request.headers.get('If-Range')===etag)) {
